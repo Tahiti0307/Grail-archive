@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CDGLOA COMME des GARÇONS LOVERS' OUTFIT ARCHIVE</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--blk:#000;--wht:#fff;--gry:#f0f0f0;--mgry:#888;--lgry:#ccc;--ln:#e0e0e0;--sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--jp:'Noto Sans JP','Helvetica Neue',sans-serif}
+    body{background:var(--wht);color:var(--blk);font-family:var(--sans);min-height:100vh;font-size:13px}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;border-bottom:1px solid var(--blk);background:var(--wht);position:sticky;top:0;z-index:200}
+    .logo-wrap{display:flex;flex-direction:column;line-height:1.15;cursor:pointer}
+    .logo-main{font-size:11px;letter-spacing:.22em;font-weight:500;text-transform:uppercase}
+    .logo-sub{font-size:8px;letter-spacing:.18em;color:var(--mgry)}
+    .navl{display:flex;gap:20px}
+    .nl{font-size:9px;letter-spacing:.15em;color:var(--mgry);cursor:pointer;padding:2px 0;border-bottom:1px solid transparent;transition:all .15s;text-transform:uppercase}
+    .nl:hover,.nl.active{color:var(--blk);border-bottom-color:var(--blk)}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .btn-login{font-family:var(--sans);font-size:9px;letter-spacing:.15em;padding:7px 14px;background:transparent;color:var(--blk);border:1px solid var(--blk);cursor:pointer;text-transform:uppercase;transition:all .15s}
+    .btn-login:hover{background:var(--blk);color:var(--wht)}
+    .btn-primary{font-family:var(--sans);font-size:9px;letter-spacing:.15em;padding:7px 14px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase;transition:opacity .15s}
+    .btn-primary:hover{opacity:.7}
+    .btn-primary:disabled{opacity:.3;cursor:not-allowed}
+    .page{display:none}.page.active{display:block}
+
+    /* MODAL */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px}
+    .modal-bg.open{display:flex}
+    .modal{background:var(--wht);width:100%;max-width:440px;border:1px solid var(--blk);margin:auto}
+    .modal-hd{padding:18px 22px 14px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;background:var(--wht)}
+    .modal-ttl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+    .modal-close{font-size:18px;cursor:pointer;color:var(--mgry);background:none;border:none;line-height:1}
+    .modal-body{padding:22px}
+    .modal-note{font-size:9px;color:var(--mgry);line-height:1.8;margin-bottom:18px;font-family:var(--jp);border-left:2px solid var(--blk);padding-left:10px}
+    .modal-tabs{display:flex;border-bottom:1px solid var(--ln);margin-bottom:20px}
+    .m-tab{flex:1;padding:10px;font-size:9px;letter-spacing:.15em;text-align:center;cursor:pointer;color:var(--mgry);border-bottom:2px solid transparent;text-transform:uppercase;transition:all .15s}
+    .m-tab.active{color:var(--blk);border-bottom-color:var(--blk)}
+    .tab-pane{display:none}.tab-pane.active{display:block}
+    .fg{margin-bottom:14px}
+    .flbl{font-size:8px;letter-spacing:.22em;color:var(--mgry);margin-bottom:5px;display:block;text-transform:uppercase}
+    .fi{width:100%;font-family:var(--sans);font-size:11px;padding:8px 10px;border:1px solid var(--ln);background:transparent;color:var(--blk);outline:none;transition:border-color .15s;-webkit-appearance:none}
+    .fi:focus{border-color:var(--blk)}
+    .fi::placeholder{color:var(--lgry)}
+    .fi-ref{text-transform:uppercase}
+    .fta{resize:vertical;min-height:68px;line-height:1.75;font-family:var(--jp)}
+    .sub-btn{width:100%;font-family:var(--sans);font-size:9px;letter-spacing:.22em;padding:12px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase;margin-top:4px}
+    .sub-btn:hover{opacity:.7}
+    .hint{font-size:9px;color:var(--mgry);margin-top:4px;font-family:var(--jp)}
+    .login-alt{font-size:9px;color:var(--mgry);text-align:center;margin-top:12px;font-family:var(--jp)}
+    .login-alt span{cursor:pointer;text-decoration:underline;color:var(--blk)}
+
+    /* AVATAR */
+    .av-upload-wrap{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    .av-preview{width:64px;height:64px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--wht);overflow:hidden;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:border-color .15s;position:relative}
+    .av-preview:hover{border-color:var(--blk)}
+    .av-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .av-preview .av-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s}
+    .av-preview:hover .av-overlay{opacity:1}
+    .av-upload-info{font-size:10px;color:var(--mgry);line-height:1.8;font-family:var(--jp)}
+    .av-upload-btn{font-family:var(--sans);font-size:8px;letter-spacing:.15em;padding:5px 12px;border:1px solid var(--blk);background:transparent;cursor:pointer;text-transform:uppercase;display:inline-block;margin-top:6px;transition:all .15s}
+    .av-upload-btn:hover{background:var(--blk);color:var(--wht)}
+
+    /* follow modal */
+    .follow-list{}
+    .follow-item{display:flex;align-items:center;justify-content:space-between;padding:11px 22px;border-bottom:1px solid var(--ln);cursor:pointer}
+    .follow-item:last-child{border-bottom:none}
+    .follow-item:hover{background:var(--gry)}
+    .fi-left{display:flex;align-items:center;gap:10px}
+    .fi-av{width:32px;height:32px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--wht);flex-shrink:0;overflow:hidden}
+    .fi-av img{width:100%;height:100%;object-fit:cover}
+    .fi-name{font-size:11px}
+    .fi-handle{font-size:9px;color:var(--mgry)}
+    .fol-btn{font-family:var(--sans);font-size:8px;letter-spacing:.12em;padding:4px 10px;border:1px solid var(--blk);background:transparent;cursor:pointer;text-transform:uppercase;transition:all .15s;white-space:nowrap}
+    .fol-btn:hover,.fol-btn.following{background:var(--blk);color:var(--wht)}
+    .fol-btn.following:hover{background:var(--wht);color:var(--blk)}
+
+    /* FEED */
+    .feed-toolbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--ln);gap:12px;flex-wrap:wrap}
+    .sort-wrap{display:flex;align-items:center;gap:6px}
+    .sort-lbl{font-size:8px;letter-spacing:.2em;color:var(--mgry);text-transform:uppercase}
+    .sort-chip{font-size:8px;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--ln);background:transparent;cursor:pointer;color:var(--mgry);transition:all .15s;text-transform:uppercase}
+    .sort-chip:hover,.sort-chip.active{background:var(--blk);color:var(--wht);border-color:var(--blk)}
+    .search-wrap{padding:12px 20px 10px;border-bottom:1px solid var(--ln)}
+    .search-inner{display:flex;max-width:460px;border:1px solid var(--blk)}
+    .search-inner input{flex:1;font-family:var(--sans);font-size:11px;padding:8px 11px;border:none;outline:none;background:transparent;text-transform:uppercase}
+    .search-inner input::placeholder{text-transform:none;color:var(--lgry)}
+    .search-btn{font-family:var(--sans);font-size:9px;letter-spacing:.1em;padding:8px 13px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase}
+    .search-note{font-size:9px;color:var(--mgry);margin-top:4px}
+    .srch-msg{font-size:10px;color:var(--mgry);margin-top:4px}
+    .filter-wrap{padding:8px 20px 6px;border-bottom:1px solid var(--ln)}
+    .filter-row{display:flex;align-items:flex-start;gap:8px;padding:4px 0}
+    .filter-lbl{font-size:8px;letter-spacing:.2em;color:var(--mgry);min-width:52px;padding-top:4px;text-transform:uppercase}
+    .chips{display:flex;gap:3px;flex-wrap:wrap}
+    .chip{font-size:8px;letter-spacing:.1em;padding:3px 9px;border:1px solid var(--ln);background:transparent;cursor:pointer;color:var(--mgry);transition:all .15s;white-space:nowrap;text-transform:uppercase}
+    .chip:hover,.chip.active{background:var(--blk);color:var(--wht);border-color:var(--blk)}
+    .color-chip{width:20px;height:20px;border:1px solid var(--ln);cursor:pointer;flex-shrink:0;position:relative}
+    .color-chip.active::after{content:'';position:absolute;inset:-3px;border:2px solid var(--blk)}
+    .feed-hd{padding:16px 20px 8px;display:flex;align-items:baseline;justify-content:space-between}
+    .feed-t{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+    .feed-c{font-size:10px;color:var(--mgry)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln)}
+    .card{background:var(--wht);cursor:pointer;overflow:hidden}
+    .card:hover .cov{opacity:1}
+    .cph{width:100%;aspect-ratio:3/4;background:var(--gry);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .cov{position:absolute;bottom:0;left:0;right:0;padding:9px 11px;background:var(--blk);opacity:0;transition:opacity .2s}
+    .cov-line{font-size:8px;letter-spacing:.12em;color:var(--lgry);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .cov-ttl{font-size:11px;color:var(--wht)}
+    .ccard-info{padding:8px 11px 10px;border-bottom:1px solid var(--ln)}
+    .ccard-line{font-size:8px;letter-spacing:.08em;color:var(--mgry);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .ccard-ttl{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .ccard-meta{display:flex;justify-content:space-between;margin-top:3px}
+    .ccard-sea{font-size:9px;color:var(--mgry)}
+    .ccard-lk{font-size:9px;color:var(--mgry)}
+
+    /* DETAIL */
+    .bk{font-size:9px;letter-spacing:.12em;color:var(--mgry);cursor:pointer;padding:11px 20px;display:inline-flex;align-items:center;gap:5px;border-bottom:1px solid var(--ln);text-transform:uppercase}
+    .bk:hover{color:var(--blk)}
+    .dw{display:grid;grid-template-columns:1fr 1fr}
+    .dim{background:var(--gry);min-height:460px}
+    .img-main{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:var(--gry)}
+    .img-thumbs{display:flex;gap:1px;background:var(--ln);padding:1px}
+    .img-thumb{width:56px;height:56px;cursor:pointer;border:2px solid transparent;overflow:hidden;flex-shrink:0}
+    .img-thumb.active{border-color:var(--blk)}
+    .dinfo{padding:24px;border-left:1px solid var(--ln);display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100vh - 96px)}
+    .dmeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--ln)}
+    .duser{display:flex;align-items:center;gap:8px;cursor:pointer}
+    .duser:hover .uname{text-decoration:underline}
+    .av{width:28px;height:28px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--wht);overflow:hidden;flex-shrink:0}
+    .av img{width:100%;height:100%;object-fit:cover}
+    .uname{font-size:10px;letter-spacing:.06em}
+    .fbtn-d{font-size:8px;letter-spacing:.12em;padding:5px 11px;border:1px solid var(--blk);background:transparent;cursor:pointer;font-family:var(--sans);text-transform:uppercase;transition:all .15s}
+    .fbtn-d:hover,.fbtn-d.following{background:var(--blk);color:var(--wht)}
+    .fbtn-d.following:hover{background:var(--wht);color:var(--blk)}
+    .dttl{font-size:19px;margin-bottom:5px;font-weight:400;line-height:1.3}
+    .dsea{font-size:9px;letter-spacing:.15em;color:var(--mgry);margin-bottom:2px;text-transform:uppercase}
+    .dline{font-size:9px;color:var(--mgry);margin-bottom:13px}
+    .dcap{font-size:11px;color:var(--mgry);line-height:1.85;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--ln);font-family:var(--jp)}
+    .slbl{font-size:8px;letter-spacing:.2em;color:var(--mgry);margin-bottom:6px;text-transform:uppercase}
+    .isec{border-top:1px solid var(--ln);padding-top:12px;margin-bottom:12px}
+    .irow{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:5px;padding:6px 0;border-bottom:1px solid var(--ln)}
+    .irow:last-child{border-bottom:none}
+    .iname{font-size:10px}
+    .ibadge{font-size:8px;color:var(--mgry);background:var(--gry);padding:2px 6px}
+    .isz{font-size:8px;background:var(--gry);padding:2px 6px}
+    .store-row{border-top:1px solid var(--ln);padding:10px 0;margin-bottom:12px;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--mgry)}
+    .dact{display:flex;gap:7px;border-top:1px solid var(--ln);padding-top:12px;flex-wrap:wrap}
+    .abtn{display:flex;align-items:center;gap:4px;font-size:8px;letter-spacing:.1em;padding:7px 11px;border:1px solid var(--ln);background:transparent;cursor:pointer;font-family:var(--sans);transition:all .15s;color:var(--mgry);text-transform:uppercase}
+    .abtn:hover{border-color:var(--blk);color:var(--blk)}
+    .abtn.liked{background:var(--blk);color:var(--wht);border-color:var(--blk)}
+    .abtn.danger:hover{border-color:#c00;color:#c00}
+    .csec{border-top:1px solid var(--ln);padding-top:12px;margin-top:3px}
+    .clbl{font-size:8px;letter-spacing:.2em;color:var(--mgry);margin-bottom:8px;text-transform:uppercase}
+    .cmt{padding:8px 0;border-bottom:1px solid var(--ln)}
+    .cmt:last-child{border-bottom:none}
+    .cmt-hd{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+    .cmt-av{width:20px;height:20px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--wht);flex-shrink:0;overflow:hidden}
+    .cmt-av img{width:100%;height:100%;object-fit:cover}
+    .cmt-un{font-size:9px}
+    .cmt-dt{font-size:8px;color:var(--mgry);margin-left:auto}
+    .cmt-txt{font-size:10px;color:var(--mgry);line-height:1.8;padding-left:25px;font-family:var(--jp)}
+    .cmt-form{margin-top:10px;display:flex;border:1px solid var(--blk)}
+    .cmt-inp{flex:1;font-family:var(--jp);font-size:10px;padding:8px 9px;border:none;outline:none;background:transparent}
+    .cmt-sub{font-family:var(--sans);font-size:8px;letter-spacing:.1em;padding:8px 11px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase}
+
+    /* PROFILE */
+    .prof-wrap{max-width:900px;margin:0 auto;padding:28px 20px 0}
+    .prof-hd{display:grid;grid-template-columns:100px 1fr;gap:24px;padding-bottom:22px;border-bottom:1px solid var(--ln)}
+    .prof-av-lg{width:80px;height:80px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--wht);overflow:hidden;cursor:pointer;position:relative;border:2px solid transparent;transition:border-color .15s}
+    .prof-av-lg:hover{border-color:var(--blk)}
+    .prof-av-lg img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .prof-av-lg .av-ov{position:absolute;inset:0;background:rgba(0,0,0,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;font-size:11px;color:var(--wht);letter-spacing:.05em;flex-direction:column;gap:2px}
+    .prof-av-lg:hover .av-ov{opacity:1}
+    .prof-name{font-size:17px;margin-bottom:2px}
+    .prof-handle{font-size:9px;letter-spacing:.1em;color:var(--mgry);margin-bottom:12px}
+    .prof-stats{display:flex;gap:24px;margin-bottom:12px}
+    .stat{cursor:pointer}
+    .stat:hover .stat-n{text-decoration:underline}
+    .stat-n{font-size:16px;display:block}
+    .stat-l{font-size:8px;letter-spacing:.15em;color:var(--mgry);text-transform:uppercase}
+    .prof-info-row{display:flex;gap:14px;margin-bottom:9px;flex-wrap:wrap}
+    .prof-info-item{font-size:10px;color:var(--mgry);display:flex;align-items:center;gap:4px}
+    .prof-info-item strong{color:var(--blk);font-weight:400}
+    .prof-bio{font-size:10px;color:var(--mgry);line-height:1.85;font-family:var(--jp)}
+    .edit-btn{font-family:var(--sans);font-size:8px;letter-spacing:.13em;padding:5px 12px;border:1px solid var(--blk);background:transparent;cursor:pointer;text-transform:uppercase;transition:all .15s;margin-top:10px;display:inline-block}
+    .edit-btn:hover{background:var(--blk);color:var(--wht)}
+    .not-reg{padding:44px 20px;text-align:center;border:1px dashed var(--lgry);margin:20px}
+    .not-reg p{font-size:11px;color:var(--mgry);line-height:1.9;font-family:var(--jp);margin-bottom:14px}
+    .vprof-wrap{max-width:900px;margin:0 auto;padding:24px 20px 0}
+    .vprof-hd{display:grid;grid-template-columns:80px 1fr;gap:22px;padding-bottom:18px;border-bottom:1px solid var(--ln)}
+
+    /* POST */
+    .pw{max-width:580px;margin:0 auto;padding:28px 20px}
+    .pttl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--blk)}
+    .fr2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .photo-zone{border:1px solid var(--ln);min-height:108px;display:flex;flex-wrap:wrap;gap:1px;align-items:flex-start;background:var(--ln)}
+    .photo-add{width:96px;height:96px;background:var(--gry);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--lgry);transition:background .15s;flex-shrink:0}
+    .photo-add:hover{background:#e0e0e0}
+    .photo-add span{font-size:8px;letter-spacing:.1em;margin-top:4px;color:var(--mgry)}
+    .photo-thumb{position:relative;width:96px;height:96px;flex-shrink:0}
+    .photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo-rm{position:absolute;top:2px;right:2px;background:var(--blk);color:var(--wht);border:none;width:17px;height:17px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .ibldr{border:1px solid var(--ln);padding:11px}
+    .ibldr-hd{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:5px;margin-bottom:5px;border-bottom:1px solid var(--ln);padding-bottom:5px}
+    .ir{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:5px;align-items:end;margin-bottom:6px}
+    .add-r{font-family:var(--sans);font-size:8px;letter-spacing:.13em;padding:5px 0;color:var(--mgry);cursor:pointer;border:none;background:none;border-top:1px solid var(--ln);width:100%;text-align:left;margin-top:3px;text-transform:uppercase}
+    .add-r:hover{color:var(--blk)}
+    .rm{font-size:13px;color:var(--lgry);cursor:pointer;border:none;background:none;padding:7px 3px;align-self:end;line-height:1}
+    .rm:hover{color:var(--blk)}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo-wrap" onclick="goNav('feed',document.querySelector('.nl'))">
+    <div class="logo-main">COMME des GARÇONS</div>
+    <div class="logo-sub">OUTFIT ARCHIVE</div>
+  </div>
+  <div class="navl">
+    <span class="nl active" onclick="goNav('feed',this)">フィード</span>
+    <span class="nl" onclick="goNav('mypage',this)">マイページ</span>
+    <span class="nl" onclick="goNav('saved',this)">保存済み</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn-login" id="nav-login-btn" onclick="openLoginModal()">ログイン</button>
+    <button class="btn-primary" id="nav-post-btn" onclick="tryPost()" disabled>＋ 投稿</button>
+  </div>
+</nav>
+
+<div class="modal-bg" id="modal-auth">
+  <div class="modal">
+    <div class="modal-hd"><span class="modal-ttl">ログイン / 新規登録</span><button class="modal-close" onclick="closeModal('modal-auth')">×</button></div>
+    <div class="modal-body">
+      <div class="modal-tabs">
+        <div class="m-tab active" onclick="switchAuthTab('login',this)">ログイン</div>
+        <div class="m-tab" onclick="switchAuthTab('register',this)">新規登録</div>
+      </div>
+      <div class="tab-pane active" id="tab-login">
+        <div class="fg"><label class="flbl">メールアドレス</label><input class="fi" type="email" id="login-email" placeholder="example@email.com"></div>
+        <div class="fg"><label class="flbl">パスワード</label><input class="fi" type="password" id="login-pass" placeholder="••••••••"></div>
+        <button class="sub-btn" onclick="doLogin()">ログイン</button>
+        <div class="login-alt">アカウントをお持ちでない方は<span onclick="switchAuthTab('register',document.querySelectorAll('.m-tab')[1])">新規登録</span></div>
+      </div>
+      <div class="tab-pane" id="tab-register">
+        <div class="modal-note">ニックネーム・ギャルソン着用歴・身長を登録してください。</div>
+        <div class="fg">
+          <label class="flbl">プロフィール写真</label>
+          <div class="av-upload-wrap">
+            <div class="av-preview" id="reg-av-preview" onclick="document.getElementById('reg-av-file').click()">
+              <span id="reg-av-initial">?</span>
+              <div class="av-overlay"><i class="ti ti-camera" aria-hidden="true" style="font-size:18px;color:#fff"></i></div>
+            </div>
+            <div class="av-upload-info">
+              JPG / PNG 推奨<br>円形にトリミングされます
+              <br><button class="av-upload-btn" onclick="document.getElementById('reg-av-file').click()">写真を選択</button>
+            </div>
+          </div>
+          <input type="file" id="reg-av-file" accept="image/*" style="display:none" onchange="previewRegAv(event)">
+        </div>
+        <div class="fg"><label class="flbl">メールアドレス *</label><input class="fi" type="email" id="reg-email" placeholder="example@email.com"></div>
+        <div class="fg"><label class="flbl">パスワード *</label><input class="fi" type="password" id="reg-pass" placeholder="8文字以上"></div>
+        <div class="fg"><label class="flbl">ニックネーム *</label><input class="fi" type="text" id="reg-nick" placeholder="例：minako.cdg" maxlength="30" oninput="document.getElementById('reg-av-initial').textContent=this.value.charAt(0).toUpperCase()||'?'"></div>
+        <div class="fg"><label class="flbl">ハンドル (@) *</label><input class="fi" type="text" id="reg-handle" placeholder="例：minako_cdg" maxlength="20"></div>
+        <div class="fg"><label class="flbl">ギャルソン着用歴 *</label>
+          <select class="fi" id="reg-history" style="appearance:none;cursor:pointer">
+            <option value="">選択してください</option>
+            <option>1年未満</option><option>1〜2年</option><option>3〜5年</option>
+            <option>6〜10年</option><option>11〜15年</option><option>16〜20年</option><option>20年以上</option>
+          </select>
+        </div>
+        <div class="fg"><label class="flbl">身長 (cm) *</label><input class="fi" type="text" id="reg-height" placeholder="168" inputmode="numeric" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')"></div>
+        <div class="fg"><label class="flbl">自己紹介</label><textarea class="fi fta" id="reg-bio" placeholder="HOMME PLUSを中心にコレクション。DSM銀座常連。"></textarea></div>
+        <button class="sub-btn" onclick="doRegister()">登録してログイン</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-edit-profile">
+  <div class="modal">
+    <div class="modal-hd"><span class="modal-ttl">プロフィール編集</span><button class="modal-close" onclick="closeModal('modal-edit-profile')">×</button></div>
+    <div class="modal-body">
+      <div class="fg">
+        <label class="flbl">プロフィール写真</label>
+        <div class="av-upload-wrap">
+          <div class="av-preview" id="ep-av-preview" onclick="document.getElementById('ep-av-file').click()">
+            <span id="ep-av-initial"></span>
+            <div class="av-overlay"><i class="ti ti-camera" aria-hidden="true" style="font-size:18px;color:#fff"></i></div>
+          </div>
+          <div class="av-upload-info">
+            プロフィール写真を変更<br>JPG / PNG 推奨
+            <br><button class="av-upload-btn" onclick="document.getElementById('ep-av-file').click()">写真を選択</button>
+          </div>
+        </div>
+        <input type="file" id="ep-av-file" accept="image/*" style="display:none" onchange="previewEditAv(event)">
+      </div>
+      <div class="fg"><label class="flbl">ニックネーム</label><input class="fi" type="text" id="ep-nick" maxlength="30"></div>
+      <div class="fg"><label class="flbl">ハンドル (@)</label><input class="fi" type="text" id="ep-handle" maxlength="20"></div>
+      <div class="fg"><label class="flbl">ギャルソン着用歴</label>
+        <select class="fi" id="ep-history" style="appearance:none;cursor:pointer">
+          <option value="">選択</option>
+          <option>1年未満</option><option>1〜2年</option><option>3〜5年</option><option>6〜10年</option><option>11〜15年</option><option>16〜20年</option><option>20年以上</option>
+        </select>
+      </div>
+      <div class="fg"><label class="flbl">身長 (cm)</label><input class="fi" type="text" id="ep-height" inputmode="numeric" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')"></div>
+      <div class="fg"><label class="flbl">自己紹介</label><textarea class="fi fta" id="ep-bio"></textarea></div>
+      <button class="sub-btn" onclick="saveEditProfile()">保存する</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-edit-post">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-hd"><span class="modal-ttl">投稿を編集</span><button class="modal-close" onclick="closeModal('modal-edit-post')">×</button></div>
+    <div class="modal-body">
+      <div class="fg"><label class="flbl">タイトル</label><input class="fi" type="text" id="epost-ttl"></div>
+      <div class="fg"><label class="flbl">説明</label><textarea class="fi fta" id="epost-cap"></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px">
+        <div class="fg" style="margin-bottom:0"><label class="flbl">ライン</label>
+          <select class="fi" id="epost-line" style="appearance:none;cursor:pointer">
+            <option>COMME des GARÇONS</option><option>COMME des GARÇONS COMME des GARÇONS</option><option>COMME des GARÇONS GIRL</option>
+            <option>COMME des GARÇONS HOMME</option><option>COMME des GARÇONS HOMME PLUS</option><option>COMME des GARÇONS HOMME DEUX</option>
+            <option>COMME des GARÇONS SHIRT</option><option>BLACK COMME des GARÇONS</option>
+            <option>JUNYA WATANABE</option><option>JUNYA WATANABE MAN</option>
+            <option>tao COMME des GARÇONS</option><option>noir kei ninomiya</option>
+            <option>CDG</option><option>PLAY COMME des GARÇONS</option><option>THE BEATLES COMME des GARÇONS</option>
+            <option>Wallet COMME des GARÇONS</option><option>COMME des GARÇONS parfums</option>
+          </select>
+        </div>
+        <div class="fg" style="margin-bottom:0"><label class="flbl">シーズン</label>
+          <select class="fi" id="epost-sea" style="appearance:none;cursor:pointer">
+            <option>SS26</option><option>AW25</option><option>SS25</option><option>AW24</option><option>SS24</option><option>AW23</option><option>SS23</option><option>AW22</option><option>アーカイブ（2020年以前）</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label class="flbl">購入店舗</label>
+        <select class="fi" id="epost-store" style="appearance:none;cursor:pointer">
+          <option value="">選択</option>
+          <option>COMME des GARÇONS 青山店（東京）</option><option>COMME des GARÇONS HOMME PLUS 青山店（東京）</option>
+          <option>Dover Street Market Ginza（東京）</option><option>Dover Street Market London</option><option>Dover Street Market New York</option>
+          <option>伊勢丹新宿店</option><option>三越銀座店</option><option>髙島屋新宿店</option><option>阪急うめだ本店</option><option>松屋銀座</option>
+          <option>COMME des GARÇONS 公式オンラインストア</option><option>SSENSE</option><option>ヤフオク（古着）</option><option>メルカリ（古着）</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flbl">着用アイテム</label>
+        <div class="ibldr">
+          <div class="ibldr-hd"><span class="flbl" style="margin-bottom:0">アイテム名</span><span class="flbl" style="margin-bottom:0">シーズン</span><span class="flbl" style="margin-bottom:0">サイズ</span><span class="flbl" style="margin-bottom:0">品番</span><span></span></div>
+          <div id="epost-ilist"></div>
+          <button class="add-r" onclick="addItemEdit()">＋ アイテムを追加</button>
+        </div>
+        <div class="hint">※ 品番はハイフンなしで入力（自動で大文字・半角に変換）</div>
+      </div>
+      <button class="sub-btn" onclick="saveEditPost()">変更を保存する</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-follow">
+  <div class="modal" style="max-width:360px">
+    <div class="modal-hd"><span class="modal-ttl" id="fol-modal-ttl">フォロー中</span><button class="modal-close" onclick="closeModal('modal-follow')">×</button></div>
+    <div class="follow-list" id="fol-list-body"></div>
+  </div>
+</div>
+
+<div id="page-feed" class="page active">
+  <div class="search-wrap">
+    <div class="search-inner">
+      <input type="text" id="srch" placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="this.value=normalizeRef(this.value)">
+      <button class="search-btn" onclick="doSearch()">検索</button>
+    </div>
+    <div class="search-note">※ 品番はハイフンなしで入力（自動で大文字・半角に変換）</div>
+    <div class="srch-msg" id="srch-msg"></div>
+  </div>
+  <div class="filter-wrap">
+    <div class="filter-row">
+      <span class="filter-lbl">ライン</span>
+      <div class="chips" id="chips-line">
+        <span class="chip active" onclick="setFilt('line','all',this)">ALL</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS',this)">CDG</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS COMME des GARÇONS',this)">CDG CDG</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS GIRL',this)">GIRL</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS HOMME',this)">HOMME</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS HOMME PLUS',this)">HOMME PLUS</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS HOMME DEUX',this)">HOMME DEUX</span>
+        <span class="chip" onclick="setFilt('line','COMME des GARÇONS SHIRT',this)">SHIRT</span>
+        <span class="chip" onclick="setFilt('line','BLACK COMME des GARÇONS',this)">BLACK CDG</span>
+        <span class="chip" onclick="setFilt('line','JUNYA WATANABE',this)">JUNYA WATANABE</span>
+        <span class="chip" onclick="setFilt('line','JUNYA WATANABE MAN',this)">JUNYA MAN</span>
+        <span class="chip" onclick="setFilt('line','tao COMME des GARÇONS',this)">TAO</span>
+        <span class="chip" onclick="setFilt('line','noir kei ninomiya',this)">KEI NINOMIYA</span>
+        <span class="chip" onclick="setFilt('line','CDG',this)">CDG (GOOD DESIGN SHOP)</span>
+        <span class="chip" onclick="setFilt('line','PLAY COMME des GARÇONS',this)">PLAY</span>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-lbl">シーズン</span>
+      <div class="chips" id="chips-season">
+        <span class="chip active" onclick="setFilt('sea','all',this)">ALL</span>
+        <span class="chip" onclick="setFilt('sea','SS26',this)">SS26</span>
+        <span class="chip" onclick="setFilt('sea','AW25',this)">AW25</span>
+        <span class="chip" onclick="setFilt('sea','SS25',this)">SS25</span>
+        <span class="chip" onclick="setFilt('sea','AW24',this)">AW24</span>
+        <span class="chip" onclick="setFilt('sea','SS24',this)">SS24</span>
+        <span class="chip" onclick="setFilt('sea','AW23',this)">AW23</span>
+        <span class="chip" onclick="setFilt('sea','SS23',this)">SS23</span>
+        <span class="chip" onclick="setFilt('sea','AW22',this)">AW22</span>
+        <span class="chip" onclick="setFilt('sea','アーカイブ（2020年以前）',this)">ARCHIVE (-2020)</span>
+      </div>
+    </div>
+  </div>
+  <div class="feed-toolbar">
+    <div class="sort-wrap">
+      <span class="sort-lbl">並び替え</span>
+      <span class="sort-chip active" id="schip-new" onclick="setSort('new')">最新順</span>
+      <span class="sort-chip" id="schip-pop" onclick="setSort('pop')">人気順</span>
+    </div>
+  </div>
+  <div class="feed-hd">
+    <div class="feed-t" id="feed-title-text">すべてのアーカイブ</div>
+    <div class="feed-c" id="feed-count">0 ITEMS</div>
+  </div>
+  <div class="grid" id="feed-grid"></div>
+</div>
+
+<div id="page-detail" class="page">
+  <div class="bk" onclick="goBack()"><i class="ti ti-arrow-left"></i> フィードに戻る</div>
+  <div class="dw">
+    <div class="dim">
+      <div class="img-main" id="det-main-pic"></div>
+      <div class="img-thumbs" id="det-thumbs"></div>
+    </div>
+    <div class="dinfo">
+      <div class="dmeta">
+        <div class="duser" id="det-user-link">
+          <div class="av" id="det-av">?</div>
+          <div class="uname" id="det-uname">USER</div>
+        </div>
+        <button class="fbtn-d" id="det-fol-btn">フォローする</button>
+      </div>
+      <h1 class="dttl" id="det-ttl">LOOK TITLE</h1>
+      <div class="dsea" id="det-sea">SEASON</div>
+      <div class="dline" id="det-line">LINE</div>
+      <p class="dcap" id="det-cap">Caption here...</p>
+      <div class="slbl">着用アイテム（品番付）</div>
+      <div class="isec" id="det-items"></div>
+      <div class="store-row" id="det-store-row"></div>
+      <div class="dact">
+        <button class="abtn" id="det-like-btn"><i class="ti ti-heart"></i> <span id="det-like-c">0</span></button>
+        <button class="abtn" id="det-save-btn"><i class="ti ti-bookmark"></i> <span id="det-save-t">コレクションに保存</span></button>
+        <button class="abtn danger" id="det-del-btn" style="display:none"><i class="ti ti-trash"></i> 削除する</button>
+        <button class="abtn" id="det-edit-btn" style="display:none"><i class="ti ti-edit"></i> 編集する</button>
+      </div>
+      <div class="csec">
+        <div class="clbl">コメント (<span id="det-cmt-c">0</span>)</div>
+        <div id="det-cmt-list"></div>
+        <div class="cmt-form">
+          <input type="text" class="cmt-inp" id="det-cmt-inp" placeholder="コメントを入力...">
+          <button class="cmt-sub" id="det-cmt-sub">送信</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-user" class="page">
+  <div class="bk" onclick="goBack()"><i class="ti ti-arrow-left"></i> 戻る</div>
+  <div class="vprof-wrap">
+    <div class="vprof-hd">
+      <div class="prof-av-lg" id="vprof-av" style="cursor:default">?</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:2px">
+          <h2 class="prof-name" id="vprof-name">USER</h2>
+          <button class="fbtn-d" id="vprof-fol-btn">フォローする</button>
+        </div>
+        <div class="prof-handle" id="vprof-handle">@handle</div>
+        <div class="prof-stats">
+          <div class="stat"><span class="stat-n" id="vprof-st-posts">0</span><span class="stat-l">POSTS</span></div>
+          <div class="stat" id="vprof-stat-er"><span class="stat-n" id="vprof-st-folers">0</span><span class="stat-l">FOLLOWERS</span></div>
+          <div class="stat" id="vprof-stat-ing"><span class="stat-n" id="vprof-st-foling">0</span><span class="stat-l">FOLLOWING</span></div>
+        </div>
+        <div class="prof-info-row">
+          <div class="prof-info-item">着用歴 <strong id="vprof-info-history">-</strong></div>
+          <div class="prof-info-item">身長 <strong id="vprof-info-height">-</strong> cm</div>
+        </div>
+        <p class="prof-bio" id="vprof-bio"></p>
+      </div>
+    </div>
+  </div>
+  <div class="feed-hd" style="max-width:900px;margin:0 auto;padding-top:20px">
+    <div class="feed-t">投稿されたアーカイブ</div>
+  </div>
+  <div class="grid" id="vprof-grid" style="max-width:900px;margin:0 auto"></div>
+</div>
+
+<div id="page-mypage" class="page">
+  <div id="my-profile-area" style="display:none">
+    <div class="prof-wrap">
+      <div class="prof-hd">
+        <div class="prof-av-lg" id="my-av-box" onclick="openModal('modal-edit-profile')">
+          <span id="my-av-initial">?</span>
+          <div class="av-ov"><i class="ti ti-edit"></i><span>EDIT</span></div>
+        </div>
+        <div>
+          <div class="prof-name" id="my-name">NAME</div>
+          <div class="prof-handle" id="my-handle">@handle</div>
+          <div class="prof-stats">
+            <div class="stat"><span class="stat-n" id="my-st-posts">0</span><span class="stat-l">POSTS</span></div>
+            <div class="stat" onclick="openFollowModal('followers',currentUser.id)"><span class="stat-n" id="my-st-folers">0</span><span class="stat-l">FOLLOWERS</span></div>
+            <div class="stat" onclick="openFollowModal('following',currentUser.id)"><span class="stat-n" id="my-st-foling">0</span><span class="stat-l">FOLLOWING</span></div>
+          </div>
+          <div class="prof-info-row">
+            <div class="prof-info-item">着用歴 <strong id="my-info-history">-</strong></div>
+            <div class="prof-info-item">身長 <strong id="my-info-height">-</strong> cm</div>
+          </div>
+          <p class="prof-bio" id="my-bio"></p>
+          <button class="edit-btn" onclick="openEditProfileModal()">プロフィールを編集</button>
+        </div>
+      </div>
+    </div>
+    <div class="feed-hd" style="max-width:900px;margin:0 auto;padding-top:20px">
+      <div class="feed-t">自分の投稿</div>
+    </div>
+    <div class="grid" id="my-grid" style="max-width:900px;margin:0 auto"></div>
+  </div>
+  <div id="my-guest-area" class="not-reg">
+    <p>マイページを表示するにはログインが必要です。<br>アーカイブの投稿、コレクションの保存、コメントやユーザーのフォロー機能が利用できます。</p>
+    <button class="btn-primary" onclick="openLoginModal()">ログイン / 新規登録</button>
+  </div>
+</div>
+
+<div id="page-saved" class="page">
+  <div id="saved-user-area" style="display:none">
+    <div class="prof-wrap" style="padding-bottom:14px"><h2 class="pttl" style="margin-bottom:10px">保存済みのコレクション</h2></div>
+    <div class="grid" id="saved-grid" style="max-width:900px;margin:0 auto"></div>
+  </div>
+  <div id="saved-guest-area" class="not-reg">
+    <p>コレクション保存機能を利用するにはログインが必要です。</p>
+    <button class="btn-primary" onclick="openLoginModal()">ログイン / 新規登録</button>
+  </div>
+</div>
+
+<div id="page-post" class="page">
+  <div class="pw">
+    <h2 class="pttl">新しいアーカイブを投稿</h2>
+    <div class="fg">
+      <label class="flbl">写真を追加 *</label>
+      <div class="photo-zone">
+        <div id="post-photo-container" style="display:flex;gap:1px;flex-wrap:wrap"></div>
+        <div class="photo-add" onclick="document.getElementById('post-file-input').click()">
+          <i class="ti ti-plus" style="font-size:20px"></i>
+          <span>画像を選択</span>
+        </div>
+      </div>
+      <input type="file" id="post-file-input" accept="image/*" multiple style="display:none" onchange="handlePostFiles(event)">
+      <div class="hint">※ 最大4枚まで。1枚目がカバー（一覧）になります。</div>
+    </div>
+    <div class="fg"><label class="flbl">ルックタイトル *</label><input class="fi" type="text" id="post-ttl" placeholder="24AW パッチワークルック、青山限定コートなど"></div>
+    <div class="fg"><label class="flbl">コーディネート解説・メモ</label><textarea class="fi fta" id="post-cap" placeholder="素材感やサイズ感、合わせ方のこだわりなどをご記入ください。"></textarea></div>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px">
+      <div class="fg" style="margin-bottom:0"><label class="flbl">メインライン *</label>
+        <select class="fi" id="post-line" style="appearance:none;cursor:pointer">
+          <option value="">選択してください</option>
+          <option>COMME des GARÇONS</option><option>COMME des GARÇONS COMME des GARÇONS</option><option>COMME des GARÇONS GIRL</option>
+          <option>COMME des GARÇONS HOMME</option><option>COMME des GARÇONS HOMME PLUS</option><option>COMME des GARÇONS HOMME DEUX</option>
+          <option>COMME des GARÇONS SHIRT</option><option>BLACK COMME des GARÇONS</option>
+          <option>JUNYA WATANABE</option><option>JUNYA WATANABE MAN</option>
+          <option>tao COMME des GARÇONS</option><option>noir kei ninomiya</option>
+          <option>CDG</option><option>PLAY COMME des GARÇONS</option><option>THE BEATLES COMME des GARÇONS</option>
+          <option>Wallet COMME des GARÇONS</option><option>COMME des GARÇONS parfums</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:0"><label class="flbl">メインシーズン *</label>
+        <select class="fi" id="post-sea" style="appearance:none;cursor:pointer">
+          <option value="">選択してください</option>
+          <option>SS26</option><option>AW25</option><option>SS25</option><option>AW24</option><option>SS24</option><option>AW23</option><option>SS23</option><option>AW22</option><option>アーカイブ（2020年以前）</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label class="flbl">購入店舗 / 入手経路</label>
+      <select class="fi" id="post-store" style="appearance:none;cursor:pointer">
+        <option value="">選択してください</option>
+        <option>COMME des GARÇONS 青山店（東京）</option><option>COMME des GARÇONS HOMME PLUS 青山店（東京）</option>
+        <option>Dover Street Market Ginza（東京）</option><option>Dover Street Market London</option><option>Dover Street Market New York</option>
+        <option>伊勢丹新宿店</option><option>三越銀座店</option><option>髙島屋新宿店</option><option>阪急うめだ本店</option><option>松屋銀座</option>
+        <option>COMME des GARÇONS 公式オンラインストア</option><option>SSENSE</option><option>ヤフオク（古着）</option><option>メルカリ（古着）</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="flbl">着用アイテムリスト</label>
+      <div class="ibldr">
+        <div class="ibldr-hd"><span class="flbl" style="margin-bottom:0">アイテム種別 (例: ジャケット)</span><span class="flbl" style="margin-bottom:0">期 (例: AW24)</span><span class="flbl" style="margin-bottom:0">サイズ</span><span class="flbl" style="margin-bottom:0">製品品番 (例: HJJ050)</span><span></span></div>
+        <div id="ilist">
+          <div class="ir">
+            <input class="fi" type="text" placeholder="コート">
+            <input class="fi" type="text" placeholder="AW24">
+            <input class="fi" type="text" placeholder="M">
+            <input class="fi fi-ref" type="text" placeholder="HJJ050" oninput="this.value=normalizeRef(this.value)">
+            <button class="rm" onclick="rmItem(this)">×</button>
+          </div>
+        </div>
+        <button class="add-r" onclick="addItem()">＋ アイテムを追加</button>
+      </div>
+      <div class="hint">※ 品番はハイフンなしの半角英数字で入力（自動で大文字になります）</div>
+    </div>
+    <button class="sub-btn" style="margin-top:20px;padding:14px" onclick="submitPost()">アーカイブを公開する</button>
+  </div>
+</div>
+
+<script>
+  /* ===== DATABASE & STATE ===== */
+  let users = [
+    {id:'u1', name:'Rei_Archive', handle:'rei_fan', history:'20年以上', height:'172', bio:'80年代の川久保玲のパッションから現在のHOMME PLUSまで幅広く収集しています。縮絨加工のアイテムが特に大好物です。', av:'', followers:['u2'], following:[]},
+    {id:'u2', name:'K_CdG', handle:'k_homme', history:'6〜10年', height:'180', bio:'HOMME PLUSとSHIRTメイン。ジャケットのシルエットの美しさに惚れています。DSM銀座によく出没します。', av:'', followers:[], following:['u1']}
+  ];
+  let posts = [
+    {id:'p1', uid:'u1', ttl:'24AW 多重レイヤードパッチワークジャケット', cap:'24AW「SPIRITUAL WORLD」の核となる多重レイヤードジャケットです。複数の異なる縮絨ウール素材がドッキングされており、歩くたびに特有の揺れ感が出ます。青山店で購入。サイズはXSですが少し大きめの作りです。', line:'COMME des GARÇONS HOMME PLUS', sea:'AW24', store:'COMME des GARÇONS 青山店（東京）', pics:[''], items:[{name:'多重レイヤードジャケット',sea:'AW24',sz:'XS',ref:'HJJ050'},{name:'縮絨エプロンパンツ',sea:'AW24',sz:'S',ref:'HPP012'}], likes:['u2'], saved:['u2'], date:Date.now()-86400000, cmts:[{uid:'u2',txt:'これめちゃくちゃかっこいいですよね！私も青山店で見ましたがサイズがなくて断念しました。非常に羨ましいです！',date:Date.now()-40000000}]}
+  ];
+  let currentUser = null;
+  let activeTab = 'feed';
+  let prevPage = 'feed';
+  let filterLine = 'all';
+  let filterSea = 'all';
+  let searchQuery = '';
+  let sortOrder = 'new';
+  let postImages = [];
+  let editPostImages = [];
+  let currentEditPostId = null;
+
+  /* ===== INITIALIZATION ===== */
+  window.addEventListener('DOMContentLoaded',()=>{
+    updateFeed();
+    renderMyPage();
+  });
+
+  /* ===== CORE NAV ===== */
+  function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  function goNav(name,el){
+    document.querySelectorAll('.nl').forEach(l=>l.classList.remove('active'));
+    if(el && el.classList && el.classList.contains('nl')) el.classList.add('active');
+    showPage('page-'+name);
+    activeTab = name;
+    if(name==='feed') updateFeed();
+    if(name==='mypage') renderMyPage();
+    if(name==='saved') renderSavedPage();
+  }
+  function goBack(){
+    if(prevPage) showPage('page-'+prevPage);
+    else goNav('feed',document.querySelector('.nl'));
+  }
+
+  /* ===== UTILITIES ===== */
+  function normalizeRef(str){ return toHankaku(str).toUpperCase().trim(); }
+  function toHankaku(str){ return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)); }
+  function getUserById(id){ return users.find(u=>u.id===id)||{name:'GUEST',handle:'guest',av:'',bio:'',history:'-',height:'-'}; }
+  function getAvHtml(u,szClass=''){
+    if(u.av) return `<img src="${u.av}" alt="${u.name}">`;
+    let init = u.name ? u.name.charAt(0).toUpperCase() : '?';
+    return `<span>${init}</span>`;
+  }
+  function fmtDate(ts){
+    let diff = Date.now() - ts;
+    if(diff < 60000) return '今すぐ';
+    if(diff < 3600000) return Math.floor(diff/60000)+'分前';
+    if(diff < 86400000) return Math.floor(diff/3600000)+'時間前';
+    let d = new Date(ts);
+    return `${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()}`;
+  }
+
+  /* ===== MODAL CONTROLS ===== */
+  function openModal(id){ document.getElementById(id).classList.add('open'); }
+  function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+  function openLoginModal(){
+    openModal('modal-auth');
+    switchAuthTab('login',document.querySelectorAll('.m-tab')[0]);
+  }
+  function switchAuthTab(tab,el){
+    document.querySelectorAll('.m-tab').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+    document.getElementById('tab-'+tab).classList.add('active');
+  }
+
+  /* ===== PROFILE MANAGEMENT ===== */
+  function previewRegAv(e){
+    let f = e.target.files[0]; if(!f)return;
+    let r = new FileReader();
+    r.onload=ev=>{
+      document.getElementById('reg-av-preview').innerHTML=`<img src="${ev.target.result}">`;
+      document.getElementById('reg-av-preview').dataset.img=ev.target.result;
+    };
+    r.readAsDataURL(f);
+  }
+  function previewEditAv(e){
+    let f = e.target.files[0]; if(!f)return;
+    let r = new FileReader();
+    r.onload=ev=>{
+      document.getElementById('ep-av-preview').innerHTML=`<img src="${ev.target.result}">`;
+      document.getElementById('ep-av-preview').dataset.img=ev.target.result;
+    };
+    r.readAsDataURL(f);
+  }
+
+  function doLogin(){
+    let em = document.getElementById('login-email').value.trim();
+    let pa = document.getElementById('login-pass').value;
+    if(!em||!pa){ alert('すべての項目を入力してください'); return; }
+    let u = users.find(x=>x.handle===em.split('@')[0]) || users[0];
+    currentUser = u;
+    postLoginSetup();
+  }
+
+  function doRegister(){
+    let em = document.getElementById('reg-email').value.trim();
+    let pa = document.getElementById('reg-pass').value;
+    let ni = document.getElementById('reg-nick').value.trim();
+    let ha = document.getElementById('reg-handle').value.trim().replace('@','');
+    let hi = document.getElementById('reg-history').value;
+    let he = document.getElementById('reg-height').value.trim();
+    let bi = document.getElementById('reg-bio').value.trim();
+    let avSrc = document.getElementById('reg-av-preview').dataset.img || '';
+
+    if(!em||!pa||!ni||!ha||!hi||!he){ alert('*マークの必須項目をすべて入力してください'); return; }
+    if(users.some(x=>x.handle===ha)){ alert('このハンドル名は既に登録されています'); return; }
+
+    let nu = { id:'u_'+Date.now(), name:ni, handle:ha, history:hi, height:he, bio:bi, av:avSrc, followers:[], following:[] };
+    users.push(nu);
+    currentUser = nu;
+    postLoginSetup();
+  }
+
+  function postLoginSetup(){
+    document.getElementById('nav-login-btn').textContent='ログアウト';
+    document.getElementById('nav-login-btn').onclick=doLogout;
+    document.getElementById('nav-post-btn').removeAttribute('disabled');
+    closeModal('modal-auth');
+    goNav('mypage',document.querySelectorAll('.nl')[1]);
+    updateFeed();
+  }
+
+  function doLogout(){
+    currentUser = null;
+    document.getElementById('nav-login-btn').textContent='ログイン';
+    document.getElementById('nav-login-btn').onclick=openLoginModal;
+    document.getElementById('nav-post-btn').setAttribute('disabled','true');
+    goNav('feed',document.querySelector('.nl'));
+  }
+
+  function openEditProfileModal(){
+    if(!currentUser)return;
+    document.getElementById('ep-nick').value = currentUser.name;
+    document.getElementById('ep-handle').value = currentUser.handle;
+    document.getElementById('ep-history').value = currentUser.history;
+    document.getElementById('ep-height').value = currentUser.height;
+    document.getElementById('ep-bio').value = currentUser.bio;
+    let box = document.getElementById('ep-av-preview');
+    box.innerHTML = getAvHtml(currentUser);
+    box.dataset.img = currentUser.av || '';
+    openModal('modal-edit-profile');
+  }
+
+  function saveEditProfile(){
+    if(!currentUser)return;
+    let ni = document.getElementById('ep-nick').value.trim();
+    let ha = document.getElementById('ep-handle').value.trim().replace('@','');
+    let hi = document.getElementById('ep-history').value;
+    let he = document.getElementById('ep-height').value.trim();
+    let bi = document.getElementById('ep-bio').value.trim();
+    let avSrc = document.getElementById('ep-av-preview').dataset.img || '';
+
+    if(!ni||!ha||!hi||!he){ alert('必須項目を入力してください'); return; }
+    if(ha!==currentUser.handle && users.some(x=>x.handle===ha && x.id!==currentUser.id)){ alert('このハンドル名は既に使用されています'); return; }
+
+    currentUser.name = ni;
+    currentUser.handle = ha;
+    currentUser.history = hi;
+    currentUser.height = he;
+    currentUser.bio = bi;
+    currentUser.av = avSrc;
+
+    closeModal('modal-edit-profile');
+    renderMyPage();
+    updateFeed();
+  }
+
+  /* ===== POST LOGIC ===== */
+  function tryPost(){
+    if(!currentUser){ openLoginModal(); return; }
+    goNav('post');
+  }
+  function addItem(){
+    let d = document.createElement('div'); d.className='ir';
+    d.innerHTML=`<input class="fi" type="text" placeholder="アイテム名"><input class="fi" type="text" placeholder="シーズン"><input class="fi" type="text" placeholder="サイズ"><input class="fi fi-ref" type="text" placeholder="品番" oninput="this.value=normalizeRef(this.value)"><button class="rm" onclick="rmItem(this)">×</button>`;
+    document.getElementById('ilist').appendChild(d);
+  }
+  function rmItem(b){b.parentElement.remove();}
+  function handlePostFiles(e){
+    let fs = Array.from(e.target.files);
+    if(postImages.length+fs.length > 4){ alert('写真は最大4枚までです'); return; }
+    fs.forEach(f=>{
+      let r = new FileReader();
+      r.onload=ev=>{
+        postImages.push(ev.target.result);
+        renderPostImages();
+      };
+      r.readAsDataURL(f);
+    });
+  }
+  function renderPostImages(){
+    let c = document.getElementById('post-photo-container'); c.innerHTML='';
+    postImages.forEach((img,idx)=>{
+      c.innerHTML+=`<div class="photo-thumb"><img src="${img}"><button class="photo-rm" onclick="rmPostImg(${idx})">×</button></div>`;
+    });
+  }
+  function rmPostImg(idx){ postImages.splice(idx,1); renderPostImages(); }
+
+  function submitPost(){
+    let ttl = document.getElementById('post-ttl').value.trim();
+    let cap = document.getElementById('post-cap').value.trim();
+    let line = document.getElementById('post-line').value;
+    let sea = document.getElementById('post-sea').value;
+    let store = document.getElementById('post-store').value;
+    if(!ttl||!line||!sea){ alert('タイトル、ライン、シーズンは必須項目です'); return; }
+
+    let items = [];
+    document.querySelectorAll('#ilist .ir').forEach(r=>{
+      let ips = r.querySelectorAll('input');
+      if(ips[0].value.trim() || ips[3].value.trim()){
+        items.push({name:ips[0].value.trim(), sea:ips[1].value.trim(), sz:ips[2].value.trim(), ref:normalizeRef(ips[3].value)});
+      }
+    });
+
+    let np = { id:'p_'+Date.now(), uid:currentUser.id, ttl:ttl, cap:cap, line:line, sea:sea, store:store, pics:postImages.length?postImages:[''], items:items, likes:[], saved:[], date:Date.now(), cmts:[] };
+    posts.unshift(np);
+
+    postImages=[]; document.getElementById('post-photo-container').innerHTML='';
+    document.getElementById('post-ttl').value=''; document.getElementById('post-cap').value='';
+    document.getElementById('post-line').value=''; document.getElementById('post-sea').value=''; document.getElementById('post-store').value='';
+    document.getElementById('ilist').innerHTML='<div class="ir"><input class="fi" type="text" placeholder="コート"><input class="fi" type="text" placeholder="AW24"><input class="fi" type="text" placeholder="M"><input class="fi fi-ref" type="text" placeholder="HJJ050" oninput=\"this.value=normalizeRef(this.value)\"><button class="rm" onclick="rmItem(this)">×</button></div>';
+    updateFeed();renderMyPage();goNav('feed',document.querySelector('.nl'));
+  }
+
+  /* ===== SEARCH & FILTERS ===== */
+  function doSearch(){
+    searchQuery = normalizeRef(document.getElementById('srch').value);
+    updateFeed();
+  }
+  function setFilt(type,val,el){
+    el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    el.classList.add('active');
+    if(type==='line') filterLine = val;
+    if(type==='sea') filterSea = val;
+    updateFeed();
+  }
+  function setSort(ord){
+    document.getElementById('schip-new').classList.toggle('active',ord==='new');
+    document.getElementById('schip-pop').classList.toggle('active',ord==='pop');
+    sortOrder = ord;
+    updateFeed();
+  }
+
+  /* ===== RENDER CHANNELS ===== */
+  function updateFeed(){
+    let f = posts.filter(p=>{
+      if(filterLine!=='all' && p.line!==filterLine) return false;
+      if(filterSea!=='all' && p.sea!==filterSea) return false;
+      if(searchQuery){
+        let match = p.items.some(i=>i.ref.includes(searchQuery)) || p.ttl.toUpperCase().includes(searchQuery);
+        if(!match) return false;
+      }
+      return true;
+    });
+
+    if(sortOrder==='pop') f.sort((a,b)=>b.likes.length - a.likes.length);
+    else f.sort((a,b)=>b.date - a.date);
+
+    document.getElementById('feed-count').textContent = f.length + ' ITEMS';
+    let g = document.getElementById('feed-grid'); g.innerHTML='';
+    
+    if(f.length===0){
+      g.style.display='none';
+      document.getElementById('srch-msg').textContent='該当するアーカイブが見つかりません。';
+    } else {
+      g.style.display='grid';
+      document.getElementById('srch-msg').textContent='';
+      f.forEach(p=>{
+        let u = getUserById(p.uid);
+        let cov = p.pics[0] ? `<img src="${p.pics[0]}" style="width:100%;height:100%;object-fit:cover">` : `<i class="ti ti-shirt" style="font-size:32px;color:var(--lgry)"></i>`;
+        g.innerHTML+=`
+          <div class="card" onclick="openDetail('${p.id}')">
+            <div class="cph">${cov}<div class="cov"><div class="cov-line">${p.line}</div><div class="cov-ttl">${p.ttl}</div></div></div>
+            <div class="ccard-info">
+              <div class="ccard-line">${p.line}</div>
+              <div class="ccard-ttl">${p.ttl}</div>
+              <div class="ccard-meta"><span class="ccard-sea">${p.sea}</span><span class="ccard-lk"><i class="ti ti-heart"></i> ${p.likes.length}</span></div>
+            </div>
+          </div>`;
+      });
+    }
+  }
+
+  function openDetail(pid){
+    let p = posts.find(x=>x.id===pid); if(!p)return;
+    prevPage = activeTab; showPage('page-detail');
+    let u = getUserById(p.uid);
+    
+    document.getElementById('det-av').innerHTML = getAvHtml(u);
+    document.getElementById('det-uname').textContent = u.name + ` (@${u.handle})`;
+    document.getElementById('det-user-link').onclick = ()=>openUserView(u.id);
+
+    let fb = document.getElementById('det-fol-btn');
+    if(currentUser && p.uid===currentUser.id) fb.style.display='none';
+    else {
+      fb.style.display='inline-block';
+      let isF = currentUser && currentUser.following.includes(u.id);
+      fb.textContent = isF ? 'フォロー中' : 'フォローする';
+      fb.classList.toggle('following',!!isF);
+      fb.onclick = ()=>toggleFollow(u.id,fb);
+    }
+
+    document.getElementById('det-ttl').textContent = p.ttl;
+    document.getElementById('det-sea').textContent = p.sea;
+    document.getElementById('det-line').textContent = p.line;
+    document.getElementById('det-cap').innerHTML = p.cap.replace(/\n/g,'<br>');
+
+    let picBox = document.getElementById('det-main-pic');
+    picBox.innerHTML = p.pics[0] ? `<img src="${p.pics[0]}" style="width:100%;height:100%;object-fit:cover">` : `<i class="ti ti-shirt" style="font-size:64px;color:var(--lgry)"></i>`;
+    
+    let ths = document.getElementById('det-thumbs'); ths.innerHTML='';
+    if(p.pics.length > 1 && p.pics[0]){
+      p.pics.forEach((pic,i)=>{
+        ths.innerHTML+=`<div class="img-thumb ${i===0?'active':''}" onclick="setDetPic('${pic}',this)"><img src="${pic}" style="width:100%;height:100%;object-fit:cover"></div>`;
+      });
+    }
+
+    let itBox = document.getElementById('det-items'); itBox.innerHTML='';
+    if(!p.items||p.items.length===0) itBox.innerHTML='<p style="color:var(--lgry)">アイテム詳細なし</p>';
+    else {
+      p.items.forEach(i=>{
+        let badge = i.sea ? `<span class="ibadge">${i.sea}</span>` : '';
+        let sz = i.sz ? `<span class="isz">${i.sz}</span>` : '';
+        itBox.innerHTML+=`<div class="irow"><span class="iname">${i.name||'着用アイテム'}</span>${badge}${sz}<span class="fi-ref" style="font-weight:bold;cursor:pointer" onclick="clickRef('${i.ref}')">${i.ref}</span></div>`;
+      });
+    }
+
+    let stRow = document.getElementById('det-store-row');
+    if(p.store) stRow.innerHTML=`<i class="ti ti-building-store"></i> <span>購入元: ${p.store}</span>`;
+    else stRow.innerHTML='';
+
+    let lBtn = document.getElementById('det-like-btn');
+    let isL = currentUser && p.likes.includes(currentUser.id);
+    lBtn.classList.toggle('liked',!!isL);
+    document.getElementById('det-like-c').textContent = p.likes.length;
+    lBtn.onclick = ()=>toggleLike(p);
+
+    let sBtn = document.getElementById('det-save-btn');
+    let isS = currentUser && p.saved.includes(currentUser.id);
+    sBtn.classList.toggle('liked',!!isS);
+    document.getElementById('det-save-t').textContent = isS ? '保存済み' : 'コレクションに保存';
+    sBtn.onclick = ()=>toggleSave(p);
+
+    document.getElementById('det-del-btn').style.display = currentUser && p.uid===currentUser.id ? 'block' : 'none';
+    document.getElementById('det-del-btn').onclick = ()=>deletePost(p.id);
+    document.getElementById('det-edit-btn').style.display = currentUser && p.uid===currentUser.id ? 'block' : 'none';
+    document.getElementById('det-edit-btn').onclick = ()=>openEditPostModal(p);
+
+    renderComments(p);
+  }
+
+  function setDetPic(src,el){
+    document.getElementById('det-main-pic').innerHTML=`<img src="${src}" style="width:100%;height:100%;object-fit:cover">`;
+    el.parentElement.querySelectorAll('.img-thumb').forEach(t=>t.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function clickRef(ref){
+    goNav('feed',document.querySelector('.nl'));
+    document.getElementById('srch').value = ref;
+    doSearch();
+  }
+
+  /* ===== ACTIONS ===== */
+  function toggleFollow(uid,btn){
+    if(!currentUser){ openLoginModal(); return; }
+    let u = getUserById(uid);
+    let idx = currentUser.following.indexOf(uid);
+    if(idx>-1){
+      currentUser.following.splice(idx,1);
+      let fIdx = u.followers.indexOf(currentUser.id); if(fIdx>-1) u.followers.splice(fIdx,1);
+    } else {
+      currentUser.following.push(uid);
+      if(!u.followers.includes(currentUser.id)) u.followers.push(currentUser.id);
+    }
+    let isF = currentUser.following.includes(uid);
+    if(btn){
+      btn.textContent = isF?'フォロー中':'フォローする';
+      btn.classList.toggle('following',isF);
+    }
+    if(document.getElementById('page-user').classList.contains('active')) openUserView(uid);
+  }
+
+  function toggleLike(p){
+    if(!currentUser){ openLoginModal(); return; }
+    let idx = p.likes.indexOf(currentUser.id);
+    if(idx>-1) p.likes.splice(idx,1);
+    else p.likes.push(currentUser.id);
+    openDetail(p.id);
+  }
+  function toggleSave(p){
+    if(!currentUser){ openLoginModal(); return; }
+    let idx = p.saved.indexOf(currentUser.id);
+    if(idx>-1) p.saved.splice(idx,1);
+    else p.saved.push(currentUser.id);
+    openDetail(p.id);
+  }
+  function deletePost(pid){
+    if(!confirm('このアーカイブを完全に削除してもよろしいですか？'))return;
+    posts = posts.filter(x=>x.id!==pid);
+    goNav('feed',document.querySelector('.nl'));
+  }
+
+  /* ===== COMMENTS ===== */
+  function renderComments(p){
+    document.getElementById('det-cmt-c').textContent = p.cmts.length;
+    let list = document.getElementById('det-cmt-list'); list.innerHTML='';
+    p.cmts.forEach(c=>{
+      let cu = getUserById(c.uid);
+      list.innerHTML+=`
+        <div class="cmt">
+          <div class="cmt-hd">
+            <div class="cmt-av">${getAvHtml(cu)}</div>
+            <div class="cmt-un" style="font-weight:bold;cursor:pointer" onclick="openUserView('${cu.id}')">${cu.name}</div>
+            <div class="cmt-dt">${fmtDate(c.date)}</div>
+          </div>
+          <p class="cmt-txt">${c.txt}</p>
+        </div>`;
+    });
+    document.getElementById('det-cmt-sub').onclick = ()=>{
+      let inp = document.getElementById('det-cmt-inp');
+      if(!currentUser){ openLoginModal(); return; }
+      if(!inp.value.trim())return;
+      p.cmts.push({uid:currentUser.id, txt:inp.value.trim(), date:Date.now()});
+      inp.value=''; renderComments(p);
+    };
+  }
+
+  /* ===== OTHER USER VIEW ===== */
+  function openUserView(uid){
+    if(currentUser && uid===currentUser.id){ goNav('mypage',document.querySelectorAll('.nl')[1]); return; }
+    let u = getUserById(uid); prevPage = activeTab; showPage('page-user');
+    document.getElementById('vprof-av').innerHTML = getAvHtml(u);
+    document.getElementById('vprof-name').textContent = u.name;
+    document.getElementById('vprof-handle').textContent = '@'+u.handle;
+    document.getElementById('vprof-info-history').textContent = u.history;
+    document.getElementById('vprof-info-height').textContent = u.height;
+    document.getElementById('vprof-bio').textContent = u.bio;
+
+    let ups = posts.filter(x=>x.uid===uid);
+    document.getElementById('vprof-st-posts').textContent = ups.length;
+    document.getElementById('vprof-st-folers').textContent = u.followers.length;
+    document.getElementById('vprof-st-foling').textContent = u.following.length;
+
+    document.getElementById('vprof-stat-er').onclick = ()=>openFollowModal('followers',u.id);
+    document.getElementById('vprof-stat-ing').onclick = ()=>openFollowModal('following',u.id);
+
+    let vfb = document.getElementById('vprof-fol-btn');
+    let isF = currentUser && currentUser.following.includes(u.id);
+    vfb.textContent = isF ? 'フォロー中' : 'フォローする';
+    vfb.classList.toggle('following',!!isF);
+    vfb.onclick = ()=>toggleFollow(u.id,vfb);
+
+    let grid = document.getElementById('vprof-grid'); grid.innerHTML='';
+    ups.forEach(p=>{
+      grid.innerHTML+=`<div class="card" onclick="openDetail('${p.id}')"><div class="cph">${p.pics[0]?`<img src="${p.pics[0]}" style="width:100%;height:100%;object-fit:cover">`:`<i class="ti ti-shirt" style="font-size:24px;color:var(--lgry)"></i>`}</div></div>`;
+    });
+  }
+
+  /* ===== MY PAGE & SAVED CHANNELS ===== */
+  function renderMyPage(){
+    if(!currentUser){
+      document.getElementById('my-guest-area').style.display='block';
+      document.getElementById('my-profile-area').style.display='none';
+    } else {
+      document.getElementById('my-guest-area').style.display='none';
+      document.getElementById('my-profile-area').style.display='block';
+      document.getElementById('my-av-box').innerHTML = getAvHtml(currentUser)+`<div class="av-ov"><i class="ti ti-edit"></i><span>EDIT</span></div>`;
+      document.getElementById('my-name').textContent = currentUser.name;
+      document.getElementById('my-handle').textContent = '@'+currentUser.handle;
+      document.getElementById('my-info-history').textContent = currentUser.history;
+      document.getElementById('my-info-height').textContent = currentUser.height;
+      document.getElementById('my-bio').textContent = currentUser.bio;
+
+      let ups = posts.filter(x=>x.uid===currentUser.id);
+      document.getElementById('my-st-posts').textContent = ups.length;
+      document.getElementById('my-st-folers').textContent = currentUser.followers.length;
+      document.getElementById('my-st-foling').textContent = currentUser.following.length;
+
+      let grid = document.getElementById('my-grid'); grid.innerHTML='';
+      ups.forEach(p=>{
+        grid.innerHTML+=`<div class="card" onclick="openDetail('${p.id}')"><div class="cph">${p.pics[0]?`<img src="${p.pics[0]}" style="width:100%;height:100%;object-fit:cover">`:`<i class="ti ti-shirt" style="font-size:24px;color:var(--lgry)"></i>`}</div></div>`;
+      });
+    }
+  }
+
+  function renderSavedPage(){
+    if(!currentUser){
+      document.getElementById('saved-guest-area').style.display='block';
+      document.getElementById('saved-user-area').style.display='none';
+    } else {
+      document.getElementById('saved-guest-area').style.display='none';
+      document.getElementById('saved-user-area').style.display='block';
+      let svs = posts.filter(x=>x.saved.includes(currentUser.id));
+      let grid = document.getElementById('saved-grid'); grid.innerHTML='';
+      if(svs.length===0){
+        grid.innerHTML='<p style="grid-column:span 3;text-align:center;padding:40px;color:var(--mgry)">保存されたアーカイブはありません。</p>';
+      } else {
+        svs.forEach(p=>{
+          grid.innerHTML+=`<div class="card" onclick="openDetail('${p.id}')"><div class="cph">${p.pics[0]?`<img src="${p.pics[0]}" style="width:100%;height:100%;object-fit:cover">`:`<i class="ti ti-shirt" style="font-size:24px;color:var(--lgry)"></i>`}</div></div>`;
+        });
+      }
+    }
+  }
+
+  /* ===== EDIT POST MODAL LOGIC ===== */
+  function openEditPostModal(p){
+    currentEditPostId = p.id;
+    document.getElementById('epost-ttl').value = p.ttl;
+    document.getElementById('epost-cap').value = p.cap;
+    document.getElementById('epost-line').value = p.line;
+    document.getElementById('epost-sea').value = p.sea;
+    document.getElementById('epost-store').value = p.store || '';
+    
+    let container = document.getElementById('epost-ilist'); container.innerHTML='';
+    if(p.items){
+      p.items.forEach(i=>{
+        let div = document.createElement('div'); div.className='ir';
+        div.innerHTML=`<input class="fi" type="text" value="${i.name||''}" placeholder="アイテム名"><input class="fi" type="text" value="${i.sea||''}" placeholder="シーズン"><input class="fi" type="text" value="${i.sz||''}" placeholder="サイズ"><input class="fi fi-ref" type="text" value="${i.ref||''}" placeholder="品番" oninput="this.value=normalizeRef(this.value)"><button class="rm" onclick="rmItem(this)">×</button>`;
+        container.appendChild(div);
+      });
+    }
+    openModal('modal-edit-post');
+  }
+  function addItemEdit(){
+    let div = document.createElement('div'); div.className='ir';
+    div.innerHTML=`<input class="fi" type="text" placeholder="アイテム名"><input class="fi" type="text" placeholder="シーズン"><input class="fi" type="text" placeholder="サイズ"><input class="fi fi-ref" type="text" placeholder="品番" oninput="this.value=normalizeRef(this.value)"><button class="rm" onclick="rmItem(this)">×</button>`;
+    document.getElementById('epost-ilist').appendChild(div);
+  }
+  function saveEditPost(){
+    let p = posts.find(x=>x.id===currentEditPostId); if(!p)return;
+    p.ttl = document.getElementById('epost-ttl').value.trim();
+    p.cap = document.getElementById('epost-cap').value.trim();
+    p.line = document.getElementById('epost-line').value;
+    p.sea = document.getElementById('epost-sea').value;
+    p.store = document.getElementById('epost-store').value;
+
+    let items = [];
+    document.querySelectorAll('#epost-ilist .ir').forEach(r=>{
+      let ips = r.querySelectorAll('input');
+      if(ips[0].value.trim() || ips[3].value.trim()){
+        items.push({name:ips[0].value.trim(), sea:ips[1].value.trim(), sz:ips[2].value.trim(), ref:normalizeRef(ips[3].value)});
+      }
+    });
+    p.items = items;
+    closeModal('modal-edit-post');
+    openDetail(p.id);
+  }
+
+  /* ===== FOLLOW LIST MODAL ===== */
+  function openFollowModal(mode,uid){
+    let u = getUserById(uid);
+    document.getElementById('fol-modal-ttl').textContent = mode==='followers' ? 'フォロワー' : 'フォロー中';
+    let targetIds = mode==='followers' ? u.followers : u.following;
+    let body = document.getElementById('fol-list-body'); body.innerHTML='';
+    if(targetIds.length===0){
+      body.innerHTML='<p style="color:var(--mgry);text-align:center;padding:24px;">ユーザーはいません</p>';
+    } else {
+      targetIds.forEach(id=>{
+        let tu = getUserById(id);
+        let btnHtml = '';
+        if(!currentUser || currentUser.id!==tu.id){
+          let isF = currentUser && currentUser.following.includes(tu.id);
+          btnHtml = `<button class="fol-btn ${isF?'following':''}" onclick="event.stopPropagation();toggleFollow('${tu.id}',this);openFollowModal('${mode}','${uid}')">${isF?'フォロー中':'フォローする'}</button>`;
+        }
+        body.innerHTML+=`
+          <div class="follow-item" onclick="closeModal('modal-follow');openUserView('${tu.id}')">
+            <div class="fi-left"><div class="fi-av">${getAvHtml(tu)}</div><div><div class="fi-name">${tu.name}</div><div class="fi-handle">@${tu.handle}</div></div></div>
+            ${btnHtml}
+          </div>`;
+      });
+    }
+    openModal('modal-follow');
+  }
+
+  // モーダル背景クリックで閉じる共通処理
+  document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+</script>
+</body>
+</html>
