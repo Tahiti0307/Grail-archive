@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVE</title>
+<title>CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
 
 <!-- ======================================================
-  CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVE
+  CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES
   Supabase統合版
 
   使用前に以下2箇所を自分のSupabase情報に書き換えてください:
@@ -406,7 +406,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 <nav>
   <div class="logo-wrap" onclick="goNav('feed',document.querySelector('.nl'))">
     <div class="logo-main">CDGLOA</div>
-    <div class="logo-sub">COMME des GARÇONS LOVERS' OUTFIT ARCHIVE</div>
+    <div class="logo-sub">COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</div>
   </div>
   <!-- PC用ナビ -->
   <div class="navl" id="pc-navl">
@@ -452,7 +452,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <div class="login-alt">アカウントをお持ちでない方は<span onclick="switchAuthTab('register',document.querySelectorAll('.m-tab')[1])">新規登録</span></div>
       </div>
       <div class="tab-pane" id="tab-register">
-        <div class="modal-note">ニックネーム・ギャルソン着用歴・身長を登録してください。</div>
+        <div class="modal-note">ギャルソン着用歴・身長を登録してください。</div>
         <div class="fg">
           <label class="flbl">プロフィール写真</label>
           <div class="av-upload-wrap">
@@ -576,7 +576,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <!-- ユーザー検索 -->
     <div id="srch-pane-user" class="srch-pane">
       <div class="search-inner">
-        <input type="text" id="srch-user" placeholder="ニックネームまたは @ハンドルで検索" onkeydown="if(event.key==='Enter')doUserSearch()">
+        <input type="text" id="srch-user" placeholder="@ハンドルで検索" onkeydown="if(event.key==='Enter')doUserSearch()">
         <button class="search-btn" id="srch-user-clear-btn" onclick="clearUserSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
         <button class="search-btn" onclick="doUserSearch()">検索</button>
       </div>
@@ -602,7 +602,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <span class="chip" onclick="setFilt('line','JUNYA WATANABE',this)">JUNYA WATANABE</span>
         <span class="chip" onclick="setFilt('line','JUNYA WATANABE MAN',this)">JUNYA MAN</span>
         <span class="chip" onclick="setFilt('line','tao COMME des GARÇONS',this)">TAO</span>
-        <span class="chip" onclick="setFilt('line','noir kei ninomiya',this)">NOIR KEI</span>
+        <span class="chip" onclick="setFilt('line','noir kei ninomiya',this)">NOIR KEI NINOMIYA</span>
         <span class="chip" onclick="setFilt('line','CDG',this)">CDG (logo)</span>
         <span class="chip" onclick="setFilt('line','PLAY COMME des GARÇONS',this)">PLAY</span>
         <span class="chip" onclick="setFilt('line','THE BEATLES COMME des GARÇONS',this)">THE BEATLES</span>
@@ -613,8 +613,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div class="filter-row"><span class="filter-lbl">シーズン</span>
       <div class="chips" id="chips-sea">
         <span class="chip active" onclick="setFilt('sea','all',this)">ALL</span>
-        <span class="chip" onclick="setFilt('sea','SS',this)">SS（春夏）</span>
-        <span class="chip" onclick="setFilt('sea','AW',this)">AW（秋冬）</span>
+        <span class="chip" onclick="setFilt('sea','SS',this)">SS</span>
+        <span class="chip" onclick="setFilt('sea','AW',this)">AW</span>
         <span class="chip" onclick="setFilt('sea','26SS',this)">26SS</span>
         <span class="chip" onclick="setFilt('sea','26AW',this)">26AW</span>
         <span class="chip" onclick="setFilt('sea','25SS',this)">25SS</span>
@@ -822,8 +822,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div id="contact-msg" style="font-size:10px;margin-bottom:10px;display:none;font-family:var(--jp)"></div>
     <button class="sub-btn" id="contact-submit-btn" onclick="sendContact()" style="margin-top:0">送信する</button>
     <div style="font-size:9px;color:var(--mgry);margin-top:14px;font-family:var(--jp);line-height:1.8">
-      ※ 送信内容は管理者のみが確認できます<br>
-      ※ 返信が必要な場合はメールアドレスをご記入ください
+      ※ 送信内容は管理者のみが確認します。メールアドレスが外部に公開されることはありません。<br>
+      ※ 返信が必要な場合は返信用メールアドレスをご記入ください
     </div>
   </div>
 </div>
@@ -835,8 +835,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
    Supabase 接続設定
    ↓ここを自分のSupabase情報に書き換えてください
 ===================================================== */
-const SUPABASE_URL     = 'https://xxxxxxxxxxxxxxxx.supabase.co';   // ← 書き換え
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxxx'; // ← 書き換え
+const SUPABASE_URL     = 'https://gzvfjzixkjbdwbzrhbdd.supabase.co';   // ← 書き換え
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6dmZqeml4a2piZHdienJoYmRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMDQ5OTEsImV4cCI6MjA5NTU4MDk5MX0.oEk8K5angcmu-tR5AOF3lTYOzmI_9o01Y7qxidtzPAY'; // ← 書き換え
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -933,6 +933,7 @@ async function fetchProfile(userId){
   return data;
 }
 
+// index.html の fetchPosts 関数を以下に書き換える
 async function fetchPosts(opts={}){
   let q=sb.from('posts')
     .select(`
@@ -946,7 +947,10 @@ async function fetchPosts(opts={}){
     .order('created_at',{ascending:false});
   if(opts.userId) q=q.eq('user_id',opts.userId);
   const {data,error}=await q;
-  if(error){console.error('fetchPosts error:',error);return[];}
+  if(error){
+    console.error('fetchPosts error:', JSON.stringify(error));  // ← ここを変更
+    return[];
+  }
   return data||[];
 }
 
@@ -1473,9 +1477,6 @@ function openEditPost(){
   document.getElementById('epost-cap').value=curPost.caption||'';
   // カラーピッカーを現在の色で初期化
   buildEditColorPicker(curPost.colors||[]);
-  document.getElementById('epost-line').value=curPost.line||'';
-  document.getElementById('epost-sea').value=curPost.season||'';
-  document.getElementById('epost-store').value=curPost.store||'';
   const el=document.getElementById('epost-ilist');el.innerHTML='';
   (curPost.post_items||[]).forEach(i=>{el.appendChild(makeEditItemRow(i));});
   if(!(curPost.post_items||[]).length) el.appendChild(makeEditItemRow());
@@ -1488,7 +1489,7 @@ function makeEditItemRow(i={}){
   const selVal=(opts,val)=>opts.includes(val)?`selected`:'';
   const lineOpts=['COMME des GARÇONS','COMME des GARÇONS COMME des GARÇONS','COMME des GARÇONS GIRL','COMME des GARÇONS HOMME','COMME des GARÇONS HOMME PLUS','COMME des GARÇONS HOMME DEUX','COMME des GARÇONS SHIRT','BLACK COMME des GARÇONS','JUNYA WATANABE','JUNYA WATANABE MAN','tao COMME des GARÇONS','noir kei ninomiya','CDG','PLAY COMME des GARÇONS','THE BEATLES COMME des GARÇONS','Wallet COMME des GARÇONS','COMME des GARÇONS parfums'];
   const seaOpts=['26AW','26SS','25AW','25SS','24AW','24SS','23AW','23SS','22AW','22SS','21AW','21SS','20AW','20SS','19AW','19SS','18AW','18SS','17AW','17SS','16AW','16SS','15AW','15SS','14AW','14SS','13AW','13SS','12AW','12SS','11AW','11SS','10AW','10SS','09AW','09SS','08AW','08SS','07AW','07SS','06AW','06SS','05AW','05SS','04AW','04SS','03AW','03SS','02AW','02SS','01AW','01SS','00AW','00SS','アーカイブ（2000年以前）'];
-  const storeOpts=['COMME des GARÇONS 青山店（東京）','COMME des GARÇONS HOMME PLUS 青山店（東京）','noir kei ninomiya 青山店（東京）','COMME des GARÇONS 大阪店','COMME des GARÇONS 京都店','Dover Street Market Ginza（東京）','Dover Street Market London','Dover Street Market New York','Dover Street Market Los Angeles','Dover Street Market Paris','伊勢丹新宿店','三越銀座店','髙島屋新宿店','阪急うめだ本店','松屋銀座','大丸東京店','COMME des GARÇONS 公式オンラインストア','Dover Street Market オンライン','SSENSE','ヤフオク（古着）','メルカリ（古着）'];
+  const storeOpts=['COMME des GARÇONS 青山店','COMME des GARÇONS 丸の内店','COMME des GARÇONS 仙台店','COMME des GARÇONS 岐阜店','COMME des GARÇONS 大阪店','COMME des GARÇONS 京都店','COMME des GARÇONS 神戸店','COMME des GARÇONS 福岡店','Dover Street Market Ginza','Trading Museum Comme des Garçons Gyre','Trading Museum Comme des Garçons Midtown','CDGGYRE','CDG 丸の内店','新宿伊勢丹','渋谷西武','銀座三越 Pocket','池袋西武 Pocket','Gyre Play Box','六本木ヒルズ Estnation Mens Shop','新宿高島屋','池袋西武','阪急メンズ東京','日本橋三越','渋谷Parco','札幌大丸','札幌Parco','静岡伊勢丹','名古屋Lachic','名古屋三越','名古屋高島屋','京都伊勢丹','藤井大丸','梅田阪急','なんばパークス','大阪高島屋','神戸阪急','CDG 福岡店','福岡岩田屋','オンラインストア','2次流通','セレクトショップ','その他'];
   const nameOpts=['シャツ','Tシャツ','ジャケット','パンツ','スカート','靴下','シューズ','その他トップス','その他ボトムス','アクセサリー','その他'];
   d.innerHTML=`
     <select class="fi" style="appearance:none;cursor:pointer;font-size:10px">
@@ -1518,8 +1519,7 @@ function rmItemEdit(b){if(document.querySelectorAll('#epost-ilist .ir').length>1
 
 async function saveEditPost(){
   setLoading('epost-save-btn',true);
-  const rows=[...document.querySelectorAll('#epost-ilist .ir')];
-  const items=rows.map(r=>{const ins=[...r.querySelectorAll('input')];return{post_id:editingPostId,name:ins[0].value||'—',season:ins[1].value||'—',size:ins[2].value||'—',ref_number:normalizeRef(ins[3].value)||'—'};});
+  // アイテムはsaveEditPost内のnewItemsで処理するためここでは不要
   // アイテム行の最初のラインとシーズンをpostsに反映
   const firstEditRow=document.querySelector('#epost-ilist .ir');
   const firstEditSels=firstEditRow?[...firstEditRow.querySelectorAll('select')]:[];
@@ -1883,15 +1883,7 @@ function makeItemLineOptions(){
   ].map(l=>`<option value="${l}">${l}</option>`).join('');
 }
 function makeItemStoreOptions(){
-  return [
-    'COMME des GARÇONS 青山店（東京）','COMME des GARÇONS HOMME PLUS 青山店（東京）',
-    'noir kei ninomiya 青山店（東京）','COMME des GARÇONS 大阪店','COMME des GARÇONS 京都店',
-    'Dover Street Market Ginza（東京）','Dover Street Market London','Dover Street Market New York',
-    'Dover Street Market Los Angeles','Dover Street Market Paris',
-    '伊勢丹新宿店','三越銀座店','髙島屋新宿店','阪急うめだ本店','松屋銀座','大丸東京店',
-    'COMME des GARÇONS 公式オンラインストア','Dover Street Market オンライン',
-    'SSENSE','ヤフオク（古着）','メルカリ（古着）'
-  ].map(s=>`<option value="${s}">${s}</option>`).join('');
+  return ['COMME des GARÇONS 青山店','COMME des GARÇONS 丸の内店','COMME des GARÇONS 仙台店','COMME des GARÇONS 岐阜店','COMME des GARÇONS 大阪店','COMME des GARÇONS 京都店','COMME des GARÇONS 神戸店','COMME des GARÇONS 福岡店','Dover Street Market Ginza','Trading Museum Comme des Garçons Gyre','Trading Museum Comme des Garçons Midtown','CDGGYRE','CDG 丸の内店','新宿伊勢丹','渋谷西武','銀座三越 Pocket','池袋西武 Pocket','Gyre Play Box','六本木ヒルズ Estnation Mens Shop','新宿高島屋','池袋西武','阪急メンズ東京','日本橋三越','渋谷Parco','札幌大丸','札幌Parco','静岡伊勢丹','名古屋Lachic','名古屋三越','名古屋高島屋','京都伊勢丹','藤井大丸','梅田阪急','なんばパークス','大阪高島屋','神戸阪急','CDG 福岡店','福岡岩田屋','オンラインストア','2次流通','セレクトショップ','その他'].map(s=>`<option value="${s}">${s}</option>`).join('');
 }
 function makeItemRow(){
   const d=document.createElement('div');
@@ -2157,50 +2149,28 @@ async function sendContact(){
   setLoading('contact-submit-btn',true,'送信する');
   msgEl.style.display='none';
 
-  // Supabaseに保存（エラーでもUIをブロックしない）
   sb.from('contact_messages').insert({
     type,
     sender_name:name||'匿名',
     sender_email:email||null,
     body,
     user_id:myUser?myUser.id:null,
-  }).then(({error})=>{ if(error) console.warn('contact save:', error); });
-
-  // メール通知
-  const typeLabel={'bug':'不具合の報告','request':'機能のリクエスト','account':'アカウントについて','other':'その他'}[type]||type;
-  const subject=encodeURIComponent('[CDGLOA] '+typeLabel);
-  const bodyText=encodeURIComponent(
-    '【種類】'+typeLabel+
-    '
-【送信者】'+(name||'匿名')+(email?' / '+email:'')+
-    (myUser?'
-【ユーザーID】'+myUser.id:'')+
-    '
-
-【内容】
-'+body+
-    '
-
----
-CDGLOA お問い合わせフォームより'
-  );
-  setTimeout(()=>{
-    const a=document.createElement('a');
-    a.href='mailto:irino.taichi.62t@st.kyoto-u.ac.jp?subject='+subject+'&body='+bodyText;
-    a.target='_blank';a.rel='noopener';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(()=>{ if(a.parentNode) a.parentNode.removeChild(a); },300);
-  },200);
-
-  // 完了表示
-  msgEl.style.display='block';
-  msgEl.style.color='var(--blk)';
-  msgEl.textContent='送信しました。ご連絡ありがとうございます。';
-  ['contact-type','contact-name','contact-email','contact-body'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.value='';
+  }).then(({error})=>{
+    if(error){
+      console.warn('contact save error:', error);
+      msgEl.style.display='block';
+      msgEl.style.color='#c00';
+      msgEl.textContent='送信に失敗しました。時間をおいて再度お試しください。';
+    }else{
+      msgEl.style.display='block';
+      msgEl.style.color='var(--blk)';
+      msgEl.textContent='送信しました。ご連絡ありがとうございます。';
+      ['contact-type','contact-name','contact-email','contact-body'].forEach(id=>{
+        const el=document.getElementById(id);if(el)el.value='';
+      });
+    }
+    setLoading('contact-submit-btn',false,'送信する');
   });
-  setLoading('contact-submit-btn',false,'送信する');
 }
 
 buildColorChips();
