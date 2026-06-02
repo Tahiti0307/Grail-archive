@@ -43,6 +43,30 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 
 .page{display:none}.page.active{display:block}
 
+
+/* NOTIFICATION BELL */
+.notif-bell{position:relative;background:none;border:none;cursor:pointer;font-size:16px;padding:4px 6px;line-height:1}
+.notif-badge{position:absolute;top:0;right:0;background:#c00;color:#fff;font-size:8px;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px;font-family:var(--sans);pointer-events:none}
+/* NOTIFICATION PANEL */
+.notif-panel{position:fixed;top:52px;right:20px;width:320px;background:var(--wht);border:1px solid var(--blk);z-index:400;max-height:440px;display:flex;flex-direction:column;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.notif-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--ln)}
+.notif-panel-ttl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+.notif-panel-close{background:none;border:none;font-size:16px;cursor:pointer;color:var(--mgry);line-height:1}
+.notif-list{overflow-y:auto;flex:1}
+.notif-empty{padding:20px;text-align:center;font-size:10px;color:var(--mgry);font-family:var(--jp)}
+.notif-item{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-bottom:1px solid var(--ln);cursor:pointer;transition:background .12s}
+.notif-item:hover{background:var(--gry)}
+.notif-item.unread{background:#f8f8f8}
+.notif-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.notif-text{font-size:10px;line-height:1.7;font-family:var(--jp);flex:1}
+.notif-text strong{font-weight:500;color:var(--blk)}
+.notif-time{font-size:8px;color:var(--mgry);margin-top:2px}
+.notif-overlay{position:fixed;inset:0;z-index:399;display:none}
+.notif-overlay.open{display:block}
+@media(max-width:600px){
+  .notif-panel{right:8px;left:8px;width:auto;top:48px}
+}
+
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px}
 .modal-bg.open{display:flex}
@@ -129,18 +153,64 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln)}
-.card{background:var(--wht);cursor:pointer;overflow:hidden}
+.card{background:var(--wht);cursor:pointer;overflow:hidden;transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.10);z-index:1;position:relative}
 .card:hover .cov{opacity:1}
 .cph{width:100%;aspect-ratio:3/4;background:var(--gry);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.cov{position:absolute;bottom:0;left:0;right:0;padding:9px 11px;background:var(--blk);opacity:0;transition:opacity .2s}
-.cov-line{font-size:8px;letter-spacing:.12em;color:var(--lgry);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cph img{transition:transform .35s ease}
+.card:hover .cph img{transform:scale(1.04)}
+.cov{position:absolute;bottom:0;left:0;right:0;padding:9px 11px;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.55) 60%,transparent 100%);opacity:0;transition:opacity .22s}
+.cov-line{font-size:8px;letter-spacing:.12em;color:rgba(255,255,255,.65);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cov-ttl{font-size:11px;color:var(--wht)}
-.ccard-info{padding:8px 11px 10px;border-bottom:1px solid var(--ln)}
+/* カラーバー */
+.card-color-bar{height:3px;display:flex;gap:1px}
+.card-color-seg{flex:1;min-width:0}
+/* カードフッター */
+.ccard-info{padding:8px 10px 9px;border-bottom:1px solid var(--ln)}
+.ccard-top{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.ccard-av{width:18px;height:18px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:7px;color:var(--wht);flex-shrink:0;overflow:hidden}
+.ccard-av img{width:100%;height:100%;object-fit:cover}
+.ccard-handle{font-size:8px;letter-spacing:.04em;color:var(--mgry);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .ccard-line{font-size:8px;letter-spacing:.08em;color:var(--mgry);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ccard-ttl{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ccard-meta{display:flex;justify-content:space-between;margin-top:3px}
+.ccard-meta{display:flex;justify-content:space-between;margin-top:3px;align-items:center}
 .ccard-sea{font-size:9px;color:var(--mgry)}
-.ccard-lk{font-size:9px;color:var(--mgry)}
+.ccard-lk{font-size:9px;color:var(--mgry);display:flex;align-items:center;gap:2px}
+
+
+/* RANKING PAGE */
+.rank-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;border-bottom:1px solid var(--ln)}
+.rank-ttl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.rank-tabs{display:flex;gap:3px}
+.rank-tab{font-family:var(--sans);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--ln);background:transparent;cursor:pointer;color:var(--mgry);transition:all .15s}
+.rank-tab:hover,.rank-tab.active{background:var(--blk);color:var(--wht);border-color:var(--blk)}
+.rank-list{padding:0}
+.rank-item{display:grid;grid-template-columns:40px 64px 1fr auto;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--ln);cursor:pointer;transition:background .12s}
+.rank-item:hover{background:var(--gry)}
+.rank-num{font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--mgry);text-align:center;line-height:1}
+.rank-num.top1{color:var(--blk)}
+.rank-num.top2{color:#555}
+.rank-num.top3{color:#888}
+.rank-thumb{width:64px;height:80px;object-fit:cover;display:block;background:var(--gry)}
+.rank-thumb-wrap{width:64px;height:80px;flex-shrink:0;overflow:hidden;background:var(--gry)}
+.rank-info{overflow:hidden}
+.rank-line{font-size:8px;letter-spacing:.1em;color:var(--mgry);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-title{font-size:13px;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank-user{display:flex;align-items:center;gap:5px;margin-bottom:4px}
+.rank-av{width:16px;height:16px;border-radius:50%;background:var(--blk);display:flex;align-items:center;justify-content:center;font-size:6px;color:var(--wht);flex-shrink:0;overflow:hidden}
+.rank-av img{width:100%;height:100%;object-fit:cover}
+.rank-handle{font-size:9px;color:var(--mgry)}
+.rank-sea{font-size:8px;color:var(--mgry)}
+.rank-stats{text-align:right;flex-shrink:0}
+.rank-lk{font-size:14px;font-weight:500;letter-spacing:-.01em}
+.rank-lk-lbl{font-size:8px;letter-spacing:.1em;color:var(--mgry);text-transform:uppercase}
+@media(max-width:600px){
+  .rank-item{grid-template-columns:28px 52px 1fr auto;gap:10px;padding:11px 12px}
+  .rank-thumb-wrap{width:52px;height:65px}
+  .rank-num{font-size:16px}
+  .rank-title{font-size:12px}
+  .rank-lk{font-size:13px}
+}
 
 /* DETAIL */
 .bk{font-size:9px;letter-spacing:.12em;color:var(--mgry);cursor:pointer;padding:11px 20px;display:inline-flex;align-items:center;gap:5px;border-bottom:1px solid var(--ln);text-transform:uppercase}
@@ -411,23 +481,39 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   <!-- PC用ナビ -->
   <div class="navl" id="pc-navl">
     <span class="nl active" onclick="goNav('feed',this)">フィード</span>
+    <span class="nl" onclick="goNav('ranking',this)">ランキング</span>
     <span class="nl" onclick="goNav('mypage',this)">マイページ</span>
     <span class="nl" onclick="goNav('saved',this)">保存済み</span>
     <span class="nl" onclick="goNav('contact',this)">お問い合わせ</span>
   </div>
   <div class="nav-right">
     <button class="btn-login" id="nav-login-btn" onclick="openLoginModal()">ログイン</button>
+    <button class="notif-bell" id="notif-bell-btn" onclick="toggleNotifPanel()" title="通知" style="display:none">
+      🔔<span class="notif-badge" id="notif-badge" style="display:none"></span>
+    </button>
     <button class="btn-primary" id="nav-post-btn" onclick="tryPost()" disabled>＋ 投稿</button>
     <!-- ハンバーガーボタン（スマホのみ表示） -->
     <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()" aria-label="メニュー">
       <span></span><span></span><span></span>
     </button>
   </div>
+  <!-- 通知パネル -->
+  <div class="notif-panel" id="notif-panel" style="display:none">
+    <div class="notif-panel-hd">
+      <span class="notif-panel-ttl">通知</span>
+      <button class="notif-panel-close" onclick="toggleNotifPanel()">×</button>
+    </div>
+    <div id="notif-list" class="notif-list">
+      <div class="notif-empty">通知はありません</div>
+    </div>
+  </div>
+  <div class="notif-overlay" id="notif-overlay" onclick="closeNotifPanel()"></div>
 </nav>
 <!-- スマホ用ドロワーメニュー -->
 <div class="drawer" id="drawer">
   <div class="drawer-inner">
     <span class="drawer-nl" onclick="goNav('feed',null);closeMenu()">フィード</span>
+    <span class="drawer-nl" onclick="goNav('ranking',null);closeMenu()">ランキング</span>
     <span class="drawer-nl" onclick="goNav('mypage',null);closeMenu()">マイページ</span>
     <span class="drawer-nl" onclick="goNav('saved',null);closeMenu()">保存済み</span>
     <span class="drawer-nl" onclick="goNav('contact',null);closeMenu()">お問い合わせ</span>
@@ -645,7 +731,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <span class="sort-chip active" onclick="setSort('popular',this)">人気順</span>
       <span class="sort-chip" onclick="setSort('new',this)">新着順</span>
     </div>
-    <span class="feed-c" id="feed-cnt"></span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button id="filter-reset-btn" class="sort-chip" onclick="resetAllFilters()" style="display:none;border-color:#c00;color:#c00">✕ リセット</button>
+      <span class="feed-c" id="feed-cnt"></span>
+    </div>
   </div>
   <div class="grid" id="feed-grid"></div>
 </div>
@@ -781,6 +870,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     </div>
     <button class="sub-btn" id="submit-post-btn" onclick="doSubmit()">アーカイブに投稿する</button>
   </div>
+</div>
+
+
+<!-- RANKING PAGE -->
+<div id="page-ranking" class="page">
+  <div class="rank-hd">
+    <div class="rank-ttl">ランキング</div>
+    <div class="rank-tabs">
+      <button class="rank-tab active" id="rtab-week" onclick="switchRankTab('week',this)">今週</button>
+      <button class="rank-tab" id="rtab-month" onclick="switchRankTab('month',this)">今月</button>
+      <button class="rank-tab" id="rtab-all" onclick="switchRankTab('all',this)">全期間</button>
+    </div>
+  </div>
+  <div id="rank-grid" class="rank-list"></div>
 </div>
 
 <!-- SAVED PAGE -->
@@ -1065,9 +1168,32 @@ function buildColorChips(){
 function card(p){
   const imgs=p.post_images||[];
   imgs.sort((a,b)=>a.position-b.position);
-  const imgHtml=imgs[0]?`<img src="${imgs[0].url}" style="width:100%;height:100%;object-fit:cover;display:block;">`  :fig(p);
+  const imgHtml=imgs[0]?`<img src="${imgs[0].url}" style="width:100%;height:100%;object-fit:cover;display:block;">`:fig(p);
   const likeCnt=(p.likes&&p.likes[0])?p.likes[0].count:0;
-  return`<div class="card" onclick="openPost('${p.id}')"><div class="cph">${imgHtml}<div class="cov"><div class="cov-line">${p.line||''}</div><div class="cov-ttl">${p.title||''}</div></div></div><div class="ccard-info"><div class="ccard-line">${p.line||''}</div><div class="ccard-ttl">${p.title||''}</div><div class="ccard-meta"><span class="ccard-sea">${p.season||''}</span><span class="ccard-lk">♡ ${likeCnt}</span></div></div></div>`;
+  const colors=p.colors&&p.colors.length?p.colors:['black'];
+  const colorBar=colors.map(cid=>{
+    const cp=COLOR_PALETTE.find(c=>c.id===cid);
+    const hex=cp?cp.hex:'#111';
+    return`<div class="card-color-seg" style="background:${hex}"></div>`;
+  }).join('');
+  const prof=p.profiles||{};
+  const avH=prof.avatar_url?`<img src="${prof.avatar_url}">`:`<span>${(prof.handle||'?').charAt(0).toUpperCase()}</span>`;
+  const isLiked=likedPostIds.has(p.id);
+  const lineShort=p.line?(p.line.replace('COMME des GARCONS ','').replace('COMME des GARÇONS ','')):'';
+  return`<div class="card" onclick="openPost('${p.id}')">
+    <div class="cph">${imgHtml}
+      <div class="cov"><div class="cov-line">${p.line||''}</div><div class="cov-ttl">${p.title||''}</div></div>
+    </div>
+    <div class="card-color-bar">${colorBar}</div>
+    <div class="ccard-info">
+      <div class="ccard-top"><div class="ccard-av">${avH}</div><span class="ccard-handle">${prof.handle||''}</span></div>
+      <div class="ccard-ttl">${p.title||''}</div>
+      <div class="ccard-meta">
+        <span class="ccard-sea">${[p.season,lineShort].filter(Boolean).join(' · ')}</span>
+        <span class="ccard-lk" style="${isLiked?'color:var(--blk)':''}">♡ ${likeCnt}</span>
+      </div>
+    </div>
+  </div>`;
 }
 
 function rg(id,arr){
@@ -1127,12 +1253,34 @@ function setFilt(type,val,el){
   else if(type==='sea'){filtSea=val;document.querySelectorAll('#chips-sea .chip').forEach(c=>c.classList.remove('active'));}
   else if(type==='color'){filtColor=val;document.querySelectorAll('#chips-color .chip').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.color-chip').forEach(c=>c.classList.remove('active'));}
   if(el)el.classList.add('active');
+  checkFilterActive();
   updateFeed();
 }
 function setSort(val,el){
   curSort=val;
   document.querySelectorAll('.sort-chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
+  updateFeed();
+}
+
+function checkFilterActive(){
+  const active=filtLine!=='all'||filtSea!=='all'||filtColor!=='all'||filtFollowing!=='all';
+  const btn=document.getElementById('filter-reset-btn');
+  if(btn)btn.style.display=active?'':'none';
+}
+
+function resetAllFilters(){
+  filtLine='all';filtSea='all';filtColor='all';filtFollowing='all';
+  document.querySelectorAll('#chips-line .chip').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('#chips-sea .chip').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('#chips-color .chip,.color-chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('chip-following-all').classList.add('active');
+  document.getElementById('chip-following-only').classList.remove('active');
+  // ALL チップをアクティブに
+  document.querySelector('#chips-line .chip').classList.add('active');
+  document.querySelector('#chips-sea .chip').classList.add('active');
+  document.querySelector('#chips-color .chip').classList.add('active');
+  const btn=document.getElementById('filter-reset-btn');if(btn)btn.style.display='none';
   updateFeed();
 }
 
@@ -1341,9 +1489,25 @@ async function doSearch(){
   });
 
   document.getElementById('srch-clear-btn').style.display='';
-  msgEl.textContent=`品番「${srchQ}」の検索結果`;
-  rg('feed-grid',res);
-  document.getElementById('feed-cnt').textContent=res.length+'件';
+  // タイトル・キャプションでも追加検索
+  const {data:titleMatched}=await sb.from('posts')
+    .select(`id,user_id,title,caption,line,season,store,colors,created_at,profiles(id,nickname,handle,avatar_url,cdg_history,height),post_images(url,position),post_items(id,name,line,season,store,size,ref_number),likes(count),comments(count)`)
+    .or(`title.ilike.%${raw}%,caption.ilike.%${raw}%`)
+    .order('created_at',{ascending:false})
+    .limit(50);
+  const allIds=new Set(res.map(p=>p.id));
+  const extra=(titleMatched||[]).filter(p=>!allIds.has(p.id)).filter(p=>{
+    const lineOk=filtLine==='all'||p.line===filtLine;
+    let seaOk=filtSea==='all';
+    if(!seaOk){if(filtSea==='SS')seaOk=p.season&&p.season.includes('SS');else if(filtSea==='AW')seaOk=p.season&&p.season.includes('AW');else seaOk=p.season===filtSea;}
+    const colorOk=filtColor==='all'||(p.colors&&p.colors.includes(filtColor));
+    return lineOk&&seaOk&&colorOk;
+  });
+  const combined=[...res,...extra];
+  if(curSort==='popular') combined.sort((a,b)=>((b.likes&&b.likes[0]?b.likes[0].count:0)-(a.likes&&a.likes[0]?a.likes[0].count:0)));
+  msgEl.textContent=`「${raw}」の検索結果（品番・タイトル・説明）`;
+  rg('feed-grid',combined);
+  document.getElementById('feed-cnt').textContent=combined.length+'件';
 }
 
 /* =====================================================
@@ -1417,10 +1581,21 @@ function renderCmts(cmts){
 }
 
 async function addCmt(){
-  if(!myUser){alert('コメントするにはログインが必要です。');return;}
+  if(!myUser){showToast('コメントするにはログインが必要です');openLoginModal();return;}
   const inp=document.getElementById('cmt-in');const txt=inp.value.trim();if(!txt||!curPost)return;
+  inp.value='';inp.disabled=true;
+  // 楽観的更新: 即座にUIに反映
+  const optimistic={id:'tmp',profiles:myProfile||{handle:myUser.email},content:txt,created_at:new Date().toISOString()};
+  const existing=document.getElementById('cmt-list');
+  const tmpDiv=document.createElement('div');
+  tmpDiv.className='cmt';
+  const prof=myProfile||{};
+  const av=prof.avatar_url?`<img src="${prof.avatar_url}">`:`<span style="font-size:8px">${(prof.handle||'?').charAt(0).toUpperCase()}</span>`;
+  tmpDiv.innerHTML=`<div class="cmt-hd"><div class="cmt-av">${av}</div><span class="cmt-un">${prof.handle||''}</span><span class="cmt-dt">今</span></div><div class="cmt-txt">${txt}</div>`;
+  if(existing.querySelector('.cmt')){existing.appendChild(tmpDiv);}else{existing.innerHTML='';existing.appendChild(tmpDiv);}
+  inp.disabled=false;inp.focus();
+  // 実際のDB書き込み
   await sb.from('comments').insert({post_id:curPost.id,user_id:myUser.id,content:txt});
-  inp.value='';
   const{data:cmts}=await sb.from('comments').select('*,profiles(nickname,handle,avatar_url)').eq('post_id',curPost.id).order('created_at');
   renderCmts(cmts||[]);
 }
@@ -1642,7 +1817,8 @@ async function doLogout(){
 
 function updateAuthUI(){
   const lb=document.getElementById('nav-login-btn');const pb=document.getElementById('nav-post-btn');
-  if(myUser){lb.style.display='none';pb.disabled=false;}else{lb.style.display='';pb.disabled=true;}
+  if(myUser){lb.style.display='none';pb.disabled=false;showNotifBell(true);fetchUnreadNotifs();}
+  else{lb.style.display='';pb.disabled=true;showNotifBell(false);unreadNotifCount=0;updateNotifBadge();}
 }
 
 /* =====================================================
@@ -1978,10 +2154,14 @@ function rmItem(b){if(document.querySelectorAll('#ilist .ir').length>1)b.closest
 
 async function doSubmit(){
   if(!myUser){openLoginModal();return;}
+  const ttl=document.getElementById('p-ttl').value.trim();
+  if(!ttl){showToast('タイトルを入力してください');document.getElementById('p-ttl').focus();return;}
+  // アイテムが1件以上あるかチェック
+  const firstItem=document.querySelector('#ilist .ir select');
+  if(!firstItem||!firstItem.value){showToast('着用アイテムを1件以上入力してください');return;}
   setLoading('submit-post-btn',true,'アーカイブに投稿する');
   try{
-    const ttl=document.getElementById('p-ttl').value||'無題';
-    const cap=document.getElementById('p-cap').value||'';
+    const cap=document.getElementById('p-cap').value.trim()||'';
     // ライン・シーズン・購入店舗はアイテム行から取得
     const line='';
     const sea='';
@@ -2004,7 +2184,7 @@ async function doSubmit(){
     const repLine=firstSels[1]?.value||'';
     const repSea=firstSels[2]?.value||'';
     const{data:newPost,error}=await sb.from('posts').insert({
-      user_id:myUser.id,title:ttl,caption:cap,line:repLine,season:repSea,store:'',colors
+      user_id:myUser.id,title:ttl||'無題',caption:cap,line:repLine,season:repSea,store:'',colors
     }).select().single();
     if(error)throw error;
 
@@ -2045,6 +2225,176 @@ async function doSubmit(){
   }
 }
 
+
+/* =====================================================
+   RANKING PAGE
+===================================================== */
+let rankPeriod='week';
+let rankCache={};
+
+function switchRankTab(period, el){
+  rankPeriod=period;
+  document.querySelectorAll('.rank-tab').forEach(t=>t.classList.remove('active'));
+  if(el)el.classList.add('active');
+  loadRanking();
+}
+
+async function loadRanking(){
+  const el=document.getElementById('rank-grid');
+  el.innerHTML='<div class="loading"><div class="spinner"></div>読み込み中...</div>';
+  try{
+    let q=sb.from('posts')
+      .select(`id, user_id, title, line, season, created_at,
+        profiles(handle,avatar_url),
+        post_images(url,position),
+        likes(count)`)
+      .order('created_at',{ascending:false});
+    if(rankPeriod==='week'){
+      const since=new Date(Date.now()-7*24*60*60*1000).toISOString();
+      q=q.gte('created_at',since);
+    }else if(rankPeriod==='month'){
+      const since=new Date(Date.now()-30*24*60*60*1000).toISOString();
+      q=q.gte('created_at',since);
+    }
+    const{data}=await q;
+    const sorted=(data||[]).sort((a,b)=>{
+      const la=(a.likes&&a.likes[0])?a.likes[0].count:0;
+      const lb=(b.likes&&b.likes[0])?b.likes[0].count:0;
+      return lb-la;
+    }).slice(0,30);
+    if(!sorted.length){el.innerHTML='<div style="padding:28px 20px;font-size:10px;color:var(--mgry);font-family:var(--jp)">この期間の投稿がありません</div>';return;}
+    el.innerHTML=sorted.map((p,i)=>{
+      const imgs=(p.post_images||[]).sort((a,b)=>a.position-b.position);
+      const thumbHtml=imgs[0]
+        ?`<img class="rank-thumb" src="${imgs[0].url}" alt="">`
+        :`<div class="rank-thumb" style="background:${['#d8d4cc','#c4c0b8','#dcdad4','#b8b4ac','#d0cec8'][i%5]};display:flex;align-items:center;justify-content:center;font-size:20px">👗</div>`;
+      const prof=p.profiles||{};
+      const avH=prof.avatar_url?`<img src="${prof.avatar_url}">`:`<span>${(prof.handle||'?').charAt(0).toUpperCase()}</span>`;
+      const lk=(p.likes&&p.likes[0])?p.likes[0].count:0;
+      const numCls=i===0?'top1':i===1?'top2':i===2?'top3':'';
+      return`<div class="rank-item" onclick="openPost('${p.id}')">
+        <div class="rank-num ${numCls}">${i+1}</div>
+        <div class="rank-thumb-wrap">${thumbHtml}</div>
+        <div class="rank-info">
+          <div class="rank-line">${p.line||''}</div>
+          <div class="rank-title">${p.title||''}</div>
+          <div class="rank-user"><div class="rank-av">${avH}</div><span class="rank-handle">${prof.handle||''}</span></div>
+          <div class="rank-sea">${p.season||''}</div>
+        </div>
+        <div class="rank-stats">
+          <div class="rank-lk">♡ ${lk}</div>
+          <div class="rank-lk-lbl">likes</div>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){console.error(e);el.innerHTML='<div style="padding:28px 20px;font-size:10px;color:var(--mgry)">読み込みに失敗しました</div>';}
+}
+
+
+/* =====================================================
+   通知機能
+===================================================== */
+let notifPanelOpen=false;
+let unreadNotifCount=0;
+
+function toggleNotifPanel(){
+  if(notifPanelOpen) closeNotifPanel();
+  else openNotifPanel();
+}
+function openNotifPanel(){
+  notifPanelOpen=true;
+  document.getElementById('notif-panel').style.display='flex';
+  document.getElementById('notif-overlay').classList.add('open');
+  loadNotifications();
+}
+function closeNotifPanel(){
+  notifPanelOpen=false;
+  document.getElementById('notif-panel').style.display='none';
+  document.getElementById('notif-overlay').classList.remove('open');
+}
+
+async function loadNotifications(){
+  if(!myUser)return;
+  const listEl=document.getElementById('notif-list');
+  listEl.innerHTML='<div class="notif-empty">読み込み中...</div>';
+  try{
+    const{data}=await sb.from('notifications')
+      .select('*,actor:profiles!notifications_actor_id_fkey(handle,avatar_url),post:posts(id,title)')
+      .eq('user_id',myUser.id)
+      .order('created_at',{ascending:false})
+      .limit(40);
+    if(!data||!data.length){listEl.innerHTML='<div class="notif-empty">通知はありません</div>';return;}
+    // 未読をマーク済みに
+    const unreadIds=(data||[]).filter(n=>!n.read_at).map(n=>n.id);
+    if(unreadIds.length){
+      sb.from('notifications').update({read_at:new Date().toISOString()}).in('id',unreadIds).then(()=>{});
+      unreadNotifCount=0;updateNotifBadge();
+    }
+    listEl.innerHTML=data.map(n=>{
+      const icon=n.type==='like'?'♡':n.type==='comment'?'💬':n.type==='follow'?'👤':'🔔';
+      const actor=n.actor||{};
+      let txt='';
+      if(n.type==='like')txt=`<strong>${actor.handle||'誰か'}</strong>があなたの投稿にいいねしました`;
+      else if(n.type==='comment')txt=`<strong>${actor.handle||'誰か'}</strong>があなたの投稿にコメントしました`;
+      else if(n.type==='follow')txt=`<strong>${actor.handle||'誰か'}</strong>があなたをフォローしました`;
+      else txt=n.message||'通知が届きました';
+      const postTitle=n.post?.title?`「${n.post.title}」`:'';
+      const timeAgo=timeAgoJa(n.created_at);
+      const unreadCls=!n.read_at?'unread':'';
+      return`<div class="notif-item ${unreadCls}" onclick="handleNotifClick('${n.type}','${n.post?.id||''}','${n.actor_id||''}')">
+        <div class="notif-icon">${icon}</div>
+        <div class="notif-text">${txt}${postTitle?'<br><span style="font-size:9px;color:var(--mgry)">'+postTitle+'</span>':''}<br><span class="notif-time">${timeAgo}</span></div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    // notificationsテーブルが存在しない場合のフォールバック
+    listEl.innerHTML='<div class="notif-empty">通知はありません</div>';
+  }
+}
+
+function handleNotifClick(type, postId, actorId){
+  closeNotifPanel();
+  if((type==='like'||type==='comment')&&postId&&postId!=='undefined')openPost(postId);
+  else if(type==='follow'&&actorId&&actorId!=='undefined')openUserProfile(actorId);
+}
+
+function timeAgoJa(dateStr){
+  const diff=(Date.now()-new Date(dateStr).getTime())/1000;
+  if(diff<60)return 'たった今';
+  if(diff<3600)return Math.floor(diff/60)+'分前';
+  if(diff<86400)return Math.floor(diff/3600)+'時間前';
+  if(diff<86400*7)return Math.floor(diff/86400)+'日前';
+  return new Date(dateStr).toLocaleDateString('ja');
+}
+
+async function fetchUnreadNotifs(){
+  if(!myUser)return;
+  try{
+    const{count}=await sb.from('notifications')
+      .select('*',{count:'exact',head:true})
+      .eq('user_id',myUser.id)
+      .is('read_at',null);
+    unreadNotifCount=count||0;
+    updateNotifBadge();
+  }catch(e){/* notificationsテーブルなし */}
+}
+
+function updateNotifBadge(){
+  const badge=document.getElementById('notif-badge');
+  if(!badge)return;
+  if(unreadNotifCount>0){
+    badge.style.display='flex';
+    badge.textContent=unreadNotifCount>9?'9+':unreadNotifCount;
+  }else{
+    badge.style.display='none';
+  }
+}
+
+function showNotifBell(show){
+  const b=document.getElementById('notif-bell-btn');
+  if(b)b.style.display=show?'':'none';
+}
+
 /* =====================================================
    SAVED PAGE
 ===================================================== */
@@ -2074,6 +2424,7 @@ function goNav(name,el){
   if(el&&el.classList&&el.classList.contains('nl'))el.classList.add('active');
   showPage('page-'+name);
   if(name==='feed')updateFeed();
+  if(name==='ranking')loadRanking();
   if(name==='mypage')renderMyPage();
   if(name==='saved')loadSavedPage();
   if(name==='contact'){
