@@ -933,7 +933,6 @@ async function fetchProfile(userId){
   return data;
 }
 
-// index.html の fetchPosts 関数を以下に書き換える
 async function fetchPosts(opts={}){
   let q=sb.from('posts')
     .select(`
@@ -947,10 +946,7 @@ async function fetchPosts(opts={}){
     .order('created_at',{ascending:false});
   if(opts.userId) q=q.eq('user_id',opts.userId);
   const {data,error}=await q;
-  if(error){
-    console.error('fetchPosts error:', JSON.stringify(error));  // ← ここを変更
-    return[];
-  }
+  if(error){console.error('fetchPosts error:',error);return[];}
   return data||[];
 }
 
