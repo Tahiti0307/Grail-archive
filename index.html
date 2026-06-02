@@ -722,9 +722,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   var inner  = document.getElementById('splash-inner');
   if(!splash) return;
 
+  // 安全策: 何があっても4秒後には確実に消す
+  setTimeout(function(){
+    splash.style.display = 'none';
+    splash.style.pointerEvents = 'none';
+  }, 4000);
+
   // 初回のみ表示（sessionStorageで管理）
   if(sessionStorage.getItem('splashSeen')){
     splash.style.display='none';
+    splash.style.pointerEvents='none';
     return;
   }
 
@@ -742,6 +749,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   setTimeout(function(){
     splash.style.transition = 'opacity .9s ease';
     splash.style.opacity = '0';
+    splash.style.pointerEvents = 'none';
     setTimeout(function(){
       splash.style.display = 'none';
       sessionStorage.setItem('splashSeen','1');
