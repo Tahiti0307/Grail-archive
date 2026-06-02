@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="CDGLOA">
+<link rel="manifest" href="manifest.json">
 <title>CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</title>
 <meta name="description" content="ギャルソンラバーのためのコーデアーカイブ。着用アイテムを品番・ライン・シーズンで記録し、共有する。">
 
@@ -63,8 +69,21 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .btn-primary:hover{opacity:.7}
 .btn-primary:disabled{opacity:.3;cursor:not-allowed}
 
-.page{display:none}.page.active{display:block}
+.page{display:none;opacity:0}.page.active{display:block;animation:pageFadeIn .22s ease forwards}
+@keyframes pageFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
+
+/* CDG STATS */
+.cdg-stats-section{padding:14px 20px 0;max-width:900px;margin:0 auto;border-top:1px solid var(--ln);margin-top:4px}
+.cdg-stats-ttl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:10px}
+.cdg-stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px}
+.cdg-stat-card{border:1px solid var(--ln);padding:10px 12px}
+.cdg-stat-label{font-size:8px;letter-spacing:.1em;color:var(--mgry);margin-bottom:3px;text-transform:uppercase}
+.cdg-stat-val{font-size:15px;font-weight:500;letter-spacing:-.01em}
+.cdg-stat-sub{font-size:8px;color:var(--mgry);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cdg-lines-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.cdg-line-chip{font-size:8px;letter-spacing:.08em;padding:3px 8px;border:1px solid var(--ln);color:var(--mgry);cursor:pointer;transition:all .12s}
+.cdg-line-chip:hover{border-color:var(--blk);color:var(--blk)}
 
 /* NOTIFICATION BELL */
 .notif-bell{position:relative;background:none;border:none;cursor:pointer;font-size:16px;padding:4px 6px;line-height:1}
@@ -88,6 +107,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 @media(max-width:600px){
   .notif-panel{right:8px;left:8px;width:auto;top:48px}
 }
+
+/* POST TAGS */
+.post-tag{font-family:var(--sans);font-size:8px;letter-spacing:.1em;padding:4px 9px;border:1px solid var(--ln);background:var(--gry);cursor:pointer;transition:all .15s;color:var(--mgry)}
+.post-tag:hover{background:var(--blk);color:var(--wht);border-color:var(--blk)}
+.tag-active{background:var(--blk);color:var(--wht);border-color:var(--blk)}
 
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px}
@@ -200,6 +224,76 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .ccard-lk{font-size:9px;color:var(--mgry);display:flex;align-items:center;gap:2px}
 
 
+
+/* SKELETON LOADING */
+@keyframes shimmer{
+  0%{background-position:-600px 0}
+  100%{background-position:600px 0}
+}
+.sk{
+  background:linear-gradient(90deg,var(--ln) 25%,var(--gry) 50%,var(--ln) 75%);
+  background-size:600px 100%;
+  animation:shimmer 1.4s infinite linear;
+  border-radius:1px;
+}
+.sk-card{background:var(--wht);overflow:hidden}
+.sk-img{width:100%;aspect-ratio:3/4;background:var(--gry)}
+.sk-bar{height:3px;background:var(--ln);margin-bottom:0}
+.sk-info{padding:8px 10px 9px;border-bottom:1px solid var(--ln)}
+.sk-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.sk-av{width:18px;height:18px;border-radius:50%;flex-shrink:0}
+.sk-handle{height:8px;flex:1;border-radius:2px}
+.sk-title{height:11px;width:85%;border-radius:2px;margin-bottom:5px}
+.sk-meta{height:8px;width:60%;border-radius:2px}
+
+
+/* MARQUEE */
+.marquee-wrap{
+  overflow:hidden;border-bottom:1px solid var(--ln);border-top:1px solid var(--ln);
+  background:var(--wht);padding:5px 0;
+}
+.marquee-track{
+  display:flex;gap:0;width:max-content;
+  animation:marqueeScroll 28s linear infinite;
+}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marqueeScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.marquee-item{
+  font-size:8px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--mgry);white-space:nowrap;padding:0 18px;
+  font-family:var(--sans);
+}
+.marquee-sep{color:var(--lgry);padding:0 4px}
+@media(max-width:600px){
+  .marquee-item{font-size:7px;letter-spacing:.22em;padding:0 14px}
+}
+
+/* ERROR STATE */
+.error-state{
+  grid-column:1/-1;padding:52px 20px;text-align:center;
+}
+.error-state-code{
+  font-size:7px;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--lgry);margin-bottom:12px;font-family:var(--sans);
+}
+.error-state-msg{
+  font-size:13px;color:var(--mgry);margin-bottom:6px;letter-spacing:.02em;
+}
+.error-state-sub{
+  font-size:10px;color:var(--lgry);font-family:var(--jp);
+  margin-bottom:20px;line-height:1.7;
+}
+.error-state-retry{
+  font-family:var(--sans);font-size:8px;letter-spacing:.2em;
+  text-transform:uppercase;padding:8px 24px;
+  border:1px solid var(--blk);background:transparent;
+  cursor:pointer;color:var(--blk);transition:all .15s;
+}
+.error-state-retry:hover{background:var(--blk);color:var(--wht)}
+
 /* PICKUP SECTION */
 .pickup-section{padding:16px 20px;border-bottom:1px solid var(--ln)}
 .section-lbl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:10px}
@@ -227,6 +321,13 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   .pickup-section{padding:12px}
   .suggest-section{padding:12px 12px 14px}
 }
+/* FEED TABS */
+.feed-tabs-wrap{display:flex;border-bottom:1px solid var(--ln);background:var(--wht);position:sticky;top:44px;z-index:10}
+.feed-tab{flex:1;font-family:var(--sans);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:11px 0;border:none;background:transparent;cursor:pointer;color:var(--mgry);border-bottom:2px solid transparent;transition:all .15s}
+.feed-tab:hover{color:var(--blk)}
+.feed-tab.active{color:var(--blk);border-bottom-color:var(--blk)}
+@media(max-width:600px){.feed-tab{font-size:9px;padding:10px 0}}
+
 /* RANKING PAGE */
 .rank-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 10px;border-bottom:1px solid var(--ln)}
 .rank-ttl{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
@@ -260,6 +361,19 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   .rank-title{font-size:12px}
   .rank-lk{font-size:13px}
 }
+
+/* IMAGE SLIDER */
+.dim{background:var(--gry);min-height:460px;position:relative}
+.slider-wrap{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--gry)}
+.slider-track{display:flex;transition:transform .3s ease;height:100%;will-change:transform}
+.slider-slide{flex:0 0 100%;height:100%;overflow:hidden}
+.slider-slide img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.slider-prev,.slider-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);color:#fff;border:none;cursor:pointer;font-size:18px;padding:10px 14px;z-index:5;line-height:1;transition:background .15s}
+.slider-prev{left:0}.slider-next{right:0}
+.slider-prev:hover,.slider-next:hover{background:rgba(0,0,0,.65)}
+.slider-dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:5px;z-index:5}
+.slider-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:background .15s;border:none;padding:0}
+.slider-dot.active{background:#fff}
 
 /* DETAIL */
 .bk{font-size:9px;letter-spacing:.12em;color:var(--mgry);cursor:pointer;padding:11px 20px;display:inline-flex;align-items:center;gap:5px;border-bottom:1px solid var(--ln);text-transform:uppercase}
@@ -415,18 +529,30 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   .ccard-ttl{font-size:10px}
   .ccard-sea,.ccard-lk{font-size:8px}
 
-  /* DETAIL: 1カラム縦並び */
+  /* DETAIL: モバイル全幅レイアウト */
   .dw{grid-template-columns:1fr;grid-template-rows:auto auto}
   .dim{min-height:unset}
-  .img-main{aspect-ratio:3/4}
-  .dinfo{padding:16px;border-left:none;border-top:1px solid var(--ln);max-height:unset}
-  .dttl{font-size:16px}
+  .slider-wrap,.img-main{aspect-ratio:unset;height:56vw;min-height:260px}
+  .slider-slide{height:56vw;min-height:260px}
+  .dinfo{padding:16px 16px 88px;border-left:none;border-top:none;max-height:unset}
+  .dttl{font-size:17px}
   .dsea{font-size:8px}
   .dline{font-size:8px}
   .dcap{font-size:10px}
   .abtn{font-size:8px;padding:6px 10px}
   .iname{font-size:9px}
   .ibadge,.isz{font-size:7px;padding:2px 4px}
+  /* モバイルアクションバー：ボトムに固定 */
+  .dact{
+    position:fixed;bottom:0;left:0;right:0;
+    background:var(--wht);border-top:1px solid var(--ln);
+    padding:10px 16px 14px;
+    flex-wrap:nowrap;gap:6px;z-index:50;
+    display:none;
+  }
+  .dact.mobile-visible{display:flex}
+  .dact .abtn{flex:1;justify-content:center;padding:8px 4px;font-size:7px}
+  .bk{border-bottom:none;padding:10px 12px}
 
   /* POST FORM */
   .pw{padding:20px 12px}
@@ -544,6 +670,86 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 </style>
 </head>
 <body>
+
+<!-- =====================================================
+   SPLASH SCREEN
+===================================================== -->
+<div id="splash" style="
+  position:fixed;inset:0;background:#000;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:all;
+">
+  <div style="position:absolute;inset:20px;border:1px solid #1a1a1a;pointer-events:none"></div>
+  <div id="splash-inner" style="padding:0 40px;opacity:0;text-align:center">
+    <div id="sp-cdg" style="
+      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-size:clamp(52px,10vw,96px);font-weight:700;
+      letter-spacing:.12em;color:#fff;line-height:1;
+      margin-bottom:.15em;
+      transform:translateY(18px);opacity:0;
+      transition:opacity .7s ease, transform .7s ease;
+    ">CDG</div>
+    <div id="sp-loa" style="
+      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-size:clamp(52px,10vw,96px);font-weight:700;
+      letter-spacing:.12em;color:#fff;line-height:1;
+      margin-bottom:.45em;
+      transform:translateY(18px);opacity:0;
+      transition:opacity .7s ease .12s, transform .7s ease .12s;
+    ">LOA</div>
+    <div id="sp-en" style="
+      font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+      font-size:clamp(9px,1.4vw,16px);font-weight:300;
+      letter-spacing:.22em;color:#555;line-height:1.6;
+      text-transform:uppercase;
+      transform:translateY(12px);opacity:0;
+      transition:opacity .6s ease .28s, transform .6s ease .28s;
+    ">COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</div>
+    <div id="sp-jp" style="
+      font-family:'Noto Sans JP','Helvetica Neue',sans-serif;
+      font-size:clamp(10px,1.2vw,13px);font-weight:300;
+      letter-spacing:.08em;color:#3a3a3a;line-height:1.6;
+      margin-top:.4em;
+      transform:translateY(12px);opacity:0;
+      transition:opacity .6s ease .38s, transform .6s ease .38s;
+    ">ギャルソンラバーのためのコーデアーカイブ</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var splash = document.getElementById('splash');
+  var inner  = document.getElementById('splash-inner');
+  if(!splash) return;
+
+  // 初回のみ表示（sessionStorageで管理）
+  if(sessionStorage.getItem('splashSeen')){
+    splash.style.display='none';
+    return;
+  }
+
+  // フェードイン開始
+  requestAnimationFrame(function(){
+    inner.style.opacity='1';
+    var els = ['sp-cdg','sp-loa','sp-en','sp-jp'];
+    els.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el){ el.style.opacity='1'; el.style.transform='translateY(0)'; }
+    });
+  });
+
+  // 1.8秒後にフェードアウト開始
+  setTimeout(function(){
+    splash.style.transition = 'opacity .9s ease';
+    splash.style.opacity = '0';
+    setTimeout(function(){
+      splash.style.display = 'none';
+      sessionStorage.setItem('splashSeen','1');
+    }, 900);
+  }, 1800);
+})();
+</script>
+
 
 <nav>
   <div class="logo-wrap" onclick="goNav('feed',document.querySelector('.nl'))">
@@ -728,6 +934,24 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div class="fg"><label class="flbl">タイトル</label><input class="fi" type="text" id="epost-ttl"></div>
       <div class="fg"><label class="flbl">説明</label><textarea class="fi fta" id="epost-cap"></textarea></div>
       <div class="fg">
+        <label class="flbl">タグ <span style="font-size:9px;color:var(--mgry);letter-spacing:.05em;text-transform:none">スペース区切りで複数入力</span></label>
+        <input class="fi" type="text" id="epost-tags" placeholder="#タグを入力（スペースで区切る）">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div class="fg">
+          <label class="flbl">コーデのライン</label>
+          <select class="fi" id="epost-line" style="appearance:none;cursor:pointer">
+            <option value="">選択してください</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="flbl">シーズン</label>
+          <select class="fi" id="epost-season" style="appearance:none;cursor:pointer">
+            <option value="">選択してください</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
         <label class="flbl">コーデのカラー（最大3色）</label>
         <div id="epost-color-picker" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px"></div>
       </div>
@@ -813,7 +1037,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <div id="user-search-list"></div>
       </div>
     </div>
-  </div>
     <!-- 店舗検索 -->
     <div id="srch-pane-store" class="srch-pane">
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center">
@@ -824,21 +1047,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <span class="sort-chip" onclick="setStoreFilter('area','中部・東海',this)">中部・東海</span>
         <span class="sort-chip" onclick="setStoreFilter('area','関西',this)">関西</span>
         <span class="sort-chip" onclick="setStoreFilter('area','九州・中国',this)">九州・中国</span>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;align-items:center">
-        <span class="sort-lbl">ライン</span>
-        <span class="sort-chip active" id="sline-all" onclick="setStoreFilter('line','all',this)">ALL</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','CDG',this)">CDG</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','DSM',this)">Dover Street Market</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','BLACK',this)">BLACK</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','JUNYA',this)">JUNYA WATANABE</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','HOMME',this)">HOMME</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','GIRL',this)">GIRL</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','TAO',this)">TAO</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','NOIR',this)">NOIR KEI NINOMIYA</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','PLAY',this)">PLAY</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','PARFUMS',this)">PARFUMS</span>
-        <span class="sort-chip" onclick="setStoreFilter('line','TRADING',this)">TRADING MUSEUM</span>
       </div>
       <div id="store-list"></div>
     </div>
@@ -907,11 +1115,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div class="suggest-list" id="suggest-list"></div>
   </div>
 
+  <div class="marquee-wrap" id="feed-marquee">
+    <div class="marquee-track"><span class="marquee-item">COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME PLUS<span class="marquee-sep"> · </span></span><span class="marquee-item">NOIR KEI NINOMIYA<span class="marquee-sep"> · </span></span><span class="marquee-item">BLACK COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">JUNYA WATANABE<span class="marquee-sep"> · </span></span><span class="marquee-item">CDG COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">SHIRT<span class="marquee-sep"> · </span></span><span class="marquee-item">GIRL<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME DEUX<span class="marquee-sep"> · </span></span><span class="marquee-item">tao COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">PLAY<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2019<span class="marquee-sep"> · </span></span><span class="marquee-item">SS2024<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2018<span class="marquee-sep"> · </span></span><span class="marquee-item">LOVERS' OUTFIT ARCHIVES<span class="marquee-sep"> · </span></span><span class="marquee-item">COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME PLUS<span class="marquee-sep"> · </span></span><span class="marquee-item">NOIR KEI NINOMIYA<span class="marquee-sep"> · </span></span><span class="marquee-item">BLACK COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">JUNYA WATANABE<span class="marquee-sep"> · </span></span><span class="marquee-item">CDG COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">SHIRT<span class="marquee-sep"> · </span></span><span class="marquee-item">GIRL<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME DEUX<span class="marquee-sep"> · </span></span><span class="marquee-item">tao COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">PLAY<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2019<span class="marquee-sep"> · </span></span><span class="marquee-item">SS2024<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2018<span class="marquee-sep"> · </span></span><span class="marquee-item">LOVERS' OUTFIT ARCHIVES<span class="marquee-sep"> · </span></span><span class="marquee-item">COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME PLUS<span class="marquee-sep"> · </span></span><span class="marquee-item">NOIR KEI NINOMIYA<span class="marquee-sep"> · </span></span><span class="marquee-item">BLACK COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">JUNYA WATANABE<span class="marquee-sep"> · </span></span><span class="marquee-item">CDG COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">SHIRT<span class="marquee-sep"> · </span></span><span class="marquee-item">GIRL<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME DEUX<span class="marquee-sep"> · </span></span><span class="marquee-item">tao COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">PLAY<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2019<span class="marquee-sep"> · </span></span><span class="marquee-item">SS2024<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2018<span class="marquee-sep"> · </span></span><span class="marquee-item">LOVERS' OUTFIT ARCHIVES<span class="marquee-sep"> · </span></span><span class="marquee-item">COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME PLUS<span class="marquee-sep"> · </span></span><span class="marquee-item">NOIR KEI NINOMIYA<span class="marquee-sep"> · </span></span><span class="marquee-item">BLACK COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">JUNYA WATANABE<span class="marquee-sep"> · </span></span><span class="marquee-item">CDG COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">SHIRT<span class="marquee-sep"> · </span></span><span class="marquee-item">GIRL<span class="marquee-sep"> · </span></span><span class="marquee-item">HOMME DEUX<span class="marquee-sep"> · </span></span><span class="marquee-item">tao COMME des GARÇONS<span class="marquee-sep"> · </span></span><span class="marquee-item">PLAY<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2019<span class="marquee-sep"> · </span></span><span class="marquee-item">SS2024<span class="marquee-sep"> · </span></span><span class="marquee-item">AW2018<span class="marquee-sep"> · </span></span><span class="marquee-item">LOVERS' OUTFIT ARCHIVES<span class="marquee-sep"> · </span></span></div>
+  </div>
+  <div class="feed-tabs-wrap">
+    <button class="feed-tab active" id="ftab-all" onclick="setFeedTab('all',this)">すべて</button>
+    <button class="feed-tab" id="ftab-following" onclick="setFeedTab('following',this)">フォロー中</button>
+  </div>
   <div class="feed-toolbar">
     <div class="sort-wrap">
       <span class="sort-lbl">並び替え</span>
-      <span class="sort-chip active" onclick="setSort('popular',this)">人気順</span>
-      <span class="sort-chip" onclick="setSort('new',this)">新着順</span>
+      <span class="sort-chip active" id="sort-popular" onclick="setSort('popular',this)">人気順</span>
+      <span class="sort-chip" id="sort-new" onclick="setSort('new',this)">新着順</span>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
       <button id="filter-reset-btn" class="sort-chip" onclick="resetAllFilters()" style="display:none;border-color:#c00;color:#c00">✕ リセット</button>
@@ -919,8 +1134,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     </div>
   </div>
   <div class="grid" id="feed-grid"></div>
-  <div id="load-more-wrap" style="display:none;text-align:center;padding:20px 0 28px">
-    <button id="load-more-btn" onclick="loadMoreFeed()" class="sort-chip" style="padding:9px 28px;font-size:9px;letter-spacing:.15em">もっと見る</button>
+  <div id="load-more-wrap" style="display:none;padding:20px 0 28px;text-align:center">
+    <div id="load-sentinel" style="height:1px"></div>
+    <div id="load-spinner" style="display:none"><div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0 auto"></div></div>
+    <button id="load-more-btn" onclick="loadMoreFeed()" class="sort-chip" style="padding:9px 28px;font-size:9px;letter-spacing:.15em;display:none">もっと見る</button>
   </div>
 </div>
 
@@ -937,6 +1154,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div class="dsea" id="d-sea"></div><div class="dline" id="d-line"></div><div class="dttl" id="d-ttl"></div><div class="dcap" id="d-cap"></div>
       <div class="isec"><div class="slbl">着用アイテム</div><div id="d-items"></div></div>
       <div class="store-row" id="d-store"></div>
+      <div id="d-date" style="font-size:8px;color:var(--mgry);letter-spacing:.05em;padding-bottom:10px;font-family:var(--sans)"></div>
       <div class="dact">
         <button class="abtn" id="lbtn" onclick="doLike()">♡ <span id="lcnt">0</span></button>
         <button class="abtn" id="save-btn" onclick="toggleSave()">□ 保存</button>
@@ -993,6 +1211,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         </div>
       </div>
     </div>
+    <div class="cdg-stats-section" id="my-cdg-stats" style="display:none">
+      <div class="cdg-stats-ttl">CDG COLLECTION STATS</div>
+      <div class="cdg-stats-grid" id="my-stats-grid"></div>
+      <div class="cdg-lines-list" id="my-lines-list"></div>
+    </div>
     <div style="padding:14px 20px 0;max-width:900px;margin:0 auto"><div style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding-bottom:10px">MY POSTS</div></div>
     <div class="grid" id="my-grid"></div>
   </div>
@@ -1017,6 +1240,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <button class="fol-btn" id="vp-fol-btn" style="margin-top:10px" onclick="toggleFollowUser(curVisitedUserId)">フォロー</button>
       </div>
     </div>
+  </div>
+  <div class="cdg-stats-section" id="vp-cdg-stats" style="display:none">
+    <div class="cdg-stats-ttl">CDG COLLECTION STATS</div>
+    <div class="cdg-stats-grid" id="vp-stats-grid"></div>
+    <div class="cdg-lines-list" id="vp-lines-list"></div>
   </div>
   <div style="padding:14px 20px 0;max-width:900px;margin:0 auto"><div style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;padding-bottom:10px">POSTS</div></div>
   <div class="grid" id="vprof-grid"></div>
@@ -1084,7 +1312,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 
 <!-- ABOUT PAGE -->
 <div id="page-about" class="page">
-  <div style="max-width:560px;margin:0 auto;padding:44px 20px 60px">
+  <div id="about-top" style="max-width:560px;margin:0 auto;padding:44px 20px 60px">
 
     <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:32px;padding-bottom:12px;border-bottom:1px solid var(--blk)">About</div>
 
@@ -1185,7 +1413,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 /* =====================================================
    UTILS
 ===================================================== */
-function toHankaku(s){return s.replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));}
+function toHankaku(s){return s.replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));}
 function normalizeRef(s){return toHankaku(s).toUpperCase().replace(/-/g,'');}
 // IME入力中（isComposing=true）は値書き換えをスキップ
 function onNumericInput(e){if(e.isComposing)return;e.target.value=toHankaku(e.target.value).replace(/[^0-9]/g,'');}
@@ -1303,7 +1531,11 @@ async function fetchPosts(opts={}){
   if(opts.followingIds&&opts.followingIds.length) q=q.in('user_id',opts.followingIds);
   if(!opts.userId&&opts.from!=null) q=q.range(opts.from, opts.from+(opts.limit??PAGE_SIZE)-1);
   const {data,error}=await q;
-  if(error){console.error('fetchPosts error:',error);return[];}
+  if(error){
+    console.error('fetchPosts error:',error);
+    showFeedError();
+    return[];
+  }
   return data||[];
 }
 
@@ -1440,6 +1672,7 @@ function card(p){
   imgs.sort((a,b)=>a.position-b.position);
   const imgHtml=imgs[0]?`<img src="${imgs[0].url}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">`:fig(p);
   const likeCnt=(p.likes&&p.likes[0])?p.likes[0].count:0;
+  const cmtCnt=(p.comments&&p.comments[0])?p.comments[0].count:0;
   const colors=p.colors&&p.colors.length?p.colors:['black'];
   const colorBar=colors.map(cid=>{
     const cp=COLOR_PALETTE.find(c=>c.id===cid);
@@ -1460,15 +1693,33 @@ function card(p){
       <div class="ccard-ttl">${p.title||''}</div>
       <div class="ccard-meta">
         <span class="ccard-sea">${[p.season,lineShort].filter(Boolean).join(' · ')}</span>
-        <span class="ccard-lk" style="${isLiked?'color:var(--blk)':''}">♡ ${likeCnt}</span>
+        <span class="ccard-lk" style="${isLiked?'color:var(--blk)':''}">♡ ${likeCnt}${cmtCnt?` <span style="margin-left:5px;opacity:.7">💬 ${cmtCnt}</span>`:''}</span>
       </div>
     </div>
   </div>`;
 }
 
+function skeletonGrid(id, n=6){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.innerHTML=Array.from({length:n},()=>`
+    <div class="sk-card">
+      <div class="sk-img sk"></div>
+      <div class="sk-bar"></div>
+      <div class="sk-info">
+        <div class="sk-row"><div class="sk-av sk"></div><div class="sk-handle sk"></div></div>
+        <div class="sk-title sk"></div>
+        <div class="sk-meta sk"></div>
+      </div>
+    </div>`).join('');
+}
+
 function rg(id,arr){
   const el=document.getElementById(id);
-  if(!arr||!arr.length){el.innerHTML='<div style="grid-column:1/-1;padding:28px 20px;font-size:10px;color:var(--mgry);font-family:var(--jp)">該当するコーデが見つかりません</div>';return;}
+  if(!arr||!arr.length){
+    el.innerHTML='<div style="grid-column:1/-1;padding:48px 20px;text-align:center"><div style="font-size:9px;letter-spacing:.2em;color:var(--mgry);text-transform:uppercase;margin-bottom:8px">Nothing here yet.</div><div style="font-size:10px;color:var(--lgry);font-family:var(--jp)">該当するコーデが見つかりません</div></div>';
+    return;
+  }
   el.innerHTML=arr.map(card).join('');
 }
 
@@ -1561,9 +1812,20 @@ function _setDiscoverySections(visible){
   });
 }
 
+function showFeedError(retryFn){
+  const el=document.getElementById('feed-grid');
+  if(!el) return;
+  el.innerHTML=`<div class="error-state">
+    <div class="error-state-code">Connection Error</div>
+    <div class="error-state-msg">Archive unavailable.</div>
+    <div class="error-state-sub">サーバーとの接続に失敗しました。<br>時間をおいて再度お試しください。</div>
+    <button class="error-state-retry" onclick="updateFeed()">Try again</button>
+  </div>`;
+}
+
 async function updateFeed(){
   feedOffset=0; feedHasMore=false; feedLoading=false; posts=[];
-  document.getElementById('feed-grid').innerHTML='<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>読み込み中...</div>';
+  skeletonGrid('feed-grid',6);
   document.getElementById('load-more-wrap').style.display='none';
   const isPopular=curSort==='popular';
   const fetched=await fetchPosts({..._feedFilterOpts(),from:0,limit:isPopular?200:PAGE_SIZE});
@@ -1573,6 +1835,7 @@ async function updateFeed(){
   rg('feed-grid',res);
   document.getElementById('feed-cnt').textContent=res.length+(feedHasMore?'+':'')+'件';
   document.getElementById('load-more-wrap').style.display=feedHasMore?'':'none';
+  initInfiniteScroll();
 }
 
 async function loadMoreFeed(){
@@ -1592,9 +1855,25 @@ async function loadMoreFeed(){
   if(btn){btn.disabled=false;btn.textContent='もっと見る';}
 }
 
+// 無限スクロール: IntersectionObserver
+let _scrollObserver = null;
+function initInfiniteScroll(){
+  if(_scrollObserver) _scrollObserver.disconnect();
+  const sentinel = document.getElementById('load-sentinel');
+  if(!sentinel) return;
+  _scrollObserver = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting && feedHasMore && !feedLoading){
+      const sp=document.getElementById('load-spinner');
+      if(sp) sp.style.display='';
+      loadMoreFeed().then(()=>{ if(sp) sp.style.display='none'; });
+    }
+  }, {rootMargin:'200px'});
+  _scrollObserver.observe(sentinel);
+}
+
 function setFollowFilt(val,el){
   if(val==='following'&&!myUser){
-    alert('フォロー中で絞り込むにはログインが必要です。');
+    showToast('フォロー中で絞り込むにはログインが必要です');openLoginModal();
     return;
   }
   filtFollowing=val;
@@ -1604,13 +1883,37 @@ function setFollowFilt(val,el){
 }
 
 function setFilt(type,val,el){
-  if(type==='line'){filtLine=val;document.querySelectorAll('#chips-line .chip').forEach(c=>c.classList.remove('active'));}
-  else if(type==='sea'){filtSea=val;document.querySelectorAll('#chips-sea .chip').forEach(c=>c.classList.remove('active'));}
-  else if(type==='color'){filtColor=val;document.querySelectorAll('#chips-color .chip').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.color-chip').forEach(c=>c.classList.remove('active'));}
-  if(el)el.classList.add('active');
+  let chips;
+  if(type==='line'){
+    filtLine=val;
+    chips=document.querySelectorAll('#chips-line .chip');
+  } else if(type==='sea'){
+    filtSea=val;
+    chips=document.querySelectorAll('#chips-sea .chip');
+  } else if(type==='color'){
+    filtColor=val;
+    chips=document.querySelectorAll('#chips-color .chip');
+    document.querySelectorAll('.color-chip').forEach(c=>c.classList.remove('active'));
+  }
+  // 全チップのactiveをリセットしてから選択したものだけをactive化
+  if(chips) chips.forEach(c=>c.classList.remove('active'));
+  if(el) el.classList.add('active');
   checkFilterActive();
   updateFeed();
 }
+function setFeedTab(tab, el){
+  document.querySelectorAll('.feed-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(tab==='following'){
+    if(!myUser){openLoginModal();document.getElementById('ftab-all').classList.add('active');return;}
+    filtFollowing='following';
+  } else {
+    filtFollowing='all';
+  }
+  checkFilterActive();
+  updateFeed();
+}
+
 function setSort(val,el){
   curSort=val;
   document.querySelectorAll('.sort-chip').forEach(c=>c.classList.remove('active'));
@@ -1728,7 +2031,6 @@ function renderStoreList(){
           <div class="store-card">
             <div>
               <div class="store-name">${s.name}</div>
-              <div class="store-line-tags">${s.lines.map(l=>`<span class="store-line-tag">${LINE_LABELS[l]||l}</span>`).join('')}</div>
               <div class="store-addr">${s.addr}</div>
             </div>
             <div class="store-tel">Tel<br>${s.tel}</div>
@@ -1930,7 +2232,7 @@ async function doSearch(){
 
   _setDiscoverySections(false);
   msgEl.textContent='検索中...';
-  document.getElementById('feed-grid').innerHTML='<div class="loading" style="grid-column:1/-1"><div class="spinner"></div>検索中...</div>';
+  skeletonGrid('feed-grid',6);
   document.getElementById('load-more-wrap').style.display='none';
 
   // Supabase側でpost_itemsの品番を検索
@@ -1940,7 +2242,17 @@ async function doSearch(){
     .select('post_id')
     .ilike('ref_number', '%'+srchQ+'%');
 
-  if(itemErr){console.error(itemErr);msgEl.textContent='検索エラーが発生しました。';return;}
+  if(itemErr){
+    console.error(itemErr);
+    msgEl.textContent='';
+    document.getElementById('feed-grid').innerHTML=`<div class="error-state">
+      <div class="error-state-code">Search Error</div>
+      <div class="error-state-msg">Search failed.</div>
+      <div class="error-state-sub">検索中にエラーが発生しました。</div>
+      <button class="error-state-retry" onclick="clearSearch()">Reset</button>
+    </div>`;
+    return;
+  }
 
   const matchedPostIds=[...new Set((matchedItems||[]).map(r=>r.post_id))];
 
@@ -1984,7 +2296,7 @@ async function doSearch(){
   document.getElementById('srch-clear-btn').style.display='';
   // タイトル・キャプションでも追加検索
   const {data:titleMatched}=await sb.from('posts')
-    .select(`id,user_id,title,caption,line,season,store,colors,created_at,profiles(id,nickname,handle,avatar_url,cdg_history,height),post_images(url,position),post_items(id,name,line,season,store,size,ref_number),likes(count),comments(count)`)
+    .select(`id,user_id,title,caption,tags,line,season,store,colors,created_at,profiles(id,nickname,handle,avatar_url,cdg_history,height),post_images(url,position),post_items(id,name,line,season,store,size,ref_number),likes(count),comments(count)`)
     .or(`title.ilike.%${raw}%,caption.ilike.%${raw}%`)
     .order('created_at',{ascending:false})
     .limit(50);
@@ -2015,10 +2327,19 @@ async function openPost(id){
   prevPage=document.querySelector('.page.active').id;
 
   const imgs=(p.post_images||[]).sort((a,b)=>a.position-b.position);
-  const mainEl=document.getElementById('d-main-img');
-  mainEl.style.aspectRatio='3/4';
-  mainEl.innerHTML=imgs[0]?`<img src="${imgs[0].url}" style="width:100%;height:100%;object-fit:cover;">`:fig(p);
-  document.getElementById('d-thumbs').innerHTML=imgs.length>1?imgs.map((img,i)=>`<div class="img-thumb ${i===0?'active':''}" onclick="switchImg('${img.url}',this)"><img src="${img.url}" style="width:100%;height:100%;object-fit:cover;"></div>`).join(''):'';
+  const dimEl=document.querySelector('.dim');
+  if(imgs.length>0){
+    const slides=imgs.map(img=>`<div class="slider-slide"><img src="${img.url}" loading="lazy"></div>`).join('');
+    const dots=imgs.length>1?`<div class="slider-dots">${imgs.map((_,i)=>`<button class="slider-dot ${i===0?'active':''}" onclick="sliderGoto(${i})"></button>`).join('')}</div>`:'';
+    const arrows=imgs.length>1?`<button class="slider-prev" onclick="sliderPrev()">&#8249;</button><button class="slider-next" onclick="sliderNext()">&#8250;</button>`:'';
+    dimEl.innerHTML=`<div class="slider-wrap" id="d-slider-wrap"><div class="slider-track" id="d-slider-track">${slides}</div>${arrows}${dots}</div>`;
+    window._sliderIdx=0;
+    window._sliderTotal=imgs.length;
+    _initSliderSwipe();
+  } else {
+    dimEl.innerHTML=`<div class="img-main" style="aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:var(--gry)">${fig(p)}</div>`;
+  }
+  document.getElementById('d-thumbs').innerHTML='';
 
   const prof=p.profiles||{};
   const avEl=document.getElementById('d-av');
@@ -2029,6 +2350,12 @@ async function openPost(id){
   document.getElementById('d-line').textContent=p.line||'';
   document.getElementById('d-ttl').textContent=p.title||'';
   document.getElementById('d-cap').textContent=p.caption||'';
+  const tagsEl=document.getElementById('d-tags');
+  if(tagsEl){
+    const tags=p.tags||[];
+    tagsEl.innerHTML=tags.length?tags.map(t=>`<span class="post-tag" onclick="searchByTag('${t}')">#${t}</span>`).join(''):'';
+    tagsEl.style.display=tags.length?'':'none';
+  }
 
   const likeCnt=(p.likes&&p.likes[0])?p.likes[0].count:0;
   document.getElementById('lcnt').textContent=likeCnt;
@@ -2048,6 +2375,15 @@ async function openPost(id){
       ${i.ref_number?`<span class="ibadge" style="font-family:var(--sans)">${i.ref_number}</span>`:''}
     </div>`).join('');
   document.getElementById('d-store').innerHTML=p.store?`<span>📍</span><span>${p.store}</span>`:'';
+  // 投稿日・更新日
+  const dateEl=document.getElementById('d-date');
+  if(dateEl){
+    const posted=p.created_at?new Date(p.created_at).toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'}):'';
+    const updated=p.updated_at&&p.updated_at!==p.created_at
+      ?` （編集済み: ${new Date(p.updated_at).toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})}）`:'';
+    dateEl.textContent=posted+updated;
+    dateEl.style.display=posted?'':'none';
+  }
 
   const isMine=myUser&&p.user_id===myUser.id;
   const fBtn=document.getElementById('detail-fol-btn');
@@ -2063,9 +2399,35 @@ async function openPost(id){
 
   await fetchCmts();
   goNav('detail',null);
+  updateUrlParam('post', p.id);
+  document.title = `${p.title||'コーデ'} — CDGLOA`;
+  // モバイルでボトムアクションバーを表示
+  if(window.innerWidth<=600){
+    document.querySelector('.dact').classList.add('mobile-visible');
+  }
 }
 
-function switchImg(src,el){document.getElementById('d-main-img').innerHTML=`<img src="${src}" style="width:100%;height:100%;object-fit:cover;">`;document.querySelectorAll('.img-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+function sliderGoto(idx){
+  const track=document.getElementById('d-slider-track');
+  if(!track) return;
+  window._sliderIdx=Math.max(0,Math.min(idx,(window._sliderTotal||1)-1));
+  track.style.transform=`translateX(-${window._sliderIdx*100}%)`;
+  document.querySelectorAll('.slider-dot').forEach((d,i)=>d.classList.toggle('active',i===window._sliderIdx));
+}
+function sliderPrev(){ sliderGoto((window._sliderIdx-1+(window._sliderTotal||1))%(window._sliderTotal||1)); }
+function sliderNext(){ sliderGoto((window._sliderIdx+1)%(window._sliderTotal||1)); }
+function _initSliderSwipe(){
+  const wrap=document.getElementById('d-slider-wrap');
+  if(!wrap) return;
+  let startX=0,dragging=false;
+  wrap.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragging=true;},{passive:true});
+  wrap.addEventListener('touchend',e=>{
+    if(!dragging)return; dragging=false;
+    const dx=e.changedTouches[0].clientX-startX;
+    if(Math.abs(dx)>40){ dx<0?sliderNext():sliderPrev(); }
+  });
+}
+function switchImg(src,el){sliderGoto(parseInt(el.dataset.idx||0));}
 
 let likedCmtIds=new Set();
 
@@ -2098,11 +2460,12 @@ function cmtHTML(c,replies,isReply=false){
   const replySection=childReplies.length?`<div class="cmt-replies">${childReplies.map(r=>cmtHTML(r,[],true)).join('')}</div>`:'';
   const replyFormId=`rf-${c.id}`;
   return`<div class="cmt" id="cmt-${c.id}">
-    <div class="cmt-hd"><div class="cmt-av">${av}</div><span class="cmt-un">${prof.handle||''}</span><span class="cmt-dt">${new Date(c.created_at).toLocaleDateString('ja')}</span></div>
+    <div class="cmt-hd"><div class="cmt-av" onclick="openUserProfile('${c.user_id}')" style="cursor:pointer">${av}</div><span class="cmt-un" onclick="openUserProfile('${c.user_id}')" style="cursor:pointer;text-decoration:underline;text-underline-offset:2px">${prof.handle||''}</span><span class="cmt-dt">${new Date(c.created_at).toLocaleDateString('ja')}</span></div>
     <div class="cmt-txt">${c.content}</div>
     <div class="cmt-actions">
       <button class="cmt-lk-btn${liked?' liked':''}" onclick="toggleCmtLike('${c.id}',this)">♡ <span>${lkCnt||''}</span></button>
       ${!isReply?`<button class="cmt-reply-btn" onclick="toggleReplyForm('${replyFormId}')">返信</button>`:''}
+      ${myUser&&c.user_id===myUser.id?`<button class="cmt-reply-btn" style="color:var(--mgry);margin-left:auto" onclick="deleteCmt('${c.id}')">削除</button>`:''}
     </div>
     ${!isReply?`<div class="cmt-reply-form" id="${replyFormId}" style="display:none"><input class="cmt-inp" type="text" placeholder="返信を追加..."><button class="cmt-sub" onclick="submitReply('${c.id}','${replyFormId}')">送信</button></div>`:''}
     ${replySection}
@@ -2129,6 +2492,14 @@ async function toggleCmtLike(cmtId,btn){
     likedCmtIds.add(cmtId);btn.classList.add('liked');
     countEl.textContent=cur+1;
   }
+}
+
+async function deleteCmt(cmtId){
+  if(!myUser)return;
+  if(!confirm('このコメントを削除しますか？'))return;
+  await sb.from('comments').delete().eq('id',cmtId).eq('user_id',myUser.id);
+  await fetchCmts();
+  showToast('コメントを削除しました');
 }
 
 async function submitReply(parentId,formId){
@@ -2161,24 +2532,28 @@ function renderSnsLinks(containerId, profile){
 
 function shareToX(){
   if(!curPost)return;
-  const text=encodeURIComponent(`${curPost.title||'コーデ'} — CDGLOA\n#CDGLOA #コムデギャルソン`);
-  const url=encodeURIComponent(location.href);
-  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
+  const line=curPost.line?' '+curPost.line.replace('COMME des GARCONS ','CDG ').replace('COMME des GARÇONS ','CDG '):'';
+  const sea=curPost.season?' '+curPost.season:'';
+  const tags=(curPost.tags||[]).map(function(t){return '#'+t;}).join(' ');
+  const txt=encodeURIComponent((curPost.title||'コーデ')+line+sea+' #CDGLOA #commesdesgarcons'+(tags?' '+tags:''));
+  const postUrl=encodeURIComponent(location.origin+location.pathname+'?post='+curPost.id);
+  window.open('https://twitter.com/intent/tweet?text='+txt+'&url='+postUrl,'_blank');
 }
 
 async function shareGeneral(){
   if(!curPost)return;
-  const shareData={title:curPost.title||'コーデ',text:`${curPost.title||'コーデ'} — CDGLOA`,url:location.href};
+  const postUrl=location.origin+location.pathname+'?post='+curPost.id;
+  const shareData={title:curPost.title||'コーデ',text:(curPost.title||'コーデ')+' — CDGLOA',url:postUrl};
   if(navigator.share){
     try{await navigator.share(shareData);}catch(e){}
   }else{
-    await navigator.clipboard.writeText(location.href);
-    showToast('リンクをコピーしました');
+    await navigator.clipboard.writeText(postUrl);
+    showToast('投稿URLをコピーしました');
   }
 }
 
 async function doLike(){
-  if(!myUser){alert('いいねするにはログインが必要です。');openLoginModal();return;}
+  if(!myUser){showToast('いいねするにはログインが必要です');openLoginModal();return;}
   const btn=document.getElementById('lbtn');
   const cnt=document.getElementById('lcnt');
   if(likedPostIds.has(curPost.id)){
@@ -2195,7 +2570,7 @@ async function doLike(){
 }
 
 async function toggleSave(){
-  if(!myUser){alert('保存するにはログインが必要です。');openLoginModal();return;}
+  if(!myUser){showToast('保存するにはログインが必要です');openLoginModal();return;}
   const btn=document.getElementById('save-btn');
   if(savedPostIds.has(curPost.id)){
     await sb.from('saves').delete().eq('post_id',curPost.id).eq('user_id',myUser.id);
@@ -2223,6 +2598,14 @@ function openEditPost(){
   if(!curPost)return;editingPostId=curPost.id;
   document.getElementById('epost-ttl').value=curPost.title||'';
   document.getElementById('epost-cap').value=curPost.caption||'';
+  document.getElementById('epost-tags').value=(curPost.tags||[]).join(' ');
+  // ライン・シーズン select を動的生成
+  const lineOpts=['COMME des GARÇONS','COMME des GARÇONS COMME des GARÇONS','COMME des GARÇONS GIRL','COMME des GARÇONS HOMME','COMME des GARÇONS HOMME PLUS','COMME des GARÇONS HOMME DEUX','COMME des GARÇONS SHIRT','BLACK COMME des GARÇONS','JUNYA WATANABE','JUNYA WATANABE MAN','tao COMME des GARÇONS','noir kei ninomiya','CDG','PLAY COMME des GARÇONS','THE BEATLES COMME des GARÇONS','Wallet COMME des GARÇONS','COMME des GARÇONS parfums'];
+  const seaOpts=['26AW','26SS','25AW','25SS','24AW','24SS','23AW','23SS','22AW','22SS','21AW','21SS','20AW','20SS','19AW','19SS','18AW','18SS','17AW','17SS','16AW','16SS','15AW','15SS','14AW','14SS','13AW','13SS','12AW','12SS','11AW','11SS','10AW','10SS','09AW','09SS','08AW','08SS','07AW','07SS','06AW','06SS','05AW','05SS','04AW','04SS','03AW','03SS','02AW','02SS','01AW','01SS','00AW','00SS','アーカイブ（2000年以前）'];
+  const lineEl=document.getElementById('epost-line');
+  lineEl.innerHTML='<option value="">選択してください</option>'+lineOpts.map(l=>`<option ${curPost.line===l?'selected':''}>${l}</option>`).join('');
+  const seaEl=document.getElementById('epost-season');
+  seaEl.innerHTML='<option value="">選択してください</option>'+seaOpts.map(s=>`<option ${curPost.season===s?'selected':''}>${s}</option>`).join('');
   // カラーピッカーを現在の色で初期化
   buildEditColorPicker(curPost.colors||[]);
   const el=document.getElementById('epost-ilist');el.innerHTML='';
@@ -2273,13 +2656,19 @@ async function saveEditPost(){
   const firstEditSels=firstEditRow?[...firstEditRow.querySelectorAll('select')]:[];
   const repLine=firstEditSels[1]?.value||'';
   const repSea=firstEditSels[2]?.value||'';
+  const rawEditTags=document.getElementById('epost-tags').value.trim();
+  const editTagsArr=rawEditTags?rawEditTags.split(/[\s,、]+/).map(t=>t.replace(/^#/,'')).filter(Boolean):[];
+  const editLine=document.getElementById('epost-line').value||repLine;
+  const editSea=document.getElementById('epost-season').value||repSea;
   await sb.from('posts').update({
     title:document.getElementById('epost-ttl').value,
     caption:document.getElementById('epost-cap').value,
-    line:repLine,
-    season:repSea,
+    tags:editTagsArr,
+    line:editLine,
+    season:editSea,
     store:'',
     colors:editSelectedColors.length>0?editSelectedColors:['black'],
+    updated_at:new Date().toISOString(),
   }).eq('id',editingPostId);
   await sb.from('post_items').delete().eq('post_id',editingPostId);
   const editRows=[...document.querySelectorAll('#epost-ilist .ir')];
@@ -2304,7 +2693,7 @@ async function saveEditPost(){
 }
 
 async function deletePost(){
-  if(!curPost)return;if(!confirm('この投稿を削除しますか？'))return;
+  if(!curPost)return;if(!confirm('この投稿を削除しますか？\nこの操作は取り消せません。'))return;
   await sb.from('posts').delete().eq('id',curPost.id);
   curPost=null;goNav('feed',document.querySelector('.nl'));updateFeed();showToast('投稿を削除しました');
 }
@@ -2493,6 +2882,7 @@ async function renderMyPage(){
   document.getElementById('my-following').textContent=fwing||0;
   document.getElementById('my-followers').textContent=fwers||0;
   rg('my-grid',myPostsData||[]);
+  calcCdgStats(myPostsData||[],'my-stats-grid','my-lines-list','my-cdg-stats');
 }
 
 function openEditProfileModal(){
@@ -2585,7 +2975,7 @@ async function updateMyAvatar(e){
    FOLLOW
 ===================================================== */
 async function toggleFollowUser(targetId){
-  if(!myUser){alert('フォローするにはログインが必要です。');openLoginModal();return;}
+  if(!myUser){showToast('フォローするにはログインが必要です');openLoginModal();return;}
   const fol=await isFollowing(targetId);
   if(fol){await sb.from('follows').delete().eq('follower_id',myUser.id).eq('following_id',targetId);}
   else{await sb.from('follows').insert({follower_id:myUser.id,following_id:targetId});}
@@ -2649,7 +3039,7 @@ async function openUserProfile(uid){
   if(u.birth_year){const vpCalcAge=new Date().getFullYear()-u.birth_year;document.getElementById('vp-age').textContent=vpCalcAge;vpAgeWrap.style.display='';}
   else{vpAgeWrap.style.display='none';}
   document.getElementById('vp-bio').textContent=u.bio||'';
-  const{data:vPosts}=await sb.from('posts').select('*,post_images(url,position),likes(count)').eq('user_id',uid).order('created_at',{ascending:false});
+  const{data:vPosts}=await sb.from('posts').select('*,post_images(url,position),likes(count),comments(count)').eq('user_id',uid).order('created_at',{ascending:false});
   document.getElementById('vp-posts').textContent=(vPosts||[]).length;
   const{count:fwing}=await sb.from('follows').select('*',{count:'exact',head:true}).eq('follower_id',uid);
   const{count:fwers}=await sb.from('follows').select('*',{count:'exact',head:true}).eq('following_id',uid);
@@ -2658,13 +3048,21 @@ async function openUserProfile(uid){
   const fol=await isFollowing(uid);
   const vb=document.getElementById('vp-fol-btn');vb.textContent=fol?'フォロー中':'フォロー';vb.classList.toggle('following',fol);
   rg('vprof-grid',vPosts||[]);
+  calcCdgStats(vPosts||[],'vp-stats-grid','vp-lines-list','vp-cdg-stats');
   goNav('vprofile',null);
 }
 
 /* =====================================================
    POST SUBMIT
 ===================================================== */
-function tryPost(){if(!myUser){openLoginModal();return;}goNav('post',null);}
+function tryPost(){
+  if(!myUser){openLoginModal();return;}
+  prevPage='page-feed';
+  goNav('post',null);
+  window.scrollTo({top:0,behavior:'instant'});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
+}
 
 async function addPhotos(e){
   const files=[...e.target.files];
@@ -2856,8 +3254,10 @@ async function doSubmit(){
     const firstSels=firstRow?[...firstRow.querySelectorAll('select')]:[];
     const repLine=firstSels[1]?.value||'';
     const repSea=firstSels[2]?.value||'';
+    const rawTags=document.getElementById('p-tags').value.trim();
+    const tagsArr=rawTags?rawTags.split(/[\s,、]+/).map(t=>t.replace(/^#/,'').trim()).filter(Boolean):[];
     const{data:newPost,error}=await sb.from('posts').insert({
-      user_id:myUser.id,title:ttl||'無題',caption:cap,line:repLine,season:repSea,store:'',colors
+      user_id:myUser.id,title:ttl||'無題',caption:cap,tags:tagsArr,line:repLine,season:repSea,store:'',colors
     }).select().single();
     if(error)throw error;
 
@@ -2894,7 +3294,9 @@ async function doSubmit(){
     setLoading('submit-post-btn',false,'アーカイブに投稿する');
     updateFeed();renderMyPage();goNav('feed',document.querySelector('.nl'));showToast('投稿しました！');
   }catch(err){
-    console.error(err);setLoading('submit-post-btn',false,'アーカイブに投稿する');showToast('投稿に失敗しました。もう一度お試しください。');
+    console.error(err);
+    setLoading('submit-post-btn',false,'アーカイブに投稿する');
+    showToast('Post failed. — 投稿に失敗しました');
   }
 }
 
@@ -2960,7 +3362,15 @@ async function loadRanking(){
         </div>
       </div>`;
     }).join('');
-  }catch(e){console.error(e);el.innerHTML='<div style="padding:28px 20px;font-size:10px;color:var(--mgry)">読み込みに失敗しました</div>';}
+  }catch(e){
+    console.error(e);
+    el.innerHTML=`<div class="error-state">
+      <div class="error-state-code">Load Error</div>
+      <div class="error-state-msg">Rankings unavailable.</div>
+      <div class="error-state-sub">ランキングの読み込みに失敗しました。</div>
+      <button class="error-state-retry" onclick="loadRanking()">Try again</button>
+    </div>`;
+  }
 }
 
 
@@ -3072,7 +3482,7 @@ function showNotifBell(show){
    SAVED PAGE
 ===================================================== */
 async function loadSavedPage(){
-  if(!myUser){document.getElementById('saved-grid').innerHTML='<div style="grid-column:1/-1;padding:28px 20px;font-size:10px;color:var(--mgry);font-family:var(--jp)">ログインすると保存済みコーデを見られます。</div>';document.getElementById('saved-cnt').textContent='';return;}
+  if(!myUser){document.getElementById('saved-grid').innerHTML=`<div class="error-state"><div class="error-state-code">Not signed in</div><div class="error-state-msg">Sign in to view saved posts.</div><div class="error-state-sub">ログインすると保存済みコーデを閲覧できます。</div><button class="error-state-retry" onclick="openLoginModal()">Sign in</button></div>`;document.getElementById('saved-cnt').textContent='';return;}
   const{data:saves}=await sb.from('saves').select('post_id').eq('user_id',myUser.id);
   const ids=(saves||[]).map(s=>s.post_id);
   if(!ids.length){rg('saved-grid',[]);document.getElementById('saved-cnt').textContent='0件';return;}
@@ -3090,24 +3500,139 @@ document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>
 /* =====================================================
    NAV
 ===================================================== */
-function goBack(){if(prevPage)showPage(prevPage);else goNav('feed',document.querySelector('.nl'));}
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+// URLパラメータ処理
+function calcCdgStats(posts, gridId, linesId, sectionId){
+  const section=document.getElementById(sectionId);
+  if(!section) return;
+  if(!posts||!posts.length){section.style.display='none';return;}
+  // ライン集計
+  const lineCounts={};
+  const seaCounts={};
+  posts.forEach(p=>{
+    if(p.line) lineCounts[p.line]=(lineCounts[p.line]||0)+1;
+    if(p.season) seaCounts[p.season]=(seaCounts[p.season]||0)+1;
+  });
+  const topLine=Object.entries(lineCounts).sort((a,b)=>b[1]-a[1])[0];
+  const topSea=Object.entries(seaCounts).sort((a,b)=>b[1]-a[1])[0];
+  const totalLikes=posts.reduce((s,p)=>s+((p.likes&&p.likes[0])?p.likes[0].count:0),0);
+  const grid=document.getElementById(gridId);
+  if(grid) grid.innerHTML=[
+    {label:'TOTAL POSTS',val:posts.length,sub:'件の投稿'},
+    {label:'TOP LINE',val:topLine?topLine[1]+'件':'—',sub:topLine?topLine[0].replace('COMME des GARÇONS ','CDG '):''},
+    {label:'TOP SEASON',val:topSea?topSea[1]+'件':'—',sub:topSea?topSea[0]:''},
+    {label:'TOTAL LIKES',val:totalLikes,sub:'いいね獲得'},
+  ].map(s=>`<div class="cdg-stat-card"><div class="cdg-stat-label">${s.label}</div><div class="cdg-stat-val">${s.val}</div><div class="cdg-stat-sub">${s.sub}</div></div>`).join('');
+  // ライン一覧
+  const linesList=document.getElementById(linesId);
+  const sortedLines=Object.entries(lineCounts).sort((a,b)=>b[1]-a[1]);
+  if(linesList) linesList.innerHTML=sortedLines.map(([line,cnt])=>`<span class="cdg-line-chip" onclick="setFilt('line','${line}',null);goNav('feed',document.querySelector('.nl'))">${line.replace('COMME des GARÇONS ','CDG ')} <span style="opacity:.6">${cnt}</span></span>`).join('');
+  section.style.display='';
+}
+
+function searchByTag(tag){
+  goNav('feed', document.querySelector('.nl'));
+  // タグで検索（キャプション・タグフィールドをOR検索）
+  const raw=tag;
+  srchQ=raw;
+  document.getElementById('srch').value=raw;
+  document.getElementById('srch-clear-btn').style.display='';
+  doSearch();
+}
+
+function parseUrlParams(){
+  const params=new URLSearchParams(window.location.search);
+  const postId=params.get('post');
+  if(postId){
+    openPost(postId);
+  }
+}
+
+function updateUrlParam(key, val){
+  const url=new URL(window.location.href);
+  if(val) url.searchParams.set(key, val);
+  else url.searchParams.delete(key);
+  window.history.replaceState({}, '', url.toString());
+}
+
+function goBack(){
+  updateUrlParam('post', null);
+  document.title='CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES';
+  document.querySelector('.dact')?.classList.remove('mobile-visible');
+  if(prevPage)showPage(prevPage);else goNav('feed',document.querySelector('.nl'));
+}
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el){
+    el.style.animation='none';
+    el.classList.add('active');
+    requestAnimationFrame(()=>{
+      el.style.animation='';
+    });
+  }
+}
 function goNav(name,el){
   document.querySelectorAll('.nl').forEach(l=>l.classList.remove('active'));
   if(el&&el.classList&&el.classList.contains('nl'))el.classList.add('active');
   showPage('page-'+name);
+  // どのページに移動してもトップへ即時スクロール
+  window.scrollTo({top:0,behavior:'instant'});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
   if(name==='feed')updateFeed();
   if(name==='ranking')loadRanking();
   if(name==='mypage')renderMyPage();
   if(name==='saved')loadSavedPage();
   if(name==='contact'){
-    // ログイン中はハンドルを自動入力
     if(myProfile){
       const nameEl=document.getElementById('contact-name');
       if(nameEl&&!nameEl.value) nameEl.value='@'+(myProfile.handle||'');
     }
   }
 }
+
+/* =====================================================
+   キーボードショートカット
+===================================================== */
+document.addEventListener('keydown', e=>{
+  // モーダルが開いているときは無効
+  const modalOpen=[...document.querySelectorAll('.modal-bg')].some(m=>m.style.display!==''&&m.style.display!=='none');
+
+  // Escape: モーダルを閉じる / 詳細ページから戻る
+  if(e.key==='Escape'){
+    if(modalOpen){
+      document.querySelectorAll('.modal-bg').forEach(m=>{if(m.style.display!=='none')m.style.display='none';});
+      return;
+    }
+    const detail=document.getElementById('page-detail');
+    if(detail&&detail.classList.contains('active')){goBack();return;}
+    const vprofile=document.getElementById('page-vprofile');
+    if(vprofile&&vprofile.classList.contains('active')){goBack();return;}
+  }
+
+  // 入力欄にフォーカス中は無効
+  const tag=document.activeElement?.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+  if(modalOpen) return;
+
+  // ←→: 詳細ページで前後の投稿に移動
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
+    const detail=document.getElementById('page-detail');
+    if(!detail||!detail.classList.contains('active')) return;
+    // スライダーが複数枚のときは画像切り替え優先
+    if(window._sliderTotal>1){
+      e.key==='ArrowLeft'?sliderPrev():sliderNext();
+      return;
+    }
+    // フィードの投稿一覧から前後移動
+    const feedPosts=posts.length?getFiltered():[];
+    if(!feedPosts.length||!curPost) return;
+    const idx=feedPosts.findIndex(p=>p.id===curPost.id);
+    if(idx===-1) return;
+    const nextIdx=e.key==='ArrowRight'?idx+1:idx-1;
+    if(nextIdx>=0&&nextIdx<feedPosts.length) openPost(feedPosts[nextIdx].id);
+  }
+});
 
 /* =====================================================
    SUPABASE AUTH STATE CHANGE (自動ログイン維持)
@@ -3221,6 +3746,13 @@ Promise.all([loadPickup(),loadSuggestUsers()]).then(()=>{
   const list=document.getElementById('ilist');
   if(list&&list.children.length===0) list.appendChild(makeItemRow());
 })();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
 </script>
 </body>
 </html>
