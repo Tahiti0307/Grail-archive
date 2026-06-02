@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='white'/%3E%3Ctext x='40' y='50' text-anchor='middle' font-family='Helvetica Neue,Helvetica,Arial,sans-serif' font-size='26' font-weight='600' letter-spacing='4' fill='black'%3ELOA%3C/text%3E%3C/svg%3E">
+<link rel="alternate icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
 
 <!-- ======================================================
   CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES
@@ -261,6 +263,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .cmt-form{margin-top:10px;display:flex;border:1px solid var(--blk)}
 .cmt-inp{flex:1;font-family:var(--jp);font-size:10px;padding:8px 9px;border:none;outline:none;background:transparent}
 .cmt-sub{font-family:var(--sans);font-size:8px;letter-spacing:.1em;padding:8px 11px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase}
+/* コメントいいね・返信 */
+.cmt-actions{display:flex;align-items:center;gap:12px;padding-left:25px;margin-top:5px}
+.cmt-lk-btn{font-family:var(--sans);font-size:8px;color:var(--mgry);background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;gap:3px;transition:color .12s;letter-spacing:.05em}
+.cmt-lk-btn:hover,.cmt-lk-btn.liked{color:var(--blk)}
+.cmt-reply-btn{font-family:var(--sans);font-size:8px;color:var(--mgry);background:none;border:none;cursor:pointer;padding:0;letter-spacing:.1em;text-transform:uppercase;transition:color .12s}
+.cmt-reply-btn:hover{color:var(--blk)}
+.cmt-replies{padding-left:20px;border-left:2px solid var(--ln);margin:6px 0 4px 12px}
+.cmt-reply-form{display:flex;border:1px solid var(--ln);margin:6px 0 4px 25px}
+/* 写真ドラッグ */
+.photo-thumb[draggable=true]{cursor:grab}
+.photo-thumb.drag-over{outline:2px solid var(--blk);opacity:.65}
+/* SNSリンク */
+.sns-link{display:inline-flex;align-items:center;gap:4px;font-size:9px;color:var(--mgry);text-decoration:none;padding:4px 10px;border:1px solid var(--ln);transition:all .12s;font-family:var(--sans);letter-spacing:.08em}
+.sns-link:hover{border-color:var(--blk);color:var(--blk)}
 
 /* PROFILE */
 .prof-wrap{max-width:900px;margin:0 auto;padding:28px 20px 0}
@@ -556,7 +572,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <div class="fg"><label class="flbl">メールアドレス *</label><input class="fi" type="email" id="reg-email" placeholder="example@email.com"></div>
         <div class="fg"><label class="flbl">パスワード *</label><input class="fi" type="password" id="reg-pass" placeholder="8文字以上"></div>
 
-        <div class="fg"><label class="flbl">ハンドル (@) *</label><input class="fi" type="text" id="reg-handle" placeholder="例：minako_cdg" maxlength="20" oninput="document.getElementById('reg-av-initial').textContent=this.value.charAt(0).toUpperCase()||'?'"></div>
+        <div class="fg"><label class="flbl">ハンドル (@) *</label><input class="fi" type="text" id="reg-handle" placeholder="例：minako_cdg" maxlength="20" oninput="if(!event.isComposing)document.getElementById('reg-av-initial').textContent=this.value.charAt(0).toUpperCase()||'?'"></div>
         <div class="fg"><label class="flbl">ギャルソン着用歴 *</label>
           <select class="fi" id="reg-history" style="appearance:none;cursor:pointer">
             <option value="">選択してください</option>
@@ -564,10 +580,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
           </select>
         </div>
         <div class="fr2">
-          <div class="fg"><label class="flbl">身長 (cm) *</label><input class="fi" type="text" id="reg-height" placeholder="168" inputmode="numeric" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')"></div>
-          <div class="fg"><label class="flbl">年齢 *</label><input class="fi" type="text" id="reg-age" placeholder="28" inputmode="numeric" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')"></div>
+          <div class="fg"><label class="flbl">身長 (cm) *</label><input class="fi" type="text" id="reg-height" placeholder="168" inputmode="numeric" oninput="onNumericInput(event)"></div>
+          <div class="fg"><label class="flbl">生まれ年 *</label><input class="fi" type="text" id="reg-birth-year" placeholder="1995" inputmode="numeric" maxlength="4" oninput="onNumericInput(event)"></div>
         </div>
         <div class="fg"><label class="flbl">自己紹介</label><textarea class="fi fta" id="reg-bio" placeholder="HOMME PLUSを中心にコレクション。DSM銀座常連。"></textarea></div>
+        <div class="fr2">
+          <div class="fg"><label class="flbl">X (@ハンドル)</label><input class="fi" type="text" id="reg-x-url" placeholder="tttaichi___"></div>
+          <div class="fg"><label class="flbl">Instagram (@ハンドル)</label><input class="fi" type="text" id="reg-ig-url" placeholder="username"></div>
+        </div>
         <div class="err-msg" id="reg-err"></div>
         <button class="sub-btn" id="reg-btn" onclick="doRegister()">登録する</button>
       </div>
@@ -631,10 +651,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         </select>
       </div>
       <div class="fr2">
-        <div class="fg"><label class="flbl">身長 (cm)</label><input class="fi" type="text" id="ep-height" inputmode="numeric" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')"></div>
-        <div class="fg"><label class="flbl">年齢</label><input class="fi" type="text" id="ep-age" inputmode="numeric" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')"></div>
+        <div class="fg"><label class="flbl">身長 (cm)</label><input class="fi" type="text" id="ep-height" inputmode="numeric" oninput="onNumericInput(event)"></div>
+        <div class="fg"><label class="flbl">生まれ年</label><input class="fi" type="text" id="ep-birth-year" placeholder="1995" inputmode="numeric" maxlength="4" oninput="onNumericInput(event)"></div>
       </div>
       <div class="fg"><label class="flbl">自己紹介</label><textarea class="fi fta" id="ep-bio"></textarea></div>
+      <div class="fr2">
+        <div class="fg"><label class="flbl">X (@ハンドル)</label><input class="fi" type="text" id="ep-x-url" placeholder="tttaichi___"></div>
+        <div class="fg"><label class="flbl">Instagram (@ハンドル)</label><input class="fi" type="text" id="ep-ig-url" placeholder="username"></div>
+      </div>
       <button class="sub-btn" id="ep-save-btn" onclick="saveEditProfile()">保存する</button>
     </div>
   </div>
@@ -693,7 +717,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <!-- 品番検索 -->
     <div id="srch-pane-ref" class="srch-pane active">
       <div class="search-inner">
-        <input type="text" id="srch" placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="this.value=normalizeRef(this.value)">
+        <input type="text" id="srch" placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="onRefInput(event)" style="text-transform:uppercase">
         <button class="search-btn" id="srch-clear-btn" onclick="clearSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
         <button class="search-btn" onclick="doSearch()">検索</button>
       </div>
@@ -710,15 +734,21 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <!-- 身長・年齢フィルター -->
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center">
         <span style="font-size:8px;letter-spacing:.15em;color:var(--mgry);text-transform:uppercase">身長</span>
-        <input type="text" id="srch-height-min" class="fi" inputmode="numeric" placeholder="150" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')" style="width:58px;padding:5px 7px;font-size:11px">
+        <input type="text" id="srch-height-min" class="fi" inputmode="numeric" placeholder="150" oninput="onNumericInput(event)" style="width:58px;padding:5px 7px;font-size:11px">
         <span style="font-size:10px;color:var(--mgry)">〜</span>
-        <input type="text" id="srch-height-max" class="fi" inputmode="numeric" placeholder="190" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')" style="width:58px;padding:5px 7px;font-size:11px">
+        <input type="text" id="srch-height-max" class="fi" inputmode="numeric" placeholder="190" oninput="onNumericInput(event)" style="width:58px;padding:5px 7px;font-size:11px">
         <span style="font-size:9px;color:var(--mgry)">cm</span>
         <span style="font-size:8px;letter-spacing:.15em;color:var(--mgry);text-transform:uppercase;margin-left:6px">年齢</span>
-        <input type="text" id="srch-age-min" class="fi" inputmode="numeric" placeholder="18" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')" style="width:48px;padding:5px 7px;font-size:11px">
+        <input type="text" id="srch-age-min" class="fi" inputmode="numeric" placeholder="18" oninput="onNumericInput(event)" style="width:48px;padding:5px 7px;font-size:11px">
         <span style="font-size:10px;color:var(--mgry)">〜</span>
-        <input type="text" id="srch-age-max" class="fi" inputmode="numeric" placeholder="60" oninput="this.value=toHankaku(this.value).replace(/[^0-9]/g,'')" style="width:48px;padding:5px 7px;font-size:11px">
+        <input type="text" id="srch-age-max" class="fi" inputmode="numeric" placeholder="60" oninput="onNumericInput(event)" style="width:48px;padding:5px 7px;font-size:11px">
         <span style="font-size:9px;color:var(--mgry)">歳</span>
+      </div>
+      <!-- 並び替え -->
+      <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
+        <span class="sort-lbl">並び替え</span>
+        <span class="sort-chip active" id="usort-new" onclick="setUserSort('new',this)">新着順</span>
+        <span class="sort-chip" id="usort-popular" onclick="setUserSort('popular',this)">人気順</span>
       </div>
       <div class="srch-msg" id="srch-user-msg"></div>
       <!-- ユーザー検索結果 -->
@@ -727,7 +757,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       </div>
     </div>
   </div>
-  <div class="filter-wrap">
+  <div class="filter-wrap" id="filter-wrap-area">
     <div class="filter-row"><span class="filter-lbl">ライン</span>
       <div class="chips" id="chips-line">
         <span class="chip active" onclick="setFilt('line','all',this)">ALL</span>
@@ -809,6 +839,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div class="dact">
         <button class="abtn" id="lbtn" onclick="doLike()">♡ <span id="lcnt">0</span></button>
         <button class="abtn" id="save-btn" onclick="toggleSave()">□ 保存</button>
+        <button class="abtn" onclick="shareToX()">𝕏 シェア</button>
+        <button class="abtn" onclick="shareGeneral()">↑ シェア</button>
         <button class="abtn" id="edit-post-btn" style="display:none" onclick="openEditPost()">✎ 編集</button>
         <button class="abtn danger" id="del-post-btn" style="display:none" onclick="deletePost()">✕ 削除</button>
       </div>
@@ -852,6 +884,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
             <div class="prof-info-item" id="my-age-wrap" style="display:none">年齢：<strong id="my-age"></strong>歳</div>
           </div>
           <div class="prof-bio" id="my-bio"></div>
+          <div id="my-sns" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
             <button class="edit-btn" onclick="openEditProfileModal()">プロフィールを編集</button>
             <button class="edit-btn" style="border-color:var(--mgry);color:var(--mgry)" onclick="doLogout()">ログアウト</button>
@@ -879,6 +912,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         </div>
         <div class="prof-info-row"><div class="prof-info-item">着用歴：<strong id="vp-history"></strong></div><div class="prof-info-item">身長：<strong id="vp-height"></strong>cm</div><div class="prof-info-item" id="vp-age-wrap" style="display:none">年齢：<strong id="vp-age"></strong>歳</div></div>
         <div class="prof-bio" id="vp-bio"></div>
+        <div id="vp-sns" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div>
         <button class="fol-btn" id="vp-fol-btn" style="margin-top:10px" onclick="toggleFollowUser(curVisitedUserId)">フォロー</button>
       </div>
     </div>
@@ -959,7 +993,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div style="font-size:20px;letter-spacing:.04em;margin-bottom:4px">タイチ</div>
       <div style="font-size:10px;letter-spacing:.12em;color:var(--mgry);margin-bottom:16px">@tahiti</div>
       <div style="display:flex;gap:8px">
-        <a href="https://x.com/tahiti" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:8px;letter-spacing:.15em;padding:6px 14px;border:1px solid var(--blk);color:var(--blk);text-decoration:none;text-transform:uppercase;transition:all .15s" onmouseover="this.style.background='var(--blk)';this.style.color='var(--wht)'" onmouseout="this.style.background='';this.style.color='var(--blk)'">X (Twitter) →</a>
+        <a href="https://x.com/tttaichi___" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:8px;letter-spacing:.15em;padding:6px 14px;border:1px solid var(--blk);color:var(--blk);text-decoration:none;text-transform:uppercase;transition:all .15s" onmouseover="this.style.background='var(--blk)';this.style.color='var(--wht)'" onmouseout="this.style.background='';this.style.color='var(--blk)'">X (Twitter) →</a>
       </div>
     </div>
 
@@ -1052,6 +1086,9 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 ===================================================== */
 function toHankaku(s){return s.replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));}
 function normalizeRef(s){return toHankaku(s).toUpperCase().replace(/-/g,'');}
+// IME入力中（isComposing=true）は値書き換えをスキップ
+function onNumericInput(e){if(e.isComposing)return;e.target.value=toHankaku(e.target.value).replace(/[^0-9]/g,'');}
+function onRefInput(e){if(e.isComposing)return;const pos=e.target.selectionStart;e.target.value=normalizeRef(e.target.value);try{e.target.setSelectionRange(pos,pos);}catch(_){}}
 function showToast(msg,dur=2400){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),dur);
@@ -1400,6 +1437,13 @@ function resetAllFilters(){
    検索タブ切り替え
 ===================================================== */
 let srchTabMode='ref'; // 'ref' or 'user'
+let userSortMode='new'; // 'new' or 'popular'
+function setUserSort(mode,el){
+  userSortMode=mode;
+  document.querySelectorAll('#usort-new,#usort-popular').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  doUserSearch();
+}
 
 function switchSrchTab(mode){
   srchTabMode=mode;
@@ -1407,14 +1451,21 @@ function switchSrchTab(mode){
   document.getElementById('tab-user-btn').classList.toggle('active', mode==='user');
   document.getElementById('srch-pane-ref').classList.toggle('active', mode==='ref');
   document.getElementById('srch-pane-user').classList.toggle('active', mode==='user');
-  // タブ切り替え時にフィードを全件表示に戻す
+  // フィルター・ソート・グリッドの表示切替
+  const filterWrap=document.getElementById('filter-wrap-area');
+  const feedToolbar=document.querySelector('.feed-toolbar');
   if(mode==='ref'){
+    if(filterWrap)filterWrap.style.display='';
+    if(feedToolbar)feedToolbar.style.display='';
     document.getElementById('user-search-results').style.display='none';
     document.getElementById('feed-grid').style.display='';
     updateFeed();
   } else {
+    if(filterWrap)filterWrap.style.display='none';
+    if(feedToolbar)feedToolbar.style.display='none';
     document.getElementById('feed-grid').style.display='none';
     document.getElementById('user-search-results').style.display='none';
+    doUserSearch(); // 全ユーザーをデフォルト表示
   }
 }
 
@@ -1425,9 +1476,13 @@ async function doUserSearch(){
   const q=document.getElementById('srch-user').value.trim();
   const heightMin=parseInt(document.getElementById('srch-height-min').value)||null;
   const heightMax=parseInt(document.getElementById('srch-height-max').value)||null;
-  const ageMin=parseInt(document.getElementById('srch-age-min').value)||null;
-  const ageMax=parseInt(document.getElementById('srch-age-max').value)||null;
-  const hasFilter=heightMin||heightMax||ageMin||ageMax;
+  const ageMinVal=parseInt(document.getElementById('srch-age-min').value)||null;
+  const ageMaxVal=parseInt(document.getElementById('srch-age-max').value)||null;
+  const curYear=new Date().getFullYear();
+  // 年齢→生まれ年に変換（年齢20〜30歳 → birth_year: curYear-30〜curYear-20）
+  const birthYearMin=ageMaxVal?curYear-ageMaxVal:null;
+  const birthYearMax=ageMinVal?curYear-ageMinVal:null;
+  const hasFilter=heightMin||heightMax||ageMinVal||ageMaxVal;
 
   const msgEl=document.getElementById('srch-user-msg');
   const resultsEl=document.getElementById('user-search-results');
@@ -1443,13 +1498,15 @@ async function doUserSearch(){
   resultsEl.style.display='none';
 
   // クエリ構築
-  let queryBase=sb.from('profiles').select('id,nickname,handle,avatar_url,cdg_history,height,age,bio');
+  let queryBase=sb.from('profiles').select('id,nickname,handle,avatar_url,cdg_history,height,birth_year,bio,created_at');
   if(q) queryBase=queryBase.ilike('handle','%'+q.replace('@','')+'%');
   if(heightMin) queryBase=queryBase.gte('height',heightMin);
   if(heightMax) queryBase=queryBase.lte('height',heightMax);
-  if(ageMin) queryBase=queryBase.gte('age',ageMin);
-  if(ageMax) queryBase=queryBase.lte('age',ageMax);
-  const {data:byNick}=await queryBase.limit(30);
+  if(birthYearMin) queryBase=queryBase.gte('birth_year',birthYearMin);
+  if(birthYearMax) queryBase=queryBase.lte('birth_year',birthYearMax);
+  // 新着順はcreated_at降順、人気順は後でフォロワー数で並び替え
+  if(userSortMode==='new') queryBase=queryBase.order('created_at',{ascending:false});
+  const {data:byNick}=await queryBase.limit(50);
 
   // 重複排除でマージ
   const merged=[];
@@ -1481,8 +1538,13 @@ async function doUserSearch(){
   const followerMap={};
   (followerData||[]).forEach(f=>{followerMap[f.following_id]=(followerMap[f.following_id]||0)+1;});
 
-  document.getElementById('srch-user-clear-btn').style.display='';
-  msgEl.textContent=`「${q}」の検索結果 ${merged.length}件`;
+  // 人気順：フォロワー数で降順ソート
+  if(userSortMode==='popular'){
+    merged.sort((a,b)=>(followerMap[b.id]||0)-(followerMap[a.id]||0));
+  }
+  if(q||hasFilter) document.getElementById('srch-user-clear-btn').style.display='';
+  const label=q?`「${q}」の検索結果 ${merged.length}件`:`${merged.length}件のユーザー`;
+  msgEl.textContent=label;
   resultsEl.style.display='block';
 
   listEl.innerHTML=merged.map(u=>{
@@ -1498,7 +1560,7 @@ async function doUserSearch(){
         <div class="user-result-av">${avH}</div>
         <div>
           <div class="user-result-name">${u.handle||''}</div>
-          ${u.cdg_history||u.height||u.age?`<div style="font-size:8px;color:var(--mgry);margin-top:1px">${[u.cdg_history?'着用歴 '+u.cdg_history:'',u.height?u.height+'cm':'',u.age?u.age+'歳':''].filter(Boolean).join(' · ')}</div>`:''}
+          ${u.cdg_history||u.height||u.birth_year?`<div style="font-size:8px;color:var(--mgry);margin-top:1px">${[u.cdg_history?'着用歴 '+u.cdg_history:'',u.height?u.height+'cm':'',u.birth_year?(new Date().getFullYear()-u.birth_year)+'歳':''].filter(Boolean).join(' · ')}</div>`:''}
         </div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
@@ -1688,36 +1750,120 @@ async function openPost(id){
   document.getElementById('edit-post-btn').style.display=isMine?'':'none';
   document.getElementById('del-post-btn').style.display=isMine?'':'none';
 
-  renderCmts(p.comments||[]);
+  await fetchCmts();
   goNav('detail',null);
 }
 
 function switchImg(src,el){document.getElementById('d-main-img').innerHTML=`<img src="${src}" style="width:100%;height:100%;object-fit:cover;">`;document.querySelectorAll('.img-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
 
+let likedCmtIds=new Set();
+
+async function fetchCmts(){
+  if(!curPost)return;
+  const{data:allCmts}=await sb.from('comments')
+    .select('*,profiles(handle,avatar_url),comment_likes(count)')
+    .eq('post_id',curPost.id).order('created_at');
+  if(myUser&&allCmts?.length){
+    const{data:myLikes}=await sb.from('comment_likes').select('comment_id').eq('user_id',myUser.id).in('comment_id',allCmts.map(c=>c.id));
+    likedCmtIds=new Set((myLikes||[]).map(l=>l.comment_id));
+  }else{likedCmtIds=new Set();}
+  renderCmts(allCmts||[]);
+}
+
 function renderCmts(cmts){
-  document.getElementById('cmt-list').innerHTML=cmts.length
-    ?cmts.map(c=>{const prof=c.profiles||{};const av=prof.avatar_url?`<img src="${prof.avatar_url}">`:`<span style="font-size:8px">${(prof.handle||'?').charAt(0).toUpperCase()}</span>`;return`<div class="cmt"><div class="cmt-hd"><div class="cmt-av">${av}</div><span class="cmt-un">${prof.handle||''}</span><span class="cmt-dt">${new Date(c.created_at).toLocaleDateString('ja')}</span></div><div class="cmt-txt">${c.content}</div></div>`;}).join('')
-    :'<div style="font-size:10px;color:var(--mgry);padding:7px 0;font-family:var(--jp)">コメントはまだありません。</div>';
+  const top=cmts.filter(c=>!c.parent_id);
+  const replies=cmts.filter(c=>c.parent_id);
+  const el=document.getElementById('cmt-list');
+  if(!top.length){el.innerHTML='<div style="font-size:10px;color:var(--mgry);padding:7px 0;font-family:var(--jp)">コメントはまだありません。</div>';return;}
+  el.innerHTML=top.map(c=>cmtHTML(c,replies)).join('');
+}
+
+function cmtHTML(c,replies,isReply=false){
+  const prof=c.profiles||{};
+  const av=prof.avatar_url?`<img src="${prof.avatar_url}">`:`<span style="font-size:8px">${(prof.handle||'?').charAt(0).toUpperCase()}</span>`;
+  const lkCnt=(c.comment_likes&&c.comment_likes[0])?c.comment_likes[0].count:0;
+  const liked=likedCmtIds.has(c.id);
+  const childReplies=(replies||[]).filter(r=>r.parent_id===c.id);
+  const replySection=childReplies.length?`<div class="cmt-replies">${childReplies.map(r=>cmtHTML(r,[],true)).join('')}</div>`:'';
+  const replyFormId=`rf-${c.id}`;
+  return`<div class="cmt" id="cmt-${c.id}">
+    <div class="cmt-hd"><div class="cmt-av">${av}</div><span class="cmt-un">${prof.handle||''}</span><span class="cmt-dt">${new Date(c.created_at).toLocaleDateString('ja')}</span></div>
+    <div class="cmt-txt">${c.content}</div>
+    <div class="cmt-actions">
+      <button class="cmt-lk-btn${liked?' liked':''}" onclick="toggleCmtLike('${c.id}',this)">♡ <span>${lkCnt||''}</span></button>
+      ${!isReply?`<button class="cmt-reply-btn" onclick="toggleReplyForm('${replyFormId}')">返信</button>`:''}
+    </div>
+    ${!isReply?`<div class="cmt-reply-form" id="${replyFormId}" style="display:none"><input class="cmt-inp" type="text" placeholder="返信を追加..."><button class="cmt-sub" onclick="submitReply('${c.id}','${replyFormId}')">送信</button></div>`:''}
+    ${replySection}
+  </div>`;
+}
+
+function toggleReplyForm(id){
+  const f=document.getElementById(id);if(!f)return;
+  const open=f.style.display==='none';f.style.display=open?'flex':'none';
+  if(open)f.querySelector('input')?.focus();
+}
+
+async function toggleCmtLike(cmtId,btn){
+  if(!myUser){showToast('ログインが必要です');openLoginModal();return;}
+  const liked=btn.classList.contains('liked');
+  const countEl=btn.querySelector('span');
+  const cur=parseInt(countEl.textContent)||0;
+  if(liked){
+    await sb.from('comment_likes').delete().eq('comment_id',cmtId).eq('user_id',myUser.id);
+    likedCmtIds.delete(cmtId);btn.classList.remove('liked');
+    countEl.textContent=cur>1?cur-1:'';
+  }else{
+    await sb.from('comment_likes').insert({comment_id:cmtId,user_id:myUser.id});
+    likedCmtIds.add(cmtId);btn.classList.add('liked');
+    countEl.textContent=cur+1;
+  }
+}
+
+async function submitReply(parentId,formId){
+  if(!myUser){showToast('ログインが必要です');openLoginModal();return;}
+  const form=document.getElementById(formId);
+  const inp=form?.querySelector('input');
+  const txt=inp?.value.trim();if(!txt||!curPost)return;
+  inp.value='';inp.disabled=true;
+  await sb.from('comments').insert({post_id:curPost.id,user_id:myUser.id,content:txt,parent_id:parentId});
+  inp.disabled=false;
+  await fetchCmts();
 }
 
 async function addCmt(){
   if(!myUser){showToast('コメントするにはログインが必要です');openLoginModal();return;}
   const inp=document.getElementById('cmt-in');const txt=inp.value.trim();if(!txt||!curPost)return;
   inp.value='';inp.disabled=true;
-  // 楽観的更新: 即座にUIに反映
-  const optimistic={id:'tmp',profiles:myProfile||{handle:myUser.email},content:txt,created_at:new Date().toISOString()};
-  const existing=document.getElementById('cmt-list');
-  const tmpDiv=document.createElement('div');
-  tmpDiv.className='cmt';
-  const prof=myProfile||{};
-  const av=prof.avatar_url?`<img src="${prof.avatar_url}">`:`<span style="font-size:8px">${(prof.handle||'?').charAt(0).toUpperCase()}</span>`;
-  tmpDiv.innerHTML=`<div class="cmt-hd"><div class="cmt-av">${av}</div><span class="cmt-un">${prof.handle||''}</span><span class="cmt-dt">今</span></div><div class="cmt-txt">${txt}</div>`;
-  if(existing.querySelector('.cmt')){existing.appendChild(tmpDiv);}else{existing.innerHTML='';existing.appendChild(tmpDiv);}
-  inp.disabled=false;inp.focus();
-  // 実際のDB書き込み
   await sb.from('comments').insert({post_id:curPost.id,user_id:myUser.id,content:txt});
-  const{data:cmts}=await sb.from('comments').select('*,profiles(nickname,handle,avatar_url)').eq('post_id',curPost.id).order('created_at');
-  renderCmts(cmts||[]);
+  inp.disabled=false;inp.focus();
+  await fetchCmts();
+}
+
+function renderSnsLinks(containerId, profile){
+  const el=document.getElementById(containerId);if(!el)return;
+  const links=[];
+  if(profile.x_url) links.push(`<a class="sns-link" href="https://x.com/${profile.x_url}" target="_blank" rel="noopener">𝕏 @${profile.x_url}</a>`);
+  if(profile.instagram_url) links.push(`<a class="sns-link" href="https://instagram.com/${profile.instagram_url}" target="_blank" rel="noopener">◎ @${profile.instagram_url}</a>`);
+  el.innerHTML=links.join('');
+}
+
+function shareToX(){
+  if(!curPost)return;
+  const text=encodeURIComponent(`${curPost.title||'コーデ'} — CDGLOA\n#CDGLOA #コムデギャルソン`);
+  const url=encodeURIComponent(location.href);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank');
+}
+
+async function shareGeneral(){
+  if(!curPost)return;
+  const shareData={title:curPost.title||'コーデ',text:`${curPost.title||'コーデ'} — CDGLOA`,url:location.href};
+  if(navigator.share){
+    try{await navigator.share(shareData);}catch(e){}
+  }else{
+    await navigator.clipboard.writeText(location.href);
+    showToast('リンクをコピーしました');
+  }
 }
 
 async function doLike(){
@@ -1800,7 +1946,7 @@ function makeEditItemRow(i={}){
       ${storeOpts.map(s=>`<option ${i.store===s?'selected':''}>${s}</option>`).join('')}
     </select>
     <input class="fi" type="text" placeholder="サイズ" value="${i.size||''}" style="font-size:10px">
-    <input class="fi" type="text" placeholder="品番" value="${i.ref_number||''}" oninput="this.value=normalizeRef(this.value)" style="text-transform:uppercase;font-size:10px">
+    <input class="fi" type="text" placeholder="品番" value="${i.ref_number||''}" oninput="onRefInput(event)" style="text-transform:uppercase;font-size:10px">
     <button class="rm" onclick="rmItemEdit(this)">×</button>
   `;
   return d;
@@ -1908,7 +2054,8 @@ async function doRegister(){
   const handle=document.getElementById('reg-handle').value.trim();
   const history=document.getElementById('reg-history').value;
   const height=document.getElementById('reg-height').value;
-  const age=document.getElementById('reg-age').value;
+  const age=document.getElementById('reg-birth-year').value;
+
   const email=document.getElementById('reg-email').value.trim();
   const pass=document.getElementById('reg-pass').value;
   const bio=document.getElementById('reg-bio').value.trim();
@@ -1925,7 +2072,9 @@ async function doRegister(){
 
   // 登録情報をsessionStorageに保存（メール確認後にプロフィールを作成するため）
   pendingRegEmail=email;
-  sessionStorage.setItem('pendingProfile',JSON.stringify({handle,history,height:parseInt(height),age:parseInt(age),bio}));
+  const xUrl=document.getElementById('reg-x-url').value.trim().replace(/^@/,'');
+  const igUrl=document.getElementById('reg-ig-url').value.trim().replace(/^@/,'');
+  sessionStorage.setItem('pendingProfile',JSON.stringify({handle,history,height:parseInt(height),birth_year:parseInt(age),bio,x_url:xUrl||null,instagram_url:igUrl||null}));
 
   // メール確認が不要な場合（Supabaseの設定でconfirmationが無効の場合）
   if(data.session){
@@ -1958,8 +2107,10 @@ async function _createProfileAfterSignup(user){
     handle:pending.handle,
     cdg_history:pending.history,
     height:pending.height,
-    age:pending.age||null,
+    birth_year:pending.birth_year||null,
     bio:pending.bio||'',
+    x_url:pending.x_url||null,
+    instagram_url:pending.instagram_url||null,
     avatar_url:avatarUrl
   });
   sessionStorage.removeItem('pendingProfile');
@@ -2019,8 +2170,9 @@ async function renderMyPage(){
   document.getElementById('my-handle').textContent='@'+(myProfile.handle||'');
   document.getElementById('my-history').textContent=myProfile.cdg_history||'';
   document.getElementById('my-height').textContent=myProfile.height||'';
+  renderSnsLinks('my-sns', myProfile);
   const myAgeWrap=document.getElementById('my-age-wrap');
-  if(myProfile.age){document.getElementById('my-age').textContent=myProfile.age;myAgeWrap.style.display='';}
+  if(myProfile.birth_year){const myCalcAge=new Date().getFullYear()-myProfile.birth_year;document.getElementById('my-age').textContent=myCalcAge;myAgeWrap.style.display='';}
   else{myAgeWrap.style.display='none';}
   document.getElementById('my-bio').textContent=myProfile.bio||'';
   const{data:myPostsData}=await sb.from('posts').select('*,post_images(url,position),post_items(ref_number),likes(count)').eq('user_id',myUser.id).order('created_at',{ascending:false});
@@ -2040,8 +2192,10 @@ function openEditProfileModal(){
   document.getElementById('ep-handle').value=myProfile.handle||'';
   document.getElementById('ep-history').value=myProfile.cdg_history||'';
   document.getElementById('ep-height').value=myProfile.height||'';
-  document.getElementById('ep-age').value=myProfile.age||'';
+  document.getElementById('ep-birth-year').value=myProfile.birth_year||'';
   document.getElementById('ep-bio').value=myProfile.bio||'';
+  document.getElementById('ep-x-url').value=myProfile.x_url||'';
+  document.getElementById('ep-ig-url').value=myProfile.instagram_url||'';
   openModal('modal-edit-profile');
 }
 
@@ -2061,8 +2215,10 @@ async function saveEditProfile(){
     handle:newHandle,
     cdg_history:document.getElementById('ep-history').value||myProfile.cdg_history,
     height:parseInt(document.getElementById('ep-height').value)||myProfile.height,
-    age:parseInt(document.getElementById('ep-age').value)||myProfile.age||null,
+    birth_year:parseInt(document.getElementById('ep-birth-year').value)||myProfile.birth_year||null,
     bio:document.getElementById('ep-bio').value.trim(),
+    x_url:document.getElementById('ep-x-url').value.trim().replace(/^@/,'')||null,
+    instagram_url:document.getElementById('ep-ig-url').value.trim().replace(/^@/,'')||null,
     avatar_url:avatarUrl,
   };
   await sb.from('profiles').update(upd).eq('id',myUser.id);
@@ -2177,8 +2333,9 @@ async function openUserProfile(uid){
   document.getElementById('vp-handle').textContent='';
   document.getElementById('vp-history').textContent=u.cdg_history||'';
   document.getElementById('vp-height').textContent=u.height||'';
+  renderSnsLinks('vp-sns', u);
   const vpAgeWrap=document.getElementById('vp-age-wrap');
-  if(u.age){document.getElementById('vp-age').textContent=u.age;vpAgeWrap.style.display='';}
+  if(u.birth_year){const vpCalcAge=new Date().getFullYear()-u.birth_year;document.getElementById('vp-age').textContent=vpCalcAge;vpAgeWrap.style.display='';}
   else{vpAgeWrap.style.display='none';}
   document.getElementById('vp-bio').textContent=u.bio||'';
   const{data:vPosts}=await sb.from('posts').select('*,post_images(url,position),likes(count)').eq('user_id',uid).order('created_at',{ascending:false});
@@ -2223,15 +2380,29 @@ async function addPhotos(e){
   }
   e.target.value='';
 }
+let _dragIdx=null;
 function renderPhotoZone(){
-  document.getElementById('photo-zone').innerHTML=
+  const zone=document.getElementById('photo-zone');
+  zone.innerHTML=
     uploadedPhotos.map((p,i)=>{
-      const badge=p.pct>0
-        ?`<span style="position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,.65);color:#fff;font-size:8px;padding:1px 5px;letter-spacing:.05em;">-${p.pct}%</span>`
-        :'';
-      return`<div class="photo-thumb" style="position:relative"><img src="${p.dataUrl}">${badge}<button class="photo-rm" onclick="removePhoto(${i})">×</button></div>`;
+      const badge=p.pct>0?`<span style="position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,.65);color:#fff;font-size:8px;padding:1px 5px;letter-spacing:.05em;">-${p.pct}%</span>`:'';
+      return`<div class="photo-thumb" draggable="true" data-idx="${i}" style="position:relative"><img src="${p.dataUrl}">${badge}<button class="photo-rm" onclick="removePhoto(${i})">×</button></div>`;
     }).join('')+
     `<div class="photo-add" onclick="document.getElementById('fi-up2').click()"><span style="font-size:22px">＋</span><span>写真を追加</span></div><input type="file" id="fi-up2" accept="image/*" multiple style="display:none" onchange="addPhotos(event)">`;
+  zone.querySelectorAll('.photo-thumb[draggable]').forEach(el=>{
+    el.addEventListener('dragstart',e=>{_dragIdx=parseInt(el.dataset.idx);el.style.opacity='.4';});
+    el.addEventListener('dragend',e=>{el.style.opacity='';renderPhotoZone();});
+    el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag-over');});
+    el.addEventListener('dragleave',e=>{el.classList.remove('drag-over');});
+    el.addEventListener('drop',e=>{
+      e.preventDefault();el.classList.remove('drag-over');
+      const toIdx=parseInt(el.dataset.idx);
+      if(_dragIdx===null||_dragIdx===toIdx)return;
+      const moved=uploadedPhotos.splice(_dragIdx,1)[0];
+      uploadedPhotos.splice(toIdx,0,moved);
+      _dragIdx=null;renderPhotoZone();
+    });
+  });
 }
 function removePhoto(i){uploadedPhotos.splice(i,1);renderPhotoZone();}
 function makeItemLineOptions(){
@@ -2333,7 +2504,7 @@ function makeItemRow(){
       ${makeItemStoreOptions()}
     </select>
     <input class="fi" type="text" placeholder="サイズ" style="font-size:10px">
-    <input class="fi" type="text" placeholder="品番" oninput="this.value=normalizeRef(this.value)" style="text-transform:uppercase;font-size:10px">
+    <input class="fi" type="text" placeholder="品番" oninput="onRefInput(event)" style="text-transform:uppercase;font-size:10px">
     <button class="rm" onclick="rmItem(this)">×</button>
   `;
   return d;
