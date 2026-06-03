@@ -2435,13 +2435,16 @@ async function doSearch(){
 ===================================================== */
 async function openPost(id){
   try{
+  console.log('openPost called:', id);
   const {data:p, error}=await sb.from('posts')
     .select(`*, profiles(id,nickname,handle,avatar_url,cdg_history,height), post_images(url,position), post_items(name,line,season,store,size,ref_number)`)
     .eq('id',id).single();
+  console.log('query result:', {p, error});
   if(error){console.error('openPost query error:',error);showToast('投稿の読み込みに失敗しました');return;}
-  if(!p)return;
+  if(!p){console.error('post not found');return;}
   // いいね数を別途取得
   const {count:likeCnt=0}=await sb.from('likes').select('*',{count:'exact',head:true}).eq('post_id',id);
+  console.log('likeCnt:', likeCnt);
   curPost=p;
   prevPage=document.querySelector('.page.active').id;
 
@@ -2527,7 +2530,7 @@ async function openPost(id){
   loadCrossRef(p.post_items||[]);
   // AIマッチ結果をリセット
   document.getElementById('ai-match-result').innerHTML='';
-  }catch(e){console.error('openPost error:',e);showToast('投稿の読み込みに失敗しました');}
+  }catch(e){console.error('openPost CATCH error:', e, e.stack);showToast('投稿の読み込みに失敗しました');}
 }
 
 function sliderGoto(idx){
