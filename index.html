@@ -2436,10 +2436,12 @@ async function doSearch(){
 async function openPost(id){
   try{
   const {data:p, error}=await sb.from('posts')
-    .select(`*, profiles(id,nickname,handle,avatar_url,cdg_history,height), post_images(url,position), post_items(name,line,season,store,size,ref_number), likes(count)`)
+    .select(`*, profiles(id,nickname,handle,avatar_url,cdg_history,height), post_images(url,position), post_items(name,line,season,store,size,ref_number)`)
     .eq('id',id).single();
   if(error){console.error('openPost query error:',error);showToast('投稿の読み込みに失敗しました');return;}
   if(!p)return;
+  // いいね数を別途取得
+  const {count:likeCnt=0}=await sb.from('likes').select('*',{count:'exact',head:true}).eq('post_id',id);
   curPost=p;
   prevPage=document.querySelector('.page.active').id;
 
@@ -2474,9 +2476,8 @@ async function openPost(id){
     tagsEl.style.display=tags.length?'':'none';
   }
 
-  const likeCnt=(p.likes&&p.likes[0])?p.likes[0].count:0;
-  document.getElementById('lcnt').textContent=likeCnt;
   const isLiked=likedPostIds.has(p.id);
+  document.getElementById('lcnt').textContent=likeCnt;
   document.getElementById('lbtn').classList.toggle('liked',isLiked);
   const isSaved=savedPostIds.has(p.id);
   document.getElementById('save-btn').classList.toggle('liked',isSaved);
