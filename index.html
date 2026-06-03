@@ -1257,6 +1257,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <button class="fbtn-d" id="detail-fol-btn" onclick="toggleFollowDetail()">フォロー</button>
       </div>
       <div class="dsea" id="d-sea"></div><div class="dline" id="d-line"></div><div class="dttl" id="d-ttl"></div><div class="dcap" id="d-cap"></div>
+      <div id="d-tags" style="display:none;flex-wrap:wrap;gap:5px;margin-bottom:8px"></div>
       <div class="isec"><div class="slbl">着用アイテム</div><div id="d-items"></div></div>
       <div class="store-row" id="d-store"></div>
       <div id="d-date" style="font-size:8px;color:var(--mgry);letter-spacing:.05em;padding-bottom:10px;font-family:var(--sans)"></div>
@@ -2461,7 +2462,8 @@ async function openPost(id){
   } else {
     dimEl.innerHTML=`<div class="img-main" style="aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:var(--gry)">${fig(p)}</div>`;
   }
-  document.getElementById('d-thumbs').innerHTML='';
+  const thumbsEl=document.getElementById('d-thumbs');
+  if(thumbsEl) thumbsEl.innerHTML='';
 
   const prof=p.profiles||{};
   const avEl=document.getElementById('d-av');
