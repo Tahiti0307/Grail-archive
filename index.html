@@ -114,6 +114,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .post-tag:hover{background:var(--blk);color:var(--wht);border-color:var(--blk)}
 .tag-active{background:var(--blk);color:var(--wht);border-color:var(--blk)}
 
+
+/* NOTIFICATION SETTINGS TOGGLE */
+.notif-setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--ln)}
+.notif-setting-row:last-child{border-bottom:none}
+.notif-setting-label{font-size:11px;font-family:var(--jp)}
+.notif-setting-sub{font-size:9px;color:var(--mgry);margin-top:1px}
+.toggle-wrap{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle-wrap input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:20px;cursor:pointer;transition:background .2s}
+.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:2px;top:2px;background:#fff;border-radius:50%;transition:transform .2s}
+.toggle-wrap input:checked + .toggle-slider{background:var(--blk)}
+.toggle-wrap input:checked + .toggle-slider:before{transform:translateX(16px)}
+.notif-sec-ttl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mgry);margin:14px 0 6px;padding-bottom:6px;border-bottom:1px solid var(--ln)}
+
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:500;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 20px}
 .modal-bg.open{display:flex}
@@ -1019,6 +1033,39 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div class="fr2">
         <div class="fg"><label class="flbl">X (@ハンドル)</label><input class="fi" type="text" id="ep-x-url" placeholder="tttaichi___"></div>
         <div class="fg"><label class="flbl">Instagram (@ハンドル)</label><input class="fi" type="text" id="ep-ig-url" placeholder="username"></div>
+      </div>
+      <div class="notif-sec-ttl">通知設定</div>
+      <div>
+        <div class="notif-setting-row">
+          <div>
+            <div class="notif-setting-label">いいね通知</div>
+            <div class="notif-setting-sub">自分の投稿にいいねされたとき</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" id="ep-notif-likes" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="notif-setting-row">
+          <div>
+            <div class="notif-setting-label">コメント通知</div>
+            <div class="notif-setting-sub">自分の投稿にコメントされたとき</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" id="ep-notif-comments" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="notif-setting-row">
+          <div>
+            <div class="notif-setting-label">フォロー通知</div>
+            <div class="notif-setting-sub">新しいフォロワーができたとき</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" id="ep-notif-follows" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
       </div>
       <button class="sub-btn" id="ep-save-btn" onclick="saveEditProfile()">保存する</button>
     </div>
@@ -3087,6 +3134,10 @@ function openEditProfileModal(){
   document.getElementById('ep-bio').value=myProfile.bio||'';
   document.getElementById('ep-x-url').value=myProfile.x_url||'';
   document.getElementById('ep-ig-url').value=myProfile.instagram_url||'';
+  // 通知設定を反映
+  document.getElementById('ep-notif-likes').checked    = myProfile.notif_likes    !== false;
+  document.getElementById('ep-notif-comments').checked = myProfile.notif_comments !== false;
+  document.getElementById('ep-notif-follows').checked  = myProfile.notif_follows  !== false;
   openModal('modal-edit-profile');
 }
 
@@ -3123,6 +3174,9 @@ async function saveEditProfile(){
     x_url:document.getElementById('ep-x-url').value.trim().replace(/^@/,'')||null,
     instagram_url:document.getElementById('ep-ig-url').value.trim().replace(/^@/,'')||null,
     avatar_url:avatarUrl,
+    notif_likes:    document.getElementById('ep-notif-likes').checked,
+    notif_comments: document.getElementById('ep-notif-comments').checked,
+    notif_follows:  document.getElementById('ep-notif-follows').checked,
   };
   await sb.from('profiles').update(upd).eq('id',myUser.id);
   myProfile={...myProfile,...upd};
