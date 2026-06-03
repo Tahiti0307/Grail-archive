@@ -65,7 +65,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .nav-right{display:flex;align-items:center;gap:10px}
 .btn-login{font-family:var(--sans);font-size:9px;letter-spacing:.15em;padding:7px 14px;background:transparent;color:var(--blk);border:1px solid var(--blk);cursor:pointer;text-transform:uppercase;transition:all .15s}
 .btn-login:hover{background:var(--blk);color:var(--wht)}
-.btn-primary{font-family:var(--sans);font-size:9px;letter-spacing:.15em;padding:7px 14px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase}
+.btn-primary{font-family:var(--sans);font-size:9px;letter-spacing:.15em;padding:7px 14px;background:var(--blk);color:var(--wht);border:none;cursor:pointer;text-transform:uppercase;white-space:nowrap}
 .btn-primary:hover{opacity:.7}
 .btn-primary:disabled{opacity:.3;cursor:not-allowed}
 
@@ -1447,7 +1447,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div style="margin-bottom:36px">
       <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:14px">Origin</div>
       <p style="font-size:11px;line-height:2;color:var(--mgry);font-family:var(--jp)">
-        Xに流れてきた一枚のコーデ写真で、COMME des GARÇONSに一目惚れし、ギャルソンにはまっていく中で、ネット上の写真をまとめて見られる場所があればと考えました。
+        Xに流れてきた一枚のコーデ写真で、COMME des GARÇONSに一目惚れし、そこからギャルソンにはまっていく中で、ネット上のコーデ投稿をまとめて見られる場所があればと考えるようになりました。
       </p>
     </div>
 
@@ -1455,10 +1455,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div style="margin-bottom:36px">
       <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:14px">Vision</div>
       <p style="font-size:11px;line-height:2;color:var(--mgry);font-family:var(--jp)">
-        ネット上に散らばっているコーデを見ていくうちに、ギャルソンが好きな人は、自分のコーデを撮るのも、他人のコーデを眺めるのも好きなのだろうと感じることが多くありました。<br><br>
-        そんな人たちのためのアーカイブサイトをつくりたいと思い、CDGLOAを開発しました。着こなしを記録し、共有し、発見できる場所。<br><br>
-        ギャルソンラバーがつながり、新たなラバーが生まれ、日本が誇るブランドが若い世代にも届いていく——そんな場所になれればと願っています。
-
+        ネット上のギャルソンコーデを見て、ギャルソン好きな人は、自分のコーデを撮るのも、他人のコーデを眺めるのも好きなのだろうと感じました。<br><br>
+        そんな人たちのためのアーカイブをつくりたいと思い、CDGLOAを開発しました。着こなしを記録し、共有し、発見できる場所。<br><br>
+        ギャルソンラバーがつながり、新たなラバーが生まれ、日本が誇るのブランドが若い世代にも届いていく——そんな場所になれれば。そう願っています。
       </p>
     </div>
 
@@ -2889,6 +2888,10 @@ async function doRegister(){
   const bio=document.getElementById('reg-bio').value.trim();
   if(!handle||!history||!height||!age||!email||!pass){showErr('reg-err','必須項目をすべて入力してください。');setLoading('reg-btn',false,'登録する');return;}
   if(pass.length<8){showErr('reg-err','パスワードは8文字以上で入力してください。');setLoading('reg-btn',false,'登録する');return;}
+  // ハンドル重複チェック
+  if(!/^[a-zA-Z0-9_]{2,20}$/.test(handle)){showErr('reg-err','ハンドルは半角英数字・アンダーバーで2〜20文字にしてください。');setLoading('reg-btn',false,'登録する');return;}
+  const{data:existH}=await sb.from('profiles').select('id').ilike('handle',handle).limit(1);
+  if(existH&&existH.length>0){showErr('reg-err','このハンドル名はすでに使用されています。別の名前をお試しください。');setLoading('reg-btn',false,'登録する');return;}
 
   const{data,error}=await sb.auth.signUp({email,password:pass});
   if(error){
@@ -3039,6 +3042,18 @@ async function saveEditProfile(){
     }catch(e){console.warn(e);}
   }
   const newHandle=document.getElementById('ep-handle').value.trim()||myProfile.handle;
+  // ハンドルが変更された場合のみ重複チェック
+  if(newHandle!==myProfile.handle){
+    if(!/^[a-zA-Z0-9_]{2,20}$/.test(newHandle)){
+      showToast('ハンドルは半角英数字・アンダーバーで2〜20文字にしてください');
+      setLoading('ep-save-btn',false,'保存する');return;
+    }
+    const{data:existH}=await sb.from('profiles').select('id').ilike('handle',newHandle).limit(1);
+    if(existH&&existH.length>0){
+      showToast('このハンドル名はすでに使用されています');
+      setLoading('ep-save-btn',false,'保存する');return;
+    }
+  }
   const upd={
     nickname:newHandle,
     handle:newHandle,
