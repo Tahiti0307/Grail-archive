@@ -2796,7 +2796,7 @@ async function openPost(id){
           ${i.size?`<span class="isz">${i.size}</span>`:''}
         </div>
       </div>
-      ${i.ref_number?`<div style="margin-top:3px"><span class="ibadge" style="font-family:var(--sans);font-size:9px;letter-spacing:.08em">${i.ref_number}</span></div>`:''}
+      ${i.ref_number?`<div style="margin-top:3px"><span class="ibadge" style="font-family:var(--sans);font-size:9px;letter-spacing:.08em;cursor:pointer;text-decoration:underline;text-underline-offset:2px" onclick="searchByRef('${i.ref_number}')">${i.ref_number}</span></div>`:''}
     </div>`).join('');
   document.getElementById('d-store').innerHTML=p.store?`<span>📍</span><span>${p.store}</span>`:'';
   // 投稿日・更新日
@@ -4330,6 +4330,18 @@ function calcCdgStats(posts, gridId, linesId, sectionId){
   const sortedLines=Object.entries(lineCounts).sort((a,b)=>b[1]-a[1]);
   if(linesList) linesList.innerHTML=sortedLines.map(([line,cnt])=>`<span class="cdg-line-chip" onclick="setFilt('line','${line}',null);goNav('feed',document.querySelector('.nl'))">${line.replace('COMME des GARÇONS ','CdG ')} <span style="opacity:.6">${cnt}</span></span>`).join('');
   section.style.display='';
+}
+
+function searchByRef(ref){
+  goNav('feed', document.querySelector('.nl'));
+  // 品番検索タブに切り替え
+  switchSrchTab('ref');
+  const inp = document.getElementById('srch');
+  if(inp){ inp.value = ref; }
+  const clearBtn = document.getElementById('srch-clear-btn');
+  if(clearBtn) clearBtn.style.display = '';
+  addSrchHistory(ref);
+  doSearch();
 }
 
 async function searchByTag(tag){
