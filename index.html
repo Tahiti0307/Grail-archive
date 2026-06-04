@@ -262,6 +262,41 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .ai-match-card-ttl{font-size:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ai-match-card-line{font-size:7px;color:var(--mgry);letter-spacing:.08em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
+
+/* TAG CHIP INPUT */
+.tag-input-wrap{
+  border:1px solid var(--blk);background:var(--wht);
+  padding:6px 8px;display:flex;flex-wrap:wrap;gap:5px;
+  min-height:44px;cursor:text;align-items:center;
+}
+.tag-chip-item{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--blk);color:var(--wht);
+  font-size:10px;letter-spacing:.05em;
+  padding:3px 8px 3px 9px;
+  font-family:var(--sans);white-space:nowrap;
+}
+.tag-chip-rm{
+  background:none;border:none;color:rgba(255,255,255,.6);
+  cursor:pointer;font-size:11px;line-height:1;padding:0 0 0 2px;
+  font-family:var(--sans);
+}
+.tag-chip-rm:hover{color:var(--wht)}
+.tag-text-input{
+  border:none;outline:none;font-size:11px;
+  font-family:var(--sans);background:transparent;
+  min-width:80px;flex:1;padding:2px 0;
+}
+.tag-text-input::placeholder{color:var(--lgry)}
+.tag-add-btn{
+  font-family:var(--sans);font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;padding:5px 12px;
+  border:1px solid var(--ln);background:transparent;
+  cursor:pointer;color:var(--mgry);margin-top:5px;
+  transition:all .15s;display:block;
+}
+.tag-add-btn:hover{border-color:var(--blk);color:var(--blk)}
+
 /* SKELETON LOADING */
 @keyframes shimmer{
   0%{background-position:-600px 0}
@@ -330,6 +365,27 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
   cursor:pointer;color:var(--blk);transition:all .15s;
 }
 .error-state-retry:hover{background:var(--blk);color:var(--wht)}
+
+
+/* SEARCH HISTORY DROPDOWN */
+.srch-hist-wrap{position:relative;max-width:460px}
+.srch-hist-drop{
+  position:absolute;top:100%;left:0;right:0;
+  background:var(--wht);border:1px solid var(--blk);border-top:none;
+  z-index:200;max-height:320px;overflow-y:auto;display:none;
+}
+.srch-hist-drop.open{display:block}
+.srch-hist-sec{font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:var(--lgry);padding:8px 12px 4px;border-bottom:0.5px solid var(--ln)}
+.srch-hist-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;transition:background .1s;border-bottom:0.5px solid var(--ln)}
+.srch-hist-item:last-child{border-bottom:none}
+.srch-hist-item:hover{background:var(--gry)}
+.srch-hist-kw{font-size:11px;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.srch-hist-kw .hist-icon{font-size:10px;color:var(--lgry)}
+.srch-hist-kw .sugg-icon{font-size:10px;color:var(--lgry)}
+.srch-hist-del{font-size:10px;color:var(--lgry);padding:2px 6px;line-height:1;cursor:pointer}
+.srch-hist-del:hover{color:var(--blk)}
+.srch-hist-clear{font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;color:var(--mgry);cursor:pointer;text-align:right;border-top:1px solid var(--ln)}
+.srch-hist-clear:hover{color:var(--blk)}
 
 /* PICKUP SECTION */
 .pickup-section{padding:16px 20px;border-bottom:1px solid var(--ln)}
@@ -1104,10 +1160,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     </div>
     <!-- 品番検索 -->
     <div id="srch-pane-ref" class="srch-pane active">
-      <div class="search-inner">
-        <input type="text" id="srch" placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="onRefInput(event)" style="text-transform:uppercase">
-        <button class="search-btn" id="srch-clear-btn" onclick="clearSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
-        <button class="search-btn" onclick="doSearch()">検索</button>
+      <div class="srch-hist-wrap">
+        <div class="search-inner">
+          <input type="text" id="srch" placeholder="品番で検索（例：HJJ050）"
+            onkeydown="onSrchKeydown(event)"
+            oninput="onRefInput(event);renderSrchDrop()"
+            onfocus="renderSrchDrop()"
+            style="text-transform:uppercase">
+          <button class="search-btn" id="srch-clear-btn" onclick="clearSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
+          <button class="search-btn" onclick="doSearch()">検索</button>
+        </div>
+        <div class="srch-hist-drop" id="srch-hist-drop"></div>
       </div>
       <div class="search-note">※ 品番はハイフンなしで入力（自動で大文字・半角に変換）</div>
       <div class="srch-msg" id="srch-msg"></div>
@@ -1391,6 +1454,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     </div>
     <div class="fg"><label class="flbl">タイトル</label><input class="fi" type="text" id="p-ttl" placeholder="例：AW24 非対称シルエット"></div>
     <div class="fg"><label class="flbl">説明</label><textarea class="fi fta" id="p-cap" placeholder="インスピレーションや着用シーンなど..."></textarea></div>
+    <div class="fg">
+      <label class="flbl">タグ</label>
+      <div class="tag-input-wrap" id="tag-input-wrap" onclick="document.getElementById('tag-text-input').focus()">
+        <div id="tag-chips"></div>
+        <input type="text" class="tag-text-input" id="tag-text-input"
+          placeholder="例: 青山"
+          onkeydown="onTagKeydown(event)"
+          oninput="onTagInput(event)">
+      </div>
+      <button class="tag-add-btn" onclick="addTagFromInput()">＋ タグを追加</button>
+      <div class="hint">タグをタップすると同じタグの投稿から発見されやすくなります</div>
+    </div>
 
     <div class="fg">
       <label class="flbl">着用アイテム</label>
@@ -2431,6 +2506,7 @@ function clearUserSearch(){
   document.getElementById('user-search-results').style.display='none';
 }
 function clearSearch(){
+  closeSrchDrop();
   document.getElementById('srch').value='';
   document.getElementById('srch-msg').textContent='';
   document.getElementById('srch-clear-btn').style.display='none';
@@ -2479,7 +2555,27 @@ async function doSearch(){
   const matchedPostIds=[...new Set((matchedItems||[]).map(r=>r.post_id))];
 
   if(!matchedPostIds.length){
-    msgEl.textContent=`品番「${srchQ}」に一致するコーデが見つかりませんでした。`;
+    // 品番マッチなし → タイトル・キャプションでフォールバック検索
+    try{
+      const raw2=document.getElementById('srch').value.trim();
+      const{data:textData}=await sb.from('posts')
+        .select(`id,user_id,title,caption,tags,line,season,store,colors,created_at,
+          profiles(id,nickname,handle,avatar_url,cdg_history,height),
+          post_images(url,position),
+          post_items(id,name,line,season,store,size,ref_number),
+          likes(count),comments(count)`)
+        .or(`title.ilike.%${raw2}%,caption.ilike.%${raw2}%`)
+        .order('created_at',{ascending:false})
+        .limit(50);
+      const textResults=textData||[];
+      if(textResults.length){
+        msgEl.textContent=`「${raw2}」— ${textResults.length}件（タイトル・説明）`;
+        rg('feed-grid',textResults);
+        document.getElementById('feed-cnt').textContent=textResults.length+'件';
+        return;
+      }
+    }catch(e){console.error(e);}
+    msgEl.textContent=`「${srchQ}」に一致するコーデが見つかりませんでした。`;
     rg('feed-grid',[]);
     document.getElementById('feed-cnt').textContent='0件';
     return;
@@ -3506,8 +3602,10 @@ async function doSubmit(){
     const firstSels=firstRow?[...firstRow.querySelectorAll('select')]:[];
     const repLine=firstSels[1]?.value||'';
     const repSea=firstSels[2]?.value||'';
-    const rawTags=document.getElementById('p-tags').value.trim();
-    const tagsArr=rawTags?rawTags.split(/[\s,、]+/).map(t=>t.replace(/^#/,'').trim()).filter(Boolean):[];
+    // addTagFromInputで未確定の入力も取り込む
+    const pendingTag=document.getElementById('tag-text-input')?.value.trim().replace(/^#+/,'');
+    if(pendingTag) commitTag(pendingTag);
+    const tagsArr=[...postTags];
     const{data:newPost,error}=await sb.from('posts').insert({
       user_id:myUser.id,title:ttl||'無題',caption:cap,tags:tagsArr,line:repLine,season:repSea,store:'',colors
     }).select().single();
@@ -3877,6 +3975,176 @@ async function findMatchingItems(){
 }
 
 
+
+/* =====================================================
+   検索履歴・サジェスト
+===================================================== */
+const SRCH_HIST_KEY = 'cdgloa_search_history';
+const MAX_HIST = 10;
+
+// よく使われる品番サジェスト（CDG定番）
+const SRCH_SUGGESTIONS = [
+  'HJJ050','OZT311','GS-T104','PO-T106','W28112',
+  'GE-T270','RO-T107','AD-T022','HJJ028','FI-T015',
+];
+
+function getSrchHistory(){
+  try{ return JSON.parse(localStorage.getItem(SRCH_HIST_KEY)||'[]'); }
+  catch(e){ return []; }
+}
+function saveSrchHistory(hist){
+  try{ localStorage.setItem(SRCH_HIST_KEY, JSON.stringify(hist)); }catch(e){}
+}
+function addSrchHistory(kw){
+  if(!kw) return;
+  let hist = getSrchHistory().filter(h=>h!==kw);
+  hist.unshift(kw);
+  if(hist.length>MAX_HIST) hist=hist.slice(0,MAX_HIST);
+  saveSrchHistory(hist);
+}
+function deleteSrchHistory(kw, e){
+  e.stopPropagation();
+  saveSrchHistory(getSrchHistory().filter(h=>h!==kw));
+  renderSrchDrop();
+}
+function clearSrchHistory(){
+  saveSrchHistory([]);
+  renderSrchDrop();
+}
+
+function renderSrchDrop(){
+  const drop = document.getElementById('srch-hist-drop');
+  const inp  = document.getElementById('srch');
+  if(!drop||!inp) return;
+  const val = inp.value.trim();
+  const hist = getSrchHistory();
+
+  // 入力中は履歴・サジェストをキーワードでフィルタ
+  const filtHist = val
+    ? hist.filter(h=>h.includes(val.toUpperCase()))
+    : hist;
+  const filtSugg = val
+    ? SRCH_SUGGESTIONS.filter(s=>s.includes(val.toUpperCase()) && !filtHist.includes(s))
+    : SRCH_SUGGESTIONS.filter(s=>!hist.includes(s)).slice(0,5);
+
+  if(!filtHist.length && !filtSugg.length){
+    drop.classList.remove('open');
+    return;
+  }
+
+  let html = '';
+
+  if(filtHist.length){
+    html += `<div class="srch-hist-sec">最近の検索</div>`;
+    html += filtHist.map(kw=>`
+      <div class="srch-hist-item" onclick="selectSrchHist('${kw}')">
+        <span class="srch-hist-kw"><span class="hist-icon">↺</span>${kw}</span>
+        <span class="srch-hist-del" onclick="deleteSrchHistory('${kw}',event)">✕</span>
+      </div>`).join('');
+    html += `<div class="srch-hist-clear" onclick="clearSrchHistory()">履歴をクリア</div>`;
+  }
+
+  if(filtSugg.length){
+    html += `<div class="srch-hist-sec">よく検索される品番</div>`;
+    html += filtSugg.map(s=>`
+      <div class="srch-hist-item" onclick="selectSrchHist('${s}')">
+        <span class="srch-hist-kw"><span class="sugg-icon">↗</span>${s}</span>
+      </div>`).join('');
+  }
+
+  drop.innerHTML = html;
+  drop.classList.add('open');
+}
+
+function selectSrchHist(kw){
+  const inp = document.getElementById('srch');
+  if(inp){ inp.value = kw; }
+  closeSrchDrop();
+  doSearch();
+}
+
+function closeSrchDrop(){
+  const drop = document.getElementById('srch-hist-drop');
+  if(drop) drop.classList.remove('open');
+}
+
+function onSrchKeydown(e){
+  if(e.key==='Enter'){ closeSrchDrop(); doSearch(); }
+  if(e.key==='Escape'){ closeSrchDrop(); }
+}
+
+// フォーカスが外れたらドロップダウンを閉じる（少し遅延してクリックを処理）
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.srch-hist-wrap')) closeSrchDrop();
+});
+
+
+
+/* =====================================================
+   タグチップ入力
+===================================================== */
+let postTags = [];
+
+function onTagInput(e){
+  const val = e.target.value;
+  // スペース・読点で即時確定
+  if(val.endsWith(' ') || val.endsWith('　') || val.endsWith('、') || val.endsWith(',')){
+    const tag = val.replace(/[\s,、]+$/, '').replace(/^#+/, '').trim();
+    if(tag) commitTag(tag);
+    e.target.value = '';
+  }
+}
+
+function onTagKeydown(e){
+  const inp = e.target;
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    addTagFromInput();
+  }
+  if(e.key === 'Backspace' && !inp.value && postTags.length){
+    removeTag(postTags.length - 1);
+  }
+}
+
+function addTagFromInput(){
+  const inp = document.getElementById('tag-text-input');
+  if(!inp) return;
+  const tag = inp.value.replace(/^#+/, '').trim();
+  if(tag) commitTag(tag);
+  inp.value = '';
+  inp.focus();
+}
+
+function commitTag(raw){
+  const tag = raw.replace(/^#+/, '').trim();
+  if(!tag || tag.length > 30) return;
+  if(postTags.includes(tag)) return; // 重複スキップ
+  if(postTags.length >= 10){ showToast('タグは最大10個まで追加できます'); return; }
+  postTags.push(tag);
+  renderTagChips();
+}
+
+function removeTag(idx){
+  postTags.splice(idx, 1);
+  renderTagChips();
+}
+
+function renderTagChips(){
+  const wrap = document.getElementById('tag-chips');
+  if(!wrap) return;
+  wrap.innerHTML = postTags.map((t, i) =>
+    `<span class="tag-chip-item">#${t}<button class="tag-chip-rm" onclick="removeTag(${i})" type="button">✕</button></span>`
+  ).join('');
+}
+
+function resetTagChips(){
+  postTags = [];
+  renderTagChips();
+  const inp = document.getElementById('tag-text-input');
+  if(inp) inp.value = '';
+}
+
+
 // URLパラメータ処理
 function calcCdgStats(posts, gridId, linesId, sectionId){
   const section=document.getElementById(sectionId);
@@ -3906,14 +4174,59 @@ function calcCdgStats(posts, gridId, linesId, sectionId){
   section.style.display='';
 }
 
-function searchByTag(tag){
+async function searchByTag(tag){
   goNav('feed', document.querySelector('.nl'));
-  // タグで検索（キャプション・タグフィールドをOR検索）
-  const raw=tag;
-  srchQ=raw;
-  document.getElementById('srch').value=raw;
-  document.getElementById('srch-clear-btn').style.display='';
-  doSearch();
+  addSrchHistory(tag);
+
+  const el=document.getElementById('feed-grid');
+  const msgEl=document.getElementById('srch-msg');
+  const inp=document.getElementById('srch');
+  const clearBtn=document.getElementById('srch-clear-btn');
+
+  // UI更新
+  if(inp){ inp.value='#'+tag; }
+  if(clearBtn) clearBtn.style.display='';
+  if(msgEl) msgEl.textContent='検索中...';
+  skeletonGrid('feed-grid',6);
+  _setDiscoverySections(false);
+  document.getElementById('load-more-wrap').style.display='none';
+
+  try{
+    // posts.tags（text[]）に対してcontains検索
+    const{data,error}=await sb.from('posts')
+      .select(`
+        id,user_id,title,caption,tags,line,season,store,colors,created_at,
+        profiles(id,nickname,handle,avatar_url,cdg_history,height),
+        post_images(url,position),
+        post_items(id,name,line,season,store,size,ref_number),
+        likes(count),
+        comments(count)
+      `)
+      .contains('tags',[tag])
+      .order('created_at',{ascending:false})
+      .limit(100);
+
+    if(error) throw error;
+
+    const results=data||[];
+    if(msgEl) msgEl.textContent=results.length
+      ? `#${tag} — ${results.length}件`
+      : `#${tag} のタグがついた投稿はまだありません`;
+
+    rg('feed-grid', results);
+    const cntEl=document.getElementById('feed-cnt');
+    if(cntEl) cntEl.textContent=results.length+'件';
+
+  }catch(e){
+    console.error('searchByTag:',e);
+    if(msgEl) msgEl.textContent='';
+    if(el) el.innerHTML=`<div class="error-state">
+      <div class="error-state-code">Search Error</div>
+      <div class="error-state-msg">Tag search failed.</div>
+      <div class="error-state-sub">タグ検索に失敗しました。</div>
+      <button class="error-state-retry" onclick="clearSearch()">Reset</button>
+    </div>`;
+  }
 }
 
 function parseUrlParams(){
