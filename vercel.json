@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/post/:id",
+      "destination": "/api/ogp?post=:id"
+    }
+  ]
+}

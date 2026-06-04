@@ -2599,7 +2599,7 @@ async function openPost(id){
   // ブラウザ履歴にdetailページを追加
   const postTitle=`${p.title||'コーデ'} — CDGLOA`;
   document.title=postTitle;
-  history.pushState({page:'detail',postId:p.id},postTitle,'?post='+p.id);
+  history.pushState({page:'detail',postId:p.id},postTitle,'/post/'+p.id);
   // モバイルでボトムアクションバーを表示
   if(window.innerWidth<=600){
     document.querySelector('.dact').classList.add('mobile-visible');
@@ -2756,7 +2756,7 @@ function shareToX(){
 
 async function shareGeneral(){
   if(!curPost)return;
-  const postUrl=location.origin+location.pathname+'?post='+curPost.id;
+  const postUrl=location.origin+'/post/'+curPost.id;
   const shareData={title:curPost.title||'コーデ',text:(curPost.title||'コーデ')+' — CDGLOA',url:postUrl};
   if(navigator.share){
     try{await navigator.share(shareData);}catch(e){}
@@ -3971,11 +3971,13 @@ function searchByTag(tag){
 }
 
 function parseUrlParams(){
+  // ?post=xxx 形式
   const params=new URLSearchParams(window.location.search);
   const postId=params.get('post');
-  if(postId){
-    openPost(postId);
-  }
+  if(postId){openPost(postId);return;}
+  // /post/:id 形式（OGPリダイレクト後）
+  const m=location.pathname.match(/^\/post\/([a-f0-9-]{36})$/i);
+  if(m){openPost(m[1]);}
 }
 
 function updateUrlParam(key, val){
@@ -4068,8 +4070,10 @@ window.addEventListener('popstate', e=>{
   const params=new URLSearchParams(location.search);
   const postId=params.get('post');
   const page=params.get('page');
-  if(postId){
-    history.replaceState({page:'detail',postId},document.title,location.href);
+  const pathMatch=location.pathname.match(/^\/post\/([a-f0-9-]{36})$/i);
+  if(postId||pathMatch){
+    const pid=postId||(pathMatch&&pathMatch[1]);
+    history.replaceState({page:'detail',postId:pid},document.title,location.href);
   }else if(page){
     history.replaceState({page},document.title,location.href);
   }else{
