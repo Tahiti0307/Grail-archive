@@ -2787,14 +2787,16 @@ async function openPost(id){
 
   document.getElementById('d-items').innerHTML=(p.post_items||[]).map(i=>`
     <div class="irow" style="padding:9px 0;border-bottom:1px solid var(--ln)">
-      <div style="font-size:11px;font-family:var(--jp);margin-bottom:4px">${i.name||''}</div>
-      <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center">
-        ${i.ref_number?`<span class="ibadge" style="font-family:var(--sans);font-weight:500;color:var(--blk);background:var(--gry)">${i.ref_number}</span>`:''}
-        ${i.line?`<span class="ibadge" style="font-size:8px">${i.line}</span>`:''}
-        ${i.season?`<span class="ibadge">${i.season}</span>`:''}
-        ${i.store?`<span class="ibadge" style="font-size:8px;color:var(--mgry)">${i.store}</span>`:''}
-        ${i.size?`<span class="isz">${i.size}</span>`:''}
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap">
+        <span style="font-size:11px;font-family:var(--jp)">${i.name||''}</span>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;justify-content:flex-end">
+          ${i.season?`<span class="ibadge">${i.season}</span>`:''}
+          ${i.line?`<span class="ibadge" style="font-size:8px">${i.line}</span>`:''}
+          ${i.store?`<span class="ibadge" style="font-size:8px;color:var(--mgry)">${i.store}</span>`:''}
+          ${i.size?`<span class="isz">${i.size}</span>`:''}
+        </div>
       </div>
+      ${i.ref_number?`<div style="margin-top:3px"><span class="ibadge" style="font-family:var(--sans);font-size:9px;letter-spacing:.08em">${i.ref_number}</span></div>`:''}
     </div>`).join('');
   document.getElementById('d-store').innerHTML=p.store?`<span>📍</span><span>${p.store}</span>`:'';
   // 投稿日・更新日
