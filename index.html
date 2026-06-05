@@ -262,6 +262,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .ai-match-card-ttl{font-size:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ai-match-card-line{font-size:7px;color:var(--mgry);letter-spacing:.08em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
+
+.store-map-tooltip{
+  background:#000;color:#fff;border:none;border-radius:0;
+  font-size:10px;font-family:'Helvetica Neue',sans-serif;
+  padding:4px 8px;letter-spacing:.04em;white-space:nowrap;
+  box-shadow:none;
+}
+.store-map-tooltip::before{
+  border-top-color:#000 !important;
+}
+
 /* SKELETON LOADING */
 @keyframes shimmer{
   0%{background-position:-600px 0}
@@ -2145,7 +2156,7 @@ function renderStoreList(){
       <div style="margin-bottom:18px">
         <div style="font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--mgry);padding:6px 0;border-bottom:1px solid var(--blk);margin-bottom:4px">${area}</div>
         ${stores.map(function(s){ var sidx=STORE_DATA.indexOf(s); var snum=sidx+1; return `
-          <div class="store-card" data-sidx="${sidx}">
+          <div class="store-card" data-sidx="${sidx}" style="cursor:pointer" onclick="zoomToStore(${sidx})">
             <div>
               <div class="store-name"><span style="font-size:9px;color:var(--lgry);margin-right:5px;font-family:var(--sans)">${snum}</span>${s.name}</div>
               <div class="store-addr">${s.addr}</div>
@@ -2190,7 +2201,12 @@ function initStoreMap(){
       iconSize:[22,22], iconAnchor:[11,11]
     });
     var marker = L.marker([s.lat,s.lng],{icon:icon}).addTo(storeMap);
-    // ポップアップ（特殊文字を避けて安全に生成）
+    // ホバーで店舗名tooltip
+    marker.bindTooltip(num+'. '+escHtml(s.name), {
+      direction:'top', offset:[0,-14],
+      className:'store-map-tooltip'
+    });
+    // クリックでポップアップ（住所・Tel）
     var popHtml = '<div style="font-family:sans-serif;font-size:11px;min-width:150px">'
       + '<b>'+num+'. '+escHtml(s.name)+'</b><br>'
       + '<span style="color:#666;font-size:10px">'+escHtml(s.addr||'')+'</span>';
@@ -2204,6 +2220,24 @@ function initStoreMap(){
 
 function escHtml(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function zoomToStore(idx){
+  var s = STORE_DATA[idx];
+  if(!s || !s.lat || !s.lng) return;
+  // 地図エリアまでスクロール
+  var mapEl = document.getElementById('store-map');
+  if(mapEl) mapEl.scrollIntoView({behavior:'smooth', block:'start'});
+  // 地図が非表示の場合は初期化
+  setTimeout(function(){
+    initStoreMap();
+    if(storeMap){
+      storeMap.invalidateSize();
+      storeMap.flyTo([s.lat, s.lng], 15, {duration:0.8});
+      // マーカーのpopupを開く
+      if(storeMarkers[idx]) storeMarkers[idx].openPopup();
+    }
+  }, storeMap ? 0 : 80);
 }
 
 function highlightStoreItem(idx){
