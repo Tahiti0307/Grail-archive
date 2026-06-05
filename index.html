@@ -1087,7 +1087,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <label class="flbl">タグ</label>
         <div class="tag-input-wrap" id="etag-input-wrap" onclick="document.getElementById('etag-text-input').focus()">
           <div id="etag-chips"></div>
-          <input type="text" class="tag-text-input" id="etag-text-input" placeholder="例: 青山" autocomplete="off"
+          <input type="text" class="tag-text-input" id="etag-text-input" autocomplete="off" placeholder="例: 青山" autocomplete="off"
             onkeydown="onEtagKeydown(event)" oninput="onEtagInput(event)">
         </div>
         <button class="tag-add-btn" onclick="addEtagFromInput()">＋ タグを追加</button>
@@ -1154,7 +1154,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <!-- 品番検索 -->
     <div id="srch-pane-ref" class="srch-pane active">
       <div class="search-inner">
-        <input type="text" id="srch" placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="onRefInput(event)" style="text-transform:uppercase">
+        <input type="text" id="srch" autocomplete="off" placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="onRefInput(event)" style="text-transform:uppercase">
         <button class="search-btn" id="srch-clear-btn" onclick="clearSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
         <button class="search-btn" onclick="doSearch()">検索</button>
       </div>
@@ -1165,7 +1165,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div id="srch-pane-tag" class="srch-pane">
       <div class="search-inner">
         <span style="padding:8px 6px 8px 12px;font-size:13px;color:var(--mgry);line-height:1;user-select:none">#</span>
-        <input type="text" id="srch-tag" placeholder="タグ名を入力（# 不要）" autocomplete="off"
+        <input type="text" id="srch-tag" autocomplete="off" placeholder="タグ名を入力（# 不要）" autocomplete="off"
           onkeydown="if(event.key==='Enter')doTagSearch()"
           style="flex:1;font-family:var(--sans);font-size:11px;padding:8px 8px 8px 0;border:none;outline:none;background:transparent">
         <button class="search-btn" id="srch-tag-clear-btn" onclick="clearTagSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
@@ -1179,7 +1179,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <!-- ユーザー検索 -->
     <div id="srch-pane-user" class="srch-pane">
       <div class="search-inner">
-        <input type="text" id="srch-user" placeholder="@ハンドルで検索（空欄でフィルターのみ可）" onkeydown="if(event.key==='Enter')doUserSearch()">
+        <input type="text" id="srch-user" placeholder="@ハンドルで検索（空欄でフィルターのみ可）" onkeydown="if(event.key==='Enter')doUserSearch()" autocomplete="off">
         <button class="search-btn" id="srch-user-clear-btn" onclick="clearUserSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
         <button class="search-btn" onclick="doUserSearch()">検索</button>
       </div>
