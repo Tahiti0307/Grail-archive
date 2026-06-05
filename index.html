@@ -1434,48 +1434,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <div class="ir-sel-wrap" style="flex:1;min-width:120px;max-width:180px">
           <select id="sea-filt-select" class="fi" style="appearance:none;font-size:10px;padding:5px 28px 5px 8px;cursor:pointer;width:100%" onchange="seaFiltSelect(this.value)">
             <option value="">シーズン選択</option>
-            <optgroup label="2020年代">
-              <option>26SS</option><option>26AW</option>
-              <option>25SS</option><option>25AW</option>
-              <option>24SS</option><option>24AW</option>
-              <option>23SS</option><option>23AW</option>
-              <option>22SS</option><option>22AW</option>
-              <option>21SS</option><option>21AW</option>
-              <option>20SS</option><option>20AW</option>
-            </optgroup>
-            <optgroup label="2010年代">
-              <option>19SS</option><option>19AW</option>
-              <option>18SS</option><option>18AW</option>
-              <option>17SS</option><option>17AW</option>
-              <option>16SS</option><option>16AW</option>
-              <option>15SS</option><option>15AW</option>
-              <option>14SS</option><option>14AW</option>
-              <option>13SS</option><option>13AW</option>
-              <option>12SS</option><option>12AW</option>
-              <option>11SS</option><option>11AW</option>
-              <option>10SS</option><option>10AW</option>
-            </optgroup>
-            <optgroup label="2000年代">
-              <option>09SS</option><option>09AW</option>
-              <option>08SS</option><option>08AW</option>
-              <option>07SS</option><option>07AW</option>
-              <option>06SS</option><option>06AW</option>
-              <option>05SS</option><option>05AW</option>
-              <option>04SS</option><option>04AW</option>
-              <option>03SS</option><option>03AW</option>
-              <option>02SS</option><option>02AW</option>
-              <option>01SS</option><option>01AW</option>
-              <option>00SS</option><option>00AW</option>
-            </optgroup>
-            <optgroup label="アーカイブ">
-              <option>90年代後半</option>
-              <option>90年代前半</option>
-              <option>80年代後半</option>
-              <option>80年代前半</option>
-            </optgroup>
-            <optgroup label="その他">
-              <option>定番アイテム</option>
-            </optgroup>
           </select>
         </div>
       </div>
@@ -2287,6 +2245,12 @@ function setFollowFilt(val,el){
   updateFeed();
 }
 
+
+function initSeasonFilter(){
+  const sel = document.getElementById('sea-filt-select');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">シーズン選択</option>' + makeSeasonOptgroups();
+}
 
 function seaFiltSelect(val){
   if(!val){ seaFiltAll(); return; }
@@ -3420,7 +3384,7 @@ async function doLogin(){
 
 async function doRegister(){
   setLoading('reg-btn',true,'登録中...');
-  const handle=document.getElementById('reg-handle').value.trim();
+  const handle=document.getElementById('reg-handle').value.trim().toLowerCase();
   const history=document.getElementById('reg-history').value;
   const height=document.getElementById('reg-height').value;
   const age=document.getElementById('reg-birth-year').value;
@@ -3586,7 +3550,7 @@ async function saveEditProfile(){
       avatarUrl=await uploadImage(file,'avatars');
     }catch(e){console.warn(e);}
   }
-  const newHandle=document.getElementById('ep-handle').value.trim()||myProfile.handle;
+  const newHandle=(document.getElementById('ep-handle').value.trim()||myProfile.handle).toLowerCase();
   // ハンドルが変更された場合のみ重複チェック
   if(newHandle!==myProfile.handle){
     if(!/^[a-zA-Z0-9_]{2,20}$/.test(newHandle)){
@@ -3806,6 +3770,95 @@ function renderPhotoZone(){
   });
 }
 function removePhoto(i){uploadedPhotos.splice(i,1);renderPhotoZone();}
+
+/* =====================================================
+   シーズンリスト動的生成
+===================================================== */
+function generateSeasonList(){
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1; // 1-12
+
+  // 末尾2桁
+  const y2 = (yr) => String(yr).slice(-2).padStart(2,'0');
+
+  // 最新シーズンの決定
+  // CDGは3-4月頃にAWを発表、9-10月頃にSSを発表
+  // → 3月以降はその年のAWを含む、9月以降は翌年SSを含む
+  const latestYear = year;
+  const includeNextSS = month >= 9;  // 9月以降は翌年SSを追加
+  const includeCurrentAW = month >= 3; // 3月以降は今年AWを追加
+
+  const seasons = [];
+
+  // 翌年SS（9月以降）
+  if(includeNextSS) seasons.push(y2(latestYear+1)+'SS');
+
+  // 今年AW・SS
+  if(includeCurrentAW) seasons.push(y2(latestYear)+'AW');
+  seasons.push(y2(latestYear)+'SS');
+
+  // 過去シーズン（今年-1 ～ 2000年）
+  for(let y = latestYear - 1; y >= 2000; y--){
+    seasons.push(y2(y)+'AW');
+    seasons.push(y2(y)+'SS');
+  }
+
+  // アーカイブ
+  seasons.push('90年代後半','90年代前半','80年代後半','80年代前半','定番アイテム');
+
+  return seasons;
+}
+
+// シーズンリストから <option> HTML を生成
+function makeSeasonOptions(selectedVal=''){
+  return generateSeasonList()
+    .map(s=>`<option${s===selectedVal?' selected':''}>${s}</option>`)
+    .join('');
+}
+
+// シーズンプルダウン用グループHTML（フィードフィルター）
+function makeSeasonOptgroups(){
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const y2 = yr => String(yr).slice(-2).padStart(2,'0');
+  const includeNextSS = month >= 9;
+  const includeCurrentAW = month >= 3;
+
+  let html = '';
+
+  // 現行シーズン
+  const current = [];
+  if(includeNextSS) current.push(y2(year+1)+'SS');
+  if(includeCurrentAW) current.push(y2(year)+'AW');
+  current.push(y2(year)+'SS');
+  html += `<optgroup label="${year}年代">${current.map(s=>`<option>${s}</option>`).join('')}</optgroup>`;
+
+  // 2020年代〜2010年代〜2000年代を動的に
+  const decades = [
+    {label:'2020年代', from: 2020, to: year - 1},
+    {label:'2010年代', from: 2010, to: 2019},
+    {label:'2000年代', from: 2000, to: 2009},
+  ];
+  for(const {label, from, to} of decades){
+    if(to < from) continue;
+    const opts = [];
+    for(let y = Math.min(to, year-1); y >= from; y--){
+      opts.push(`<option>${y2(y)}AW</option><option>${y2(y)}SS</option>`);
+    }
+    if(opts.length) html += `<optgroup label="${label}">${opts.join('')}</optgroup>`;
+  }
+
+  html += `<optgroup label="アーカイブ">
+    <option>90年代後半</option><option>90年代前半</option>
+    <option>80年代後半</option><option>80年代前半</option>
+  </optgroup>
+  <optgroup label="その他"><option>定番アイテム</option></optgroup>`;
+
+  return html;
+}
+
 function makeItemLineOptions(){
   return [
     'COMME des GARÇONS','COMME des GARÇONS COMME des GARÇONS','COMME des GARÇONS GIRL',
@@ -3855,39 +3908,7 @@ function makeItemRow(){
         <div class="ir-label">シーズン</div>
         <select class="fi" style="appearance:none;cursor:pointer;font-size:12px;width:100%">
           <option value="">選択</option>
-          <option>26AW</option><option>26SS</option>
-          <option>25AW</option><option>25SS</option>
-          <option>24AW</option><option>24SS</option>
-          <option>23AW</option><option>23SS</option>
-          <option>22AW</option><option>22SS</option>
-          <option>21AW</option><option>21SS</option>
-          <option>20AW</option><option>20SS</option>
-          <option>19AW</option><option>19SS</option>
-          <option>18AW</option><option>18SS</option>
-          <option>17AW</option><option>17SS</option>
-          <option>16AW</option><option>16SS</option>
-          <option>15AW</option><option>15SS</option>
-          <option>14AW</option><option>14SS</option>
-          <option>13AW</option><option>13SS</option>
-          <option>12AW</option><option>12SS</option>
-          <option>11AW</option><option>11SS</option>
-          <option>10AW</option><option>10SS</option>
-          <option>09AW</option><option>09SS</option>
-          <option>08AW</option><option>08SS</option>
-          <option>07AW</option><option>07SS</option>
-          <option>06AW</option><option>06SS</option>
-          <option>05AW</option><option>05SS</option>
-          <option>04AW</option><option>04SS</option>
-          <option>03AW</option><option>03SS</option>
-          <option>02AW</option><option>02SS</option>
-          <option>01AW</option><option>01SS</option>
-          <option>00AW</option><option>00SS</option>
-          <option>90年代後半</option>
-          <option>90年代前半</option>
-          <option>80年代後半</option>
-          <option>80年代前半</option>
-          <option>定番アイテム</option>
-        </select>
+          ${makeSeasonOptions()}</select>
       </div>
       <div>
         <div class="ir-label">購入店舗</div>
