@@ -1720,7 +1720,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div style="margin-bottom:40px">
       <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:14px">Developer</div>
       <div style="font-size:20px;letter-spacing:.04em;margin-bottom:4px">タイチ</div>
-      <div style="font-size:10px;letter-spacing:.12em;color:var(--mgry);margin-bottom:16px">@tahiti</div>
+      <div style="font-size:10px;letter-spacing:.12em;color:var(--mgry);margin-bottom:16px;cursor:pointer;text-decoration:underline;text-underline-offset:3px" onclick="openProfileByHandle('tahiti')">@tahiti</div>
       <div style="display:flex;gap:8px">
         <a href="https://x.com/tttaichi___" target="_blank" rel="noopener" style="font-family:var(--sans);font-size:8px;letter-spacing:.15em;padding:6px 14px;border:1px solid var(--blk);color:var(--blk);text-decoration:none;text-transform:uppercase;transition:all .15s" onmouseover="this.style.background='var(--blk)';this.style.color='var(--wht)'" onmouseout="this.style.background='';this.style.color='var(--blk)'">X (Twitter) →</a>
       </div>
@@ -5170,6 +5170,14 @@ function editorSkip(){
 function editorCancel(){
   _editorQueue = [];
   closeModal('modal-photo-editor');
+}
+
+async function openProfileByHandle(handle){
+  try{
+    const{data}=await sb.from('profiles').select('id').ilike('handle',handle).single();
+    if(data) openUserProfile(data.id);
+    else showToast('@'+handle+' が見つかりませんでした');
+  }catch(e){ showToast('プロフィールを開けませんでした'); }
 }
 
 function goBack(){
