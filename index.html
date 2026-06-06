@@ -2254,17 +2254,24 @@ function initSeasonFilter(){
 
 function seaFiltSelect(val){
   if(!val){ seaFiltAll(); return; }
-  // セレクトからの選択はsetFiltに委譲
-  setFilt('sea', val, null);
-  // セレクトの見た目を維持（選択されたvalueを表示）
+  // プルダウンからの選択は単一値に置換（複数選択はチップ式のライン・カラーのみ）
+  filtSeas.clear();
+  filtSeas.add(val);
   const allChip = document.getElementById('sea-all-chip');
-  if(allChip) allChip.classList.toggle('active', filtSeas.has('all'));
+  if(allChip) allChip.classList.remove('active');
+  checkFilterActive();
+  updateFeed();
 }
 
 function seaFiltAll(){
   const sel = document.getElementById('sea-filt-select');
   if(sel) sel.value = '';
-  setFilt('sea','all', document.getElementById('sea-all-chip'));
+  filtSeas.clear();
+  filtSeas.add('all');
+  const allChip = document.getElementById('sea-all-chip');
+  if(allChip) allChip.classList.add('active');
+  checkFilterActive();
+  updateFeed();
 }
 function setFilt(type,val,el){
   // filtSetを取得
@@ -5363,6 +5370,9 @@ sb.auth.onAuthStateChange(async(event,session)=>{
     updateAuthUI();renderMyPage();
   }
 });
+
+// ページ読み込み時にシーズンフィルターを初期化
+initSeasonFilter();
 
 /* =====================================================
    INIT
