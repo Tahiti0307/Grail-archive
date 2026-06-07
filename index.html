@@ -478,6 +478,32 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 .srch-hist-clear{font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px;color:var(--mgry);cursor:pointer;text-align:right;border-top:1px solid var(--ln)}
 .srch-hist-clear:hover{color:var(--blk)}
 
+
+.go-top{
+  position:fixed;bottom:24px;right:16px;z-index:100;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--blk);color:var(--wht);border:none;
+  font-size:14px;cursor:pointer;display:none;
+  align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+  transition:opacity .2s,transform .2s;
+  opacity:.7;
+}
+.go-top:hover{opacity:1;transform:scale(1.05)}
+.go-top.show{display:flex}
+
+
+.pull-indicator{
+  position:fixed;top:44px;left:50%;transform:translateX(-50%);
+  z-index:50;
+  background:var(--blk);color:var(--wht);
+  padding:6px 16px;font-size:9px;letter-spacing:.1em;
+  font-family:var(--sans);
+  opacity:0;transition:opacity .2s;
+  pointer-events:none;
+}
+.pull-indicator.show{opacity:1}
+
 /* SKELETON LOADING */
 @keyframes shimmer{
   0%{background-position:-600px 0}
@@ -1645,6 +1671,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
         <div id="vp-sns" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"></div>
         <button class="fol-btn" id="vp-fol-btn" style="margin-top:10px" onclick="toggleFollowUser(curVisitedUserId)">フォロー</button>
         <div style="display:flex;gap:12px;margin-top:8px">
+          <button class="abtn" onclick="shareProfile()" style="font-size:8px;color:var(--mgry)">↗ シェア</button>
           <button class="abtn" onclick="openBlockModal(curVisitedUserId,document.getElementById('vp-name').textContent)" style="font-size:8px;color:var(--mgry)">ブロック</button>
           <button class="abtn" onclick="openReportModal('user',curVisitedUserId)" style="font-size:8px;color:var(--mgry)">通報</button>
         </div>
@@ -4662,7 +4689,9 @@ function parseUrlParams(){
   const postId=params.get('post');
   if(postId){openPost(postId);return;}
   const m=location.pathname.match(/^\/post\/([a-f0-9-]{36})$/i);
-  if(m){openPost(m[1]);}
+  if(m){openPost(m[1]);return;}
+  const userParam=params.get('user');
+  if(userParam){openProfileByHandle(userParam);}
 }
 
 function updateUrlParam(key, val){
@@ -5351,6 +5380,65 @@ function selectSrchHist(kw){var inp=document.getElementById('srch');if(inp)inp.v
 function closeSrchDrop(){var d=document.getElementById('srch-hist-drop');if(d)d.classList.remove('open');}
 document.addEventListener('click',function(e){if(!e.target.closest('.srch-hist-wrap'))closeSrchDrop();});
 
+
+window.addEventListener('scroll',function(){
+  var btn=document.getElementById('go-top-btn');
+  if(btn) btn.classList.toggle('show', window.scrollY > 400);
+}, {passive:true});
+
+
+var _pullStartY=0, _pullDist=0, _isPulling=false;
+
+document.addEventListener('touchstart', function(e){
+  if(window.scrollY > 5) return;
+  var feedPage=document.getElementById('page-feed');
+  if(!feedPage || !feedPage.classList.contains('active')) return;
+  _pullStartY = e.touches[0].clientY;
+  _isPulling = true;
+}, {passive:true});
+
+document.addEventListener('touchmove', function(e){
+  if(!_isPulling) return;
+  _pullDist = e.touches[0].clientY - _pullStartY;
+  var ind = document.getElementById('pull-indicator');
+  if(_pullDist > 60 && ind) ind.classList.add('show');
+  else if(ind) ind.classList.remove('show');
+}, {passive:true});
+
+document.addEventListener('touchend', function(){
+  if(!_isPulling) return;
+  var ind = document.getElementById('pull-indicator');
+  if(ind) ind.classList.remove('show');
+  if(_pullDist > 60){
+    updateFeed();
+    showToast('フィードを更新しました');
+  }
+  _isPulling = false;
+  _pullDist = 0;
+});
+
+
+function shareProfile(){
+  var handle = document.getElementById('vp-name').textContent || '';
+  var url = location.origin + '/?user=' + encodeURIComponent(handle);
+  if(navigator.share){
+    navigator.share({title:'@'+handle+' - CDGLOA', url:url}).catch(function(){});
+  } else {
+    navigator.clipboard.writeText(url).then(function(){showToast('URLをコピーしました');});
+  }
+}
+
+function shareMyProfile(){
+  if(!myProfile) return;
+  var handle = myProfile.handle || '';
+  var url = location.origin + '/?user=' + encodeURIComponent(handle);
+  if(navigator.share){
+    navigator.share({title:'@'+handle+' - CDGLOA', url:url}).catch(function(){});
+  } else {
+    navigator.clipboard.writeText(url).then(function(){showToast('URLをコピーしました');});
+  }
+}
+
 function goBack(){
   updateUrlParam('post', null);
   document.title='CDGLOA \u2014 COMME des GAR\u00c7ONS LOVERS\u2019 OUTFIT ARCHIVES';
@@ -5678,5 +5766,7 @@ if('serviceWorker' in navigator){
   </div>
 </div>
 
+<button class="go-top" id="go-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="トップへ戻る">↑</button>
+<div class="pull-indicator" id="pull-indicator">↓ 離して更新</div>
 </body>
 </html>
