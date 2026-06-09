@@ -7,35 +7,35 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="CDGLOA">
+<meta name="apple-mobile-web-app-title" content="GRAIL">
 <link rel="manifest" href="manifest.json">
-<title>CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</title>
+<title>GRAIL — Designer Fashion Outfit Archives</title>
 <meta name="description" content="ギャルソンラバーのためのコーデアーカイブ。着用アイテムを品番・ライン・シーズンで記録し、共有する。">
 
 <!-- OGP -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://grail-archive.vercel.app/">
-<meta property="og:title" content="CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES">
+<meta property="og:url" content="https://cdg-loa.vercel.app/">
+<meta property="og:title" content="GRAIL — Designer Fashion Outfit Archives">
 <meta property="og:description" content="ギャルソンラバーのためのコーデアーカイブ。着用アイテムを品番・ライン・シーズンで記録し、共有する。">
-<meta property="og:image" content="https://grail-archive.vercel.app/og-image.png">
+<meta property="og:image" content="https://cdg-loa.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:site_name" content="CDGLOA">
+<meta property="og:site_name" content="GRAIL">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@tttaichi___">
 <meta name="twitter:creator" content="@tttaichi___">
-<meta name="twitter:title" content="CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES">
+<meta name="twitter:title" content="GRAIL — Designer Fashion Outfit Archives">
 <meta name="twitter:description" content="ギャルソンラバーのためのコーデアーカイブ。着用アイテムを品番・ライン・シーズンで記録し、共有する。">
-<meta name="twitter:image" content="https://grail-archive.vercel.app/og-image.png">
+<meta name="twitter:image" content="https://cdg-loa.vercel.app/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Crect width='80' height='80' fill='white'/%3E%3Ctext x='40' y='50' text-anchor='middle' font-family='Helvetica Neue,Helvetica,Arial,sans-serif' font-size='26' font-weight='600' letter-spacing='4' fill='black'%3ELOA%3C/text%3E%3C/svg%3E">
 <link rel="alternate icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
 
 <!-- ======================================================
-  CDGLOA — COMME des GARÇONS LOVERS' OUTFIT ARCHIVES
+  GRAIL — DESIGNER FASHION OUTFIT ARCHIVES
   Supabase統合版
 
   使用前に以下2箇所を自分のSupabase情報に書き換えてください:
@@ -98,7 +98,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 @keyframes pageFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
 
-/* CDG STATS */
+/* STATS */
 .cdg-stats-section{padding:14px 20px 0;max-width:900px;margin:0 auto;border-top:1px solid var(--ln);margin-top:4px}
 .cdg-stats-ttl{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:10px}
 .cdg-stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px}
@@ -1022,7 +1022,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       margin-bottom:.15em;
       transform:translateY(18px);opacity:0;
       transition:opacity .7s ease, transform .7s ease;
-    ">CDG</div>
+    ">GRAIL</div>
     <div id="sp-loa" style="
       font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
       font-size:clamp(52px,10vw,96px);font-weight:700;
@@ -1038,7 +1038,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       text-transform:uppercase;
       transform:translateY(12px);opacity:0;
       transition:opacity .6s ease .28s, transform .6s ease .28s;
-    ">COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</div>
+    ">DESIGNER FASHION OUTFIT ARCHIVES</div>
     <div id="sp-jp" style="
       font-family:'Noto Sans JP','Helvetica Neue',sans-serif;
       font-size:clamp(10px,1.2vw,13px);font-weight:300;
@@ -1046,7 +1046,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       margin-top:.4em;
       transform:translateY(12px);opacity:0;
       transition:opacity .6s ease .38s, transform .6s ease .38s;
-    ">ギャルソンラバーのためのコーデアーカイブ</div>
+    ">Designer Fashion Outfit Archives</div>
   </div>
 </div>
 
@@ -1095,8 +1095,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
 
 <nav>
   <div class="logo-wrap" onclick="goNav('feed',document.querySelector('.nl'))">
-    <div class="logo-main">CDGLOA</div>
-    <div class="logo-sub">COMME des GARÇONS LOVERS' OUTFIT ARCHIVES</div>
+    <div class="logo-main">GRAIL</div>
+    <div class="logo-sub">DESIGNER FASHION OUTFIT ARCHIVES</div>
   </div>
   <!-- PC用ナビ -->
   <div class="navl" id="pc-navl">
@@ -1389,7 +1389,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div id="srch-pane-ref" class="srch-pane active">
       <div class="srch-hist-wrap">
       <div class="search-inner">
-        <input type="text" id="srch" name="cdgloa-ref-m2p" autocomplete="new-password" onfocus="this.removeAttribute('readonly');renderSrchDrop()" readonly placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="onRefInput(event)" style="text-transform:uppercase">
+        <input type="text" id="srch" name="grail-ref-m2p" autocomplete="new-password" onfocus="this.removeAttribute('readonly');renderSrchDrop()" readonly placeholder="品番で検索（例：HJJ050）" onkeydown="if(event.key==='Enter')doSearch()" oninput="onRefInput(event)" style="text-transform:uppercase">
         <button class="search-btn" id="srch-clear-btn" onclick="clearSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
         <button class="search-btn" onclick="doSearch()">検索</button>
       </div>
@@ -1402,7 +1402,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div id="srch-pane-tag" class="srch-pane">
       <div class="search-inner">
         <span style="padding:8px 6px 8px 12px;font-size:13px;color:var(--mgry);line-height:1;user-select:none">#</span>
-        <input type="text" id="srch-tag" name="cdgloa-tag-q7w" autocomplete="new-password" onfocus="this.removeAttribute('readonly')" readonly placeholder="タグ名を入力（# 不要）" autocomplete="off"
+        <input type="text" id="srch-tag" name="grail-tag-q7w" autocomplete="new-password" onfocus="this.removeAttribute('readonly')" readonly placeholder="タグ名を入力（# 不要）" autocomplete="off"
           onkeydown="if(event.key==='Enter')doTagSearch()"
           style="flex:1;font-family:var(--sans);font-size:11px;padding:8px 8px 8px 0;border:none;outline:none;background:transparent">
         <button class="search-btn" id="srch-tag-clear-btn" onclick="clearTagSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
@@ -1423,7 +1423,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <!-- ユーザー検索 -->
     <div id="srch-pane-user" class="srch-pane">
       <div class="search-inner">
-        <input type="text" id="srch-user" name="cdgloa-usr-x9k" placeholder="@ハンドルで検索（空欄でフィルターのみ可）" onkeydown="if(event.key==='Enter')doUserSearch()" autocomplete="new-password" onfocus="this.removeAttribute('readonly')" readonly>
+        <input type="text" id="srch-user" name="grail-usr-x9k" placeholder="@ハンドルで検索（空欄でフィルターのみ可）" onkeydown="if(event.key==='Enter')doUserSearch()" autocomplete="new-password" onfocus="this.removeAttribute('readonly')" readonly>
         <button class="search-btn" id="srch-user-clear-btn" onclick="clearUserSearch()" style="display:none;background:var(--mgry);padding:8px 10px">✕</button>
         <button class="search-btn" onclick="doUserSearch()">検索</button>
       </div>
@@ -1793,7 +1793,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:14px">Vision</div>
       <p style="font-size:11px;line-height:2;color:var(--mgry);font-family:var(--jp)">
         ネット上のギャルソンコーデを見て、ギャルソン好きな人は、自分のコーデを撮るのも、他人のコーデを眺めるのも好きなのだろうと感じました。<br><br>
-        そんな人たちのためのアーカイブをつくりたいと思い、CDGLOAを開発しました。着こなしを記録し、共有し、発見できる場所。<br><br>
+        そんな人たちのためのアーカイブをつくりたいと思い、GRAILを開発しました。着こなしを記録し、共有し、発見できる場所。<br><br>
         ギャルソンラバーがつながり、新たなラバーが生まれ、日本が誇るのブランドが若い世代にも届いていく——そんな場所になれれば。そう願っています。
       </p>
     </div>
@@ -1802,7 +1802,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
     <div style="margin-bottom:60px">
       <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--mgry);margin-bottom:14px">About This App</div>
       <p style="font-size:10px;line-height:1.9;color:var(--mgry);font-family:var(--jp)">
-        CDGLOA（COMME des GARÇONS LOVERS' OUTFIT ARCHIVES）は、ギャルソン愛好家によるコーデアーカイブです。着用アイテムの品番・ライン・シーズンを記録し、フィルタリングや品番検索でギャルソンの着こなしを探せます。
+        GRAIL（GRAIL ARCHIVE）は、デザイナーズファッション愛好家によるコーデアーカイブです。着用アイテムの品番・ライン・シーズンを記録し、フィルタリングや品番検索でコーデを探せます。
       </p>
     </div>
     <div style="border-top:1px solid var(--ln);margin-bottom:48px"></div>
@@ -1810,7 +1810,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px
       <div style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid var(--blk)">利用規約</div>
       <p style="font-size:9px;color:var(--lgry);margin-bottom:20px">最終更新日：2025年6月1日</p>
       <div style="font-size:11px;line-height:2;color:var(--mgry);font-family:var(--jp)">
-        <p style="margin-bottom:16px">本利用規約は、CDGLOA（以下「本サービス」）の利用条件を定めるものです。ユーザーの皆さまには、本規約に同意いただいたうえで本サービスをご利用いただきます。</p>
+        <p style="margin-bottom:16px">本利用規約は、GRAIL ARCHIVE（以下「本サービス」）の利用条件を定めるものです。ユーザーの皆さまには、本規約に同意いただいたうえで本サービスをご利用いただきます。</p>
         <p style="font-size:10px;letter-spacing:.12em;color:var(--blk);margin:24px 0 8px">第1条（禁止事項）</p>
         <p style="margin-bottom:16px">他人の著作物の無断投稿、誹謗中傷、虚偽情報の登録、サービス運営の妨害、法令違反、なりすまし、スパム投稿を禁止します。</p>
         <p style="font-size:10px;letter-spacing:.12em;color:var(--blk);margin:24px 0 8px">第2条（コンテンツの権利）</p>
@@ -3165,7 +3165,7 @@ async function openPost(id){
   await fetchCmts();
   goNav('detail',null);
   // ブラウザ履歴にdetailページを追加
-  const postTitle=`${p.title||'コーデ'} — CDGLOA`;
+  const postTitle=`${p.title||'コーデ'} — GRAIL`;
   document.title=postTitle;
   history.pushState({page:'detail',postId:p.id},postTitle,'/post/'+p.id);
   // モバイルでボトムアクションバーを表示
@@ -3307,7 +3307,7 @@ function shareToX(){
   const line=curPost.line?' '+curPost.line.replace('COMME des GARCONS ','CDG ').replace('COMME des GARÇONS ','CdG '):'';
   const sea=curPost.season?' '+curPost.season:'';
   const tags=(curPost.tags||[]).map(function(t){return '#'+t;}).join(' ');
-  const txt=encodeURIComponent((curPost.title||'コーデ')+line+sea+' #CDGLOA #commesdesgarcons'+(tags?' '+tags:''));
+  const txt=encodeURIComponent((curPost.title||'コーデ')+line+sea+' #GRAIL #commesdesgarcons'+(tags?' '+tags:''));
   const postUrl=encodeURIComponent(location.origin+location.pathname+'?post='+curPost.id);
   window.open('https://twitter.com/intent/tweet?text='+txt+'&url='+postUrl,'_blank');
 }
@@ -3315,7 +3315,7 @@ function shareToX(){
 async function shareGeneral(){
   if(!curPost)return;
   const postUrl=location.origin+'/post/'+curPost.id;
-  const shareData={title:curPost.title||'コーデ',text:(curPost.title||'コーデ')+' — CDGLOA',url:postUrl};
+  const shareData={title:curPost.title||'コーデ',text:(curPost.title||'コーデ')+' — GRAIL',url:postUrl};
   if(navigator.share){
     try{await navigator.share(shareData);}catch(e){}
   }else{
@@ -5345,7 +5345,7 @@ async function openProfileByHandle(handle){
 }
 
 
-const SRCH_HIST_KEY='cdgloa_search_history';
+const SRCH_HIST_KEY='grail_search_history';
 const MAX_HIST=10;
 const SRCH_SUGGESTIONS=['HJJ050','OZT311','GS-T104','PO-T106','W28112','GE-T270','RO-T107','AD-T022','HJJ028','FI-T015'];
 
@@ -5422,7 +5422,7 @@ function shareProfile(){
   var handle = document.getElementById('vp-name').textContent || '';
   var url = location.origin + '/?user=' + encodeURIComponent(handle);
   if(navigator.share){
-    navigator.share({title:'@'+handle+' - CDGLOA', url:url}).catch(function(){});
+    navigator.share({title:'@'+handle+' - GRAIL', url:url}).catch(function(){});
   } else {
     navigator.clipboard.writeText(url).then(function(){showToast('URLをコピーしました');});
   }
@@ -5433,7 +5433,7 @@ function shareMyProfile(){
   var handle = myProfile.handle || '';
   var url = location.origin + '/?user=' + encodeURIComponent(handle);
   if(navigator.share){
-    navigator.share({title:'@'+handle+' - CDGLOA', url:url}).catch(function(){});
+    navigator.share({title:'@'+handle+' - GRAIL', url:url}).catch(function(){});
   } else {
     navigator.clipboard.writeText(url).then(function(){showToast('URLをコピーしました');});
   }
@@ -5441,7 +5441,7 @@ function shareMyProfile(){
 
 function goBack(){
   updateUrlParam('post', null);
-  document.title='CDGLOA \u2014 COMME des GAR\u00c7ONS LOVERS\u2019 OUTFIT ARCHIVES';
+  document.title='GRAIL \u2014 COMME des GAR\u00c7ONS LOVERS\u2019 OUTFIT ARCHIVES';
   document.querySelector('.dact')?.classList.remove('mobile-visible');
   if(prevPage)showPage(prevPage);else goNav('feed',document.querySelector('.nl'));
 }
@@ -5488,7 +5488,7 @@ window.addEventListener('popstate', e=>{
   // モーダルを閉じる
   document.querySelectorAll('.modal-bg').forEach(m=>{m.style.display='none';});
   document.querySelector('.dact')?.classList.remove('mobile-visible');
-  document.title='CDGLOA — COMME des GARÇONS LOVERS’ OUTFIT ARCHIVES';
+  document.title='GRAIL — COMME des GARÇONS LOVERS’ OUTFIT ARCHIVES';
 
   if(!state){
     // 初期状態（feedページ）
