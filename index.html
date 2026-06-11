@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#000000">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="GRAIL">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
@@ -87,22 +87,11 @@ body{background:var(--wht);color:var(--blk);font-family:var(--sans);min-height:1
 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px;border-bottom:1px solid var(--blk);background:var(--wht);position:sticky;top:0;z-index:200;
-  /* iPhoneノッチ・ステータスバー対応 */
+  /* iPhoneノッチ対応（Safariブラウザ表示時の左右） */
   padding-left: max(20px, env(safe-area-inset-left));
   padding-right: max(20px, env(safe-area-inset-right));
   padding-top: env(safe-area-inset-top);
   height: calc(52px + env(safe-area-inset-top));
-}
-/* ホーム画面追加（アプリモード）時: ノッチなし端末はenv()が0を返すため最低値を保証 */
-@media (display-mode: standalone){
-  nav{
-    padding-top: max(env(safe-area-inset-top), 24px);
-    height: calc(52px + max(env(safe-area-inset-top), 24px));
-  }
-  .notif-panel{top: calc(52px + max(env(safe-area-inset-top), 24px))}
-  .drawer{top: calc(48px + max(env(safe-area-inset-top), 24px))}
-  .lb-close{top: calc(16px + max(env(safe-area-inset-top), 24px))}
-  .pull-indicator{top: calc(44px + max(env(safe-area-inset-top), 24px))}
 }
 .logo-wrap{display:flex;flex-direction:column;line-height:1.2;cursor:pointer}
 .logo-main{font-size:13px;letter-spacing:.18em;font-weight:600;text-transform:uppercase}
