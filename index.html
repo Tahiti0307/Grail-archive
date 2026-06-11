@@ -3349,13 +3349,13 @@ function shareToX(){
   const sea=curPost.season?' '+curPost.season:'';
   const tags=(curPost.tags||[]).map(function(t){return '#'+t;}).join(' ');
   const txt=encodeURIComponent((curPost.title||'コーデ')+line+sea+' #GRAIL #commesdesgarcons'+(tags?' '+tags:''));
-  const postUrl=encodeURIComponent(location.origin+location.pathname+'?post='+curPost.id);
+  const postUrl=encodeURIComponent(location.origin+'/?post='+curPost.id);
   window.open('https://twitter.com/intent/tweet?text='+txt+'&url='+postUrl,'_blank');
 }
 
 async function shareGeneral(){
   if(!curPost)return;
-  const postUrl=location.origin+location.pathname+'?post='+curPost.id;
+  const postUrl=location.origin+'/?post='+curPost.id;
   const shareData={title:curPost.title||'コーデ',text:(curPost.title||'コーデ')+' — GRAIL',url:postUrl};
   if(navigator.share){
     try{await navigator.share(shareData);}catch(e){}

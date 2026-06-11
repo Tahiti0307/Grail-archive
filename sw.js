@@ -6,7 +6,7 @@
    - Supabase API → Network Only（キャッシュしない）
 ===================================================== */
 
-const CACHE_VERSION = 'grail-v4';
+const CACHE_VERSION = 'grail-v5';
 const STATIC_CACHE  = `${CACHE_VERSION}-static`;
 const IMAGE_CACHE   = `${CACHE_VERSION}-images`;
 
